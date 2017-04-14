@@ -12,18 +12,19 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="SmartDoc"
-        android:id="@+id/textView"
+        android:id="@+id/sdLogo"
         android:typeface="normal"
-        android:textColor="#b7fffaf2"
-        android:textSize="40dp"
+        android:textColor="#ffffff"
+        android:textSize="50dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/sdLogo"
         android:layout_marginTop="20dp"
         android:id="@+id/linearLayout2">
 
@@ -32,53 +33,60 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editText"
+            android:id="@+id/nameEditText"
             android:layout_marginTop="10dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:background="#22ffffff"
-            android:textColorHint="#ccffffff"
-            android:hint="Name" />
+            android:textColorHint="#aaffffff"
+            android:hint="Name"
+            android:textSize="15dp"
+            android:textIsSelectable="false"
+            android:textColor="#ddffffff" />
 
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="date"
             android:ems="10"
-            android:id="@+id/editText2"
+            android:id="@+id/dobEditText"
             android:layout_marginTop="10dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:background="#22ffffff"
             android:hint="Date of Birth"
-            android:textColorHint="#ccffffff" />
+            android:textColorHint="#aaffffff"
+            android:textSize="15dp"
+            android:textIsSelectable="false"
+            android:textColor="#ddffffff" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginTop="10dp">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Male"
-                android:id="@+id/radioButton"
+                android:id="@+id/maleRadioButton"
                 android:layout_weight="1"
                 android:textColor="#ccffffff"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:checked="false" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Female"
-                android:id="@+id/radioButton2"
+                android:id="@+id/femaleRadioButton"
                 android:layout_weight="1"
                 android:textColor="#ccffffff"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:checked="false" />
         </LinearLayout>
 
         <EditText
@@ -86,42 +94,51 @@
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:ems="10"
-            android:id="@+id/editText3"
+            android:id="@+id/usernameEditText"
             android:layout_marginTop="10dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:background="#22ffffff"
             android:hint="Email address (Username)"
-            android:textColorHint="#ccffffff" />
+            android:textColorHint="#aaffffff"
+            android:textSize="15dp"
+            android:textIsSelectable="false"
+            android:textColor="#ddffffff" />
 
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"
             android:ems="10"
-            android:id="@+id/editText4"
+            android:id="@+id/passwordEditText"
             android:layout_marginTop="10dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:background="#22ffffff"
-            android:textColorHint="#ccffffff"
-            android:hint="Password" />
+            android:textColorHint="#aaffffff"
+            android:hint="Password"
+            android:textSize="15dp"
+            android:textIsSelectable="false"
+            android:textColor="#ddffffff" />
 
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"
             android:ems="10"
-            android:id="@+id/editText5"
+            android:id="@+id/confirmPwEditText"
             android:layout_marginTop="10dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:background="#22ffffff"
-            android:textColorHint="#ccffffff"
-            android:hint="Confirm Password" />
+            android:textColorHint="#aaffffff"
+            android:hint="Confirm Password"
+            android:textSize="15dp"
+            android:textIsSelectable="false"
+            android:textColor="#ddffffff" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -137,12 +154,13 @@
                 <Switch
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/switch1"
+                    android:id="@+id/isDocSwitch"
                     android:textSize="15dp"
                     android:layout_weight="1"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginRight="3dp" />
+                    android:layout_marginRight="3dp"
+                    android:checked="false" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -150,11 +168,12 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Doctor?"
                     android:id="@+id/textView2"
-                    android:textSize="17dp"
+                    android:textSize="14dp"
+                    android:textColor="#ccffffff"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginBottom="3dp"
-                    android:layout_marginLeft="7dp" />
+                    android:layout_toStartOf="@+id/isDocSwitch"
+                    android:layout_marginRight="7dp"
+                    android:layout_alignBaseline="@+id/isDocSwitch" />
             </RelativeLayout>
 
             <EditText
@@ -162,17 +181,20 @@
                 android:layout_height="wrap_content"
                 android:inputType="phone"
                 android:ems="10"
-                android:id="@+id/editText6"
+                android:id="@+id/regNoEditText"
                 android:layout_marginTop="10dp"
-                android:paddingTop="10dp"
+                android:paddingTop="5dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:background="#22ffffff"
-                android:textColorHint="#ccffffff"
+                android:textColorHint="#aaffffff"
                 android:hint="Registration Number"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.5"
-                android:layout_marginLeft="3dp" />
+                android:layout_marginLeft="3dp"
+                android:textSize="15dp"
+                android:textIsSelectable="false"
+                android:textColor="#ddffffff" />
 
         </LinearLayout>
 
@@ -182,9 +204,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Verify E-Mail Address"
-        android:id="@+id/button2"
+        android:id="@+id/verifyEmailButton"
         android:layout_below="@+id/linearLayout2"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_alignEnd="@+id/linearLayout2"
         android:background="#44ffffff"
         android:textColor="#ffeaf9" />
@@ -193,11 +215,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Sign Up"
-        android:id="@+id/button4"
-        android:layout_below="@+id/button2"
+        android:id="@+id/signUpButton"
+        android:layout_below="@+id/verifyEmailButton"
         android:layout_centerHorizontal="true"
-        android:textColor="#ff0000"
-        android:background="#ccffffff"
+        android:textColor="#dd5a25"
+        android:background="#ffffff"
         android:layout_marginTop="10dp"
         android:textStyle="bold" />
 
