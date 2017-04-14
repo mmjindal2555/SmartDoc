@@ -20,10 +20,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".nav_drawer"
-            android:label="@string/title_activity_nav_drawer" >
-        </activity>
     </application>
 
 </manifest>
