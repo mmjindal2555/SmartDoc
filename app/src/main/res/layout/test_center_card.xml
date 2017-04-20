@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="#ffffff"
+        android:id="@+id/relativeLayout"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="BrazzersLab"
+            android:id="@+id/genericNameTextView"
+           />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Approved By"
+            android:id="@+id/approvedByTextView"
+            android:layout_below="@+id/genericNameTextView"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignLeft="@+id/genericNameTextView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="2M"
+            android:id="@+id/testPriceTextView"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/genericNameTextView"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Danny D"
+            android:id="@+id/certificationTextView"
+            android:layout_below="@+id/approvedByTextView"
+            android:layout_marginTop="0dp"
+            android:layout_alignLeft="@+id/genericNameTextView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Go To Website"
+            android:id="@+id/websiteTextView"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="false"
+            android:layout_below="@+id/approvedByTextView"
+             />
+    </RelativeLayout>
+
+</RelativeLayout>
