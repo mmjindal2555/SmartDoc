@@ -1,0 +1,23 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.silk.smartdoc.TestSearchActivity"
+    android:id="@+id/test_search_layout">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/test_search_toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:background="#bbbbbb"
+        android:logo="@mipmap/ic_launcher"
+        xmlns:android="http://schemas.android.com/apk/res/android"/>
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchListView"
+        android:layout_below="@+id/test_search_toolbar"
+        android:layout_centerHorizontal="true"
+    />
+
+</RelativeLayout>
