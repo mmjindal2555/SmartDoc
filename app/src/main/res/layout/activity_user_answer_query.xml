@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Enter your query here ..."
+        android:id="@+id/queryInputTextView"
+        android:textSize="13dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/queryInputTextView"
+        android:id="@+id/relativeLayout3"
+        android:minHeight="40dp">
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/faqListView"
+            android:layout_below="@+id/queryRelativeLayout"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profilePicImageView"
+        android:adjustViewBounds="false"
+        android:minHeight="30dp"
+        android:minWidth="30dp"
+        android:src="@drawable/ic_user"
+        android:layout_below="@+id/relativeLayout3"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentEnd="false" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/textView"
+        android:layout_toRightOf="@+id/profilePicImageView"
+        android:layout_below="@+id/relativeLayout3"
+        android:layout_alignParentBottom="false"
+        android:gravity="bottom" />
+
+
+</RelativeLayout>
