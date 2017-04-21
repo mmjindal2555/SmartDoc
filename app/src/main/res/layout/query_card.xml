@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/profilePicImageView"
+            android:adjustViewBounds="false"
+            android:minHeight="30dp"
+            android:minWidth="30dp"
+            android:src="@drawable/ic_user"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="username"
+            android:id="@+id/usernameTextView"
+            android:layout_toRightOf="@+id/profilePicImageView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="query"
+            android:id="@+id/queryTextView"
+            android:layout_below="@+id/usernameTextView"
+            android:layout_alignLeft="@+id/usernameTextView" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/thumbsUpImageView"
+            android:layout_below="@+id/queryTextView"
+            android:src="@drawable/ic_action_thumb_up"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/thumbsDownImageView"
+            android:src="@drawable/ic_action_thumb_down"
+            android:layout_toRightOf="@+id/thumbsUpImageView"
+            android:layout_alignTop="@+id/thumbsUpImageView"
+            android:paddingLeft="20dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/reportAbuseImageView"
+            android:src="@drawable/ic_action_angry_64"
+            android:layout_alignTop="@+id/thumbsUpImageView"
+            android:layout_toRightOf="@+id/thumbsDownImageView"
+            android:paddingLeft="20dp" />
+    </RelativeLayout>
+</RelativeLayout>
