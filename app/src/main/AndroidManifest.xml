@@ -28,6 +28,30 @@
             android:name=".TestSearchResultsActivity"
             android:label="@string/title_activity_test_search_results" >
         </activity>
+        <activity
+            android:name=".AnswerQuery"
+            android:label="@string/title_activity_answer_query" >
+        </activity>
+        <activity
+            android:name=".MedicineResult"
+            android:label="@string/title_activity_medicine_result" >
+        </activity>
+        <activity
+            android:name=".MedicineSearch"
+            android:label="@string/title_activity_medicine_search" >
+        </activity>
+        <activity
+            android:name=".UserAnswerQuery"
+            android:label="@string/title_activity_user_answer_query" >
+        </activity>
+        <activity
+            android:name=".HealthForum"
+            android:label="@string/title_activity_health_forum" >
+        </activity>
+        <activity
+            android:name=".PostQueryExperience"
+            android:label="@string/title_activity_post_query_experience" >
+        </activity>
     </application>
 
 </manifest>
