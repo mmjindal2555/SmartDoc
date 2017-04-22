@@ -91,9 +91,14 @@
     <orderEntry type="jdk" jdkName="Android API 25 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="appcompat-v7-24.0.0-beta1" level="project" />
+    <orderEntry type="library" exported="" name="firebase-database-10.2.1" level="project" />
     <orderEntry type="library" exported="" name="support-vector-drawable-24.0.0-beta1" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-24.0.0-beta1" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-24.0.0-beta1" level="project" />
+    <orderEntry type="library" exported="" name="play-services-basement-10.2.1" level="project" />
+    <orderEntry type="library" exported="" name="play-services-tasks-10.2.1" level="project" />
+    <orderEntry type="library" exported="" name="firebase-database-connection-10.2.1" level="project" />
     <orderEntry type="library" exported="" name="animated-vector-drawable-24.0.0-beta1" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-24.0.0" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-24.0.0" level="project" />
+    <orderEntry type="library" exported="" name="firebase-common-10.2.1" level="project" />
   </component>
 </module>

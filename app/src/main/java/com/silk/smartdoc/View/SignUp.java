@@ -1,4 +1,4 @@
-package com.silk.smartdoc;
+package com.silk.smartdoc.View;
 
 import android.app.Activity;
 import android.graphics.Typeface;
@@ -8,15 +8,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class LoginActivity extends Activity {
+import com.silk.smartdoc.R;
+
+public class SignUp extends Activity {
 
     TextView sdlogo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_sign_up);
         sdlogo = (TextView)findViewById(R.id.sdLogo);
-        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), "font/Satisfy-Regular.ttf");
+        Typeface myCustomFont = Typeface.createFromAsset(getAssets(),"font/Satisfy-Regular.ttf");
         sdlogo.setTypeface(myCustomFont);
         getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarcolor));
     }
