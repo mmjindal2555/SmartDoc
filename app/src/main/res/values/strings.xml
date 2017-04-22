@@ -16,5 +16,11 @@
     <string name="action_example">Example action</string>
     <string name="title_activity_test_search">TestSearchActivity</string>
     <string name="title_activity_test_search_results">TestSearchResultsActivity</string>
+    <string name="title_activity_answer_query">AnswerQuery</string>
+    <string name="title_activity_medicine_result">MedicineResult</string>
+    <string name="title_activity_medicine_search">MedicineSearch</string>
+    <string name="title_activity_user_answer_query">UserAnswerQuery</string>
+    <string name="title_activity_health_forum">HealthForum</string>
+    <string name="title_activity_post_query_experience">PostQueryExperience</string>
 
 </resources>
