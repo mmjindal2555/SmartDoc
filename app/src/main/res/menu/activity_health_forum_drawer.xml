@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+
+        <item
+            android:id="@+id/health_forum"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Health Forum" />
+        <item
+            android:id="@+id/medical_tests"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Search for medical tests" />
+        <item
+            android:id="@+id/medicines"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Search for medicines" />
+    </group>
+
+    <item android:title="My Activities">
+        <menu>
+            <item
+                android:id="@+id/my_questions"
+                android:icon="@drawable/ic_menu_send"
+                android:title="My Questions" />
+            <item
+                android:id="@+id/my_experiences"
+                android:icon="@drawable/ic_menu_send"
+                android:title="My Experiences" />
+        </menu>
+    </item>
+
+</menu>
