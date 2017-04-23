@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.silk.smartdoc.R;
 
-public class SignUp extends Activity {
+public class SignUp extends AppCompatActivity {
 
     TextView sdlogo;
     @Override

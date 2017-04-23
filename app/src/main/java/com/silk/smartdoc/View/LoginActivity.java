@@ -17,7 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.silk.smartdoc.Controller.LoggingController;
 import com.silk.smartdoc.R;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends AppCompatActivity {
 
     TextView sdLogo;
     EditText usernameET;

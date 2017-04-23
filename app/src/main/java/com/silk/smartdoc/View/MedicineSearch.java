@@ -1,25 +1,84 @@
 package com.silk.smartdoc.View;
 
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.silk.smartdoc.R;
 
-public class MedicineSearch extends AppCompatActivity {
+import java.util.ArrayList;
 
+public class MedicineSearch extends AppCompatActivity {
+    ListView searchListView;
+    ArrayList<String> al;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicine_search);
+
+        searchListView = (ListView)findViewById(R.id.searchListView);
+        al = new ArrayList<String>();
+        al.add("one");
+        al.add("one2");
+        al.add("one3");
+        al.add("one4");
+        al.add("one5");
+        al.add("one6");
+        al.add("one7");
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,al);
+        searchListView.setAdapter(arrayAdapter);
+
+
+        searchListView.setOnItemClickListener (new AdapterView.OnItemClickListener(){
+               @Override
+               public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
+                   String text = searchListView.getItemAtPosition(i).toString();
+                   Toast.makeText(MedicineSearch.this,text,Toast.LENGTH_SHORT).show();
+               }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_medicine_search, menu);
-        return true;
+
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_medicine_search,menu);
+
+        MenuItem searchItem = menu.findItem(R.id.medicine_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                ArrayList<String> tempList = new ArrayList<String>();
+                for(String temp: al){
+                    if(temp.toLowerCase().contains(newText.toLowerCase())){
+                        tempList.add(temp);
+                    }
+                }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MedicineSearch.this,android.R.layout.simple_expandable_list_item_1,tempList);
+                searchListView.setAdapter(adapter);
+                return true;
+            }
+        });
+
+       return super.onCreateOptionsMenu(menu);
     }
 
     @Override
