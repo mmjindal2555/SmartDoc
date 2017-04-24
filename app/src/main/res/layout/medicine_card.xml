@@ -9,8 +9,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="#ffffff"
+
         android:id="@+id/relativeLayout"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
@@ -21,25 +20,25 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="BrazzersLab"
-            android:id="@+id/genericNameTextView"
+            android:id="@+id/genericName"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="2M"
-            android:id="@+id/medicinePriceTextView"
+            android:id="@+id/medicinePrice"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/genericNameTextView"
+            android:layout_alignTop="@+id/genericName"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Danny D"
-            android:id="@+id/manufacturerTextView"
-            android:layout_below="@+id/genericNameTextView"
+            android:id="@+id/manufacturer"
+            android:layout_below="@+id/genericName"
             android:layout_marginTop="0dp"
-            android:layout_alignLeft="@+id/genericNameTextView" />
+            android:layout_alignLeft="@+id/genericName" />
     </RelativeLayout>
 </RelativeLayout>

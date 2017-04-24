@@ -1,5 +1,6 @@
 package com.silk.smartdoc.View;
 
+import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,13 +28,9 @@ public class MedicineSearch extends AppCompatActivity {
 
         searchListView = (ListView)findViewById(R.id.searchListView);
         al = new ArrayList<String>();
-        al.add("one");
-        al.add("one2");
-        al.add("one3");
-        al.add("one4");
-        al.add("one5");
-        al.add("one6");
-        al.add("one7");
+        al.add("Paracetamol");
+        al.add("Itraconozole");
+        al.add("Terbanifine");
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,al);
         searchListView.setAdapter(arrayAdapter);
@@ -43,7 +40,8 @@ public class MedicineSearch extends AppCompatActivity {
                @Override
                public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
                    String text = searchListView.getItemAtPosition(i).toString();
-                   Toast.makeText(MedicineSearch.this,text,Toast.LENGTH_SHORT).show();
+                   Intent intent = new Intent(MedicineSearch.this,MedicineResult.class);
+                   startActivity(intent);
                }
         });
     }

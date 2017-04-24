@@ -1,40 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:id="@+id/medicine_search_result_layout">
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/medicine_search_result_toolbar"
-        android:minHeight="?attr/actionBarSize"
-        android:background="#bbbbbb"
-        android:logo="@mipmap/ic_launcher"
-        xmlns:android="http://schemas.android.com/apk/res/android"/>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.MedicineResult">
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/medicine_search_result_toolbar"
-        android:background="#ffffff"
-        android:layout_alignParentStart="false"
-        android:id="@+id/relativeLayout2"
-        android:padding="5dp"
-        android:layout_margin="4dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:id="@+id/medicineDescription"
-            android:text="jooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolllllllllpppppppppppppppppgggggggggggggggggg" />
-    </RelativeLayout>
 
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listView"
-        android:layout_below="@+id/relativeLayout2"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/MedicineDetails"
+        android:layout_width="match_parent"
+        android:layout_height="495dp"
+        android:layout_weight="1" >
+    </ListView>
 
-</RelativeLayout>
+
+
+</android.support.constraint.ConstraintLayout>
