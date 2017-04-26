@@ -12,15 +12,16 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.silk.smartdoc.Model.Medicine;
 import com.silk.smartdoc.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MedicineCustomAdapter extends ArrayAdapter<MessageDetails> {
+public class MedicineCustomAdapter extends ArrayAdapter<Medicine> {
 
-    public MedicineCustomAdapter(Context context, ArrayList<MessageDetails> resource) {
+    public MedicineCustomAdapter(Context context, ArrayList<Medicine> resource) {
         super(context, R.layout.medicine_card,resource);
     }
 
@@ -33,10 +34,10 @@ public class MedicineCustomAdapter extends ArrayAdapter<MessageDetails> {
         TextView priceView = (TextView) v.findViewById(R.id.medicinePrice);
         TextView MedicineDescriptionView = (TextView) v.findViewById(R.id.manufacturer);
 
-        MessageDetails msg=getItem(position);
-        MedicineNameView.setText("Medicine Name: "+msg.MName);
-        priceView.setText("Price: " + msg.MPrice);
-        MedicineDescriptionView.setText("Chemical Name: "+msg.MChemicalName);
+        Medicine msg=getItem(position);
+        MedicineNameView.setText("Medicine Name: "+msg.medicineName);
+        priceView.setText("Price: " + msg.price);
+        MedicineDescriptionView.setText("Chemical Name: "+msg.chemicalName);
 
         return v;
 
