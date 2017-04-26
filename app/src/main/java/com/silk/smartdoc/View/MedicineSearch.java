@@ -5,6 +5,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,23 +17,51 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.silk.smartdoc.Model.Medicine;
 import com.silk.smartdoc.R;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class MedicineSearch extends AppCompatActivity {
     ListView searchListView;
-    ArrayList<String> al;
+    ArrayList<String> medArrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicine_search);
 
-        searchListView = (ListView)findViewById(R.id.searchListView);
+        searchListView = (ListView) findViewById(R.id.searchListView);
 
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("medicineList");
+        medArrayList = new ArrayList<String>();
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children= dataSnapshot.getChildren();
+                for (DataSnapshot child: children) {
+                    String medName = child.getValue(String.class);
+                    medArrayList.add(medName);
+                }
+                searchListView.setAdapter(new ArrayAdapter<String>(MedicineSearch.this, android.R.layout.simple_list_item_1, medArrayList));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        /*
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("medicineList");
         final FirebaseListAdapter<String> firebaseListAdapter = new FirebaseListAdapter<String>(
                 MedicineSearch.this,
@@ -47,20 +76,19 @@ public class MedicineSearch extends AppCompatActivity {
             }
 
         };
+        */
 
-        searchListView.setAdapter(firebaseListAdapter);
-
-
-        searchListView.setOnItemClickListener (new AdapterView.OnItemClickListener(){
-               @Override
-               public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
-                   String value = searchListView.getItemAtPosition(i).toString();
-                   Intent intent = new Intent(MedicineSearch.this,MedicineResult.class);
-                   intent.putExtra("searchValue",value);
-                   startActivity(intent);
-               }
+        searchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
+                String value = searchListView.getItemAtPosition(i).toString();
+                Intent intent = new Intent(MedicineSearch.this, MedicineResult.class);
+                intent.putExtra("searchValue", value);
+                startActivity(intent);
+            }
         });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -80,7 +108,7 @@ public class MedicineSearch extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 ArrayList<String> tempList = new ArrayList<String>();
-                for(String temp: al){
+                for(String temp: medArrayList){
                     if(temp.toLowerCase().contains(newText.toLowerCase())){
                         tempList.add(temp);
                     }
@@ -92,7 +120,7 @@ public class MedicineSearch extends AppCompatActivity {
             }
         });
 
-       return super.onCreateOptionsMenu(menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
