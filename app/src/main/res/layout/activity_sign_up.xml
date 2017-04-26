@@ -8,17 +8,17 @@
     android:id="@+id/signupLayout">
 
     <TextView
+        android:id="@+id/sdLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="SmartDoc"
-        android:id="@+id/sdLogo"
-        android:typeface="normal"
-        android:textColor="#ffffff"
-        android:textSize="50dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:text="SmartDoc"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#ffffff"
+        android:textSize="40dp"
+        android:typeface="normal" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -212,15 +212,15 @@
         android:textColor="#ffeaf9" />
 
     <Button
+        android:id="@+id/signUpButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Sign Up"
-        android:id="@+id/signUpButton"
         android:layout_below="@+id/verifyEmailButton"
         android:layout_centerHorizontal="true"
-        android:textColor="#dd5a25"
+        android:layout_marginTop="20dp"
         android:background="#ffffff"
-        android:layout_marginTop="10dp"
+        android:text="Sign Up"
+        android:textColor="#ff3f5c"
         android:textStyle="bold" />
 
 </RelativeLayout>

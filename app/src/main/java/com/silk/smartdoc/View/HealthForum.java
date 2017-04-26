@@ -27,11 +27,12 @@ public class HealthForum extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_health_forum);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.primarycolor));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+
         setSupportActionBar(toolbar);
-
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.setBackgroundColor(getResources().getColor(R.color.accentcolor));
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -96,7 +97,7 @@ public class HealthForum extends AppCompatActivity
             Intent intents = new Intent(this,TestSearchActivity.class);
             startActivity(intents);
         } else if (id == R.id.medicines) {
-            SmartDocManager sdm = (SmartDocManager) getApplicationContext();
+            SmartDocManager sdm = (SmartDocManager)getApplicationContext();
             sdm.displayMgr.displayMedicineSerachPage(this);
         } else if (id == R.id.my_questions) {
             Intent intents = new Intent(this,HealthForum.class);

@@ -9,6 +9,7 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 
 public class SmartDoc extends Application {
+    // for database purpose
     public void onCreate() {
         super.onCreate();
         if (!FirebaseApp.getApps(this).isEmpty()) {

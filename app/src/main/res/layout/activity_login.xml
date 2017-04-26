@@ -6,17 +6,17 @@
     android:id="@+id/mainActivityLayout">
 
     <TextView
+        android:id="@+id/sdLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="SmartDoc"
-        android:id="@+id/sdLogo"
-        android:typeface="normal"
-        android:textColor="#ffffff"
-        android:textSize="40dp"
-        android:layout_marginTop="100dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="SmartDoc"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#ffffff"
+        android:textSize="50sp"
+        android:typeface="normal" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -30,44 +30,46 @@
         android:layout_marginRight="20dp">
 
         <EditText
+            android:id="@+id/usernameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:ems="10"
-            android:id="@+id/usernameEditText"
             android:layout_gravity="center_horizontal"
             android:background="#17ffffff"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:ems="10"
             android:hint="email or username"
+            android:inputType="textEmailAddress"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
             android:textColorHint="#9effffff"
-            android:paddingLeft="10dp" />
+            android:textSize="15dp" />
 
         <EditText
+            android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/passwordEditText"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="15dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:background="#17ffffff"
-            android:paddingLeft="10dp"
+            android:ems="10"
             android:hint="password"
-            android:textColorHint="#9effffff" />
+            android:inputType="textPassword"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:textColorHint="#9effffff"
+            android:textSize="15dp" />
 
         <Button
+            android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Log In"
-            android:id="@+id/loginButton"
-            android:layout_marginTop="15dp"
             android:layout_gravity="center_horizontal"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/white_border"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="Log In"
             android:textColor="#ccffffff" />
 
         <RelativeLayout
@@ -100,13 +102,13 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/signUpButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Don&apos;t have account? Sign Up"
-        android:id="@+id/signUpButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:background="#fff"
-        android:textColor="#ff3f5c"/>
+        android:text="Don&apos;t have account? Sign Up"
+        android:textColor="#ff3f5c" />
 
 </RelativeLayout>
