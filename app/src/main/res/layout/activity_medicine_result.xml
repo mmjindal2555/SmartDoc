@@ -7,15 +7,13 @@
     tools:context=".View.MedicineResult">
 
 
-
     <ListView
-        android:id="@+id/MedicineDetails"
+        android:id="@+id/medicine_details"
         android:layout_width="344dp"
         android:layout_height="495dp"
         android:layout_weight="1"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="8dp">
-    </ListView>
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="0dp"></ListView>
 
 
 
