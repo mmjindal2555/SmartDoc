@@ -16,7 +16,6 @@ import java.util.List;
 /**
  * Created by Manish on 4/26/2017.
  */
-
 public class MedicineResultsAdapter extends BaseAdapter {
     List<Medicine> mObjects;
     private Context mContext;

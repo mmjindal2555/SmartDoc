@@ -37,7 +37,6 @@ public class MedicineResult extends AppCompatActivity {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("medicine");
         medResultArrayList = new ArrayList<Medicine>();
-
         databaseReference.addValueEventListener(new ValueEventListener() {
 
             @Override
