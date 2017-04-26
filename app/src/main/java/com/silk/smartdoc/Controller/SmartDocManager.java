@@ -17,9 +17,9 @@ public class SmartDocManager  extends SmartDoc{
     public ForumManager forumMgr;
 
     public SmartDocManager(){
-        this.searchMgr = new SearchManager();
+        this.searchMgr = new SearchManager(this);
         this.displayMgr = new DisplayManager();
-        this.dataMgr = new DataManager();
+        this.dataMgr = new DataManager(this);
         this.forumMgr = new ForumManager();
     }
 

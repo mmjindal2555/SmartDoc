@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.silk.smartdoc.Controller.SmartDocManager;
 import com.silk.smartdoc.Model.Medicine;
 import com.silk.smartdoc.R;
 
@@ -30,35 +31,17 @@ public class MedicineResult extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicine_result);
+        medicinesList = (ListView)findViewById(R.id.medicine_details);
+
 
         Bundle searchData = getIntent().getExtras();
         final String searchValue = searchData.getString("searchValue");
-        medicinesList = (ListView)findViewById(R.id.medicine_details);
+        SmartDocManager sdm = (SmartDocManager) getApplicationContext();
+        medResultArrayList = sdm.searchMgr.searchMedicine(searchValue);
+        medicinesList.setAdapter(new MedicineResultsAdapter(medResultArrayList,MedicineResult.this));
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("medicine");
-        medResultArrayList = new ArrayList<Medicine>();
-        databaseReference.addValueEventListener(new ValueEventListener() {
 
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                    Medicine medicine = postSnapshot.getValue(Medicine.class);
 
-                    String medChemName = medicine.chemicalName;
-                    String medName = medicine.medicineName;
 
-                    if(medChemName.equalsIgnoreCase(searchValue) || medName.equalsIgnoreCase(searchValue))
-                        medResultArrayList.add(medicine);
-
-                }
-                medicinesList.setAdapter(new MedicineResultsAdapter(medResultArrayList,MedicineResult.this));
-                Log.e("dodo",medResultArrayList.toString());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 }

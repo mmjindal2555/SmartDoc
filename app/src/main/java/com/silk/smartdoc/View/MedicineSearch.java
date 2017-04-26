@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.silk.smartdoc.Controller.SmartDocManager;
 import com.silk.smartdoc.Model.Medicine;
 import com.silk.smartdoc.R;
 
@@ -82,9 +83,9 @@ public class MedicineSearch extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
                 String value = searchListView.getItemAtPosition(i).toString();
-                Intent intent = new Intent(MedicineSearch.this, MedicineResult.class);
-                intent.putExtra("searchValue", value);
-                startActivity(intent);
+
+                SmartDocManager sdm = (SmartDocManager)getApplicationContext();
+                sdm.displayMgr.displayMedicineResult(MedicineSearch.this,value);
             }
         });
     }

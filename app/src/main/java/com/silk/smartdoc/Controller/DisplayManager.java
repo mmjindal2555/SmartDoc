@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.silk.smartdoc.Model.Answer;
+import com.silk.smartdoc.View.MedicineResult;
 import com.silk.smartdoc.View.MedicineSearch;
 
 /**
@@ -15,7 +16,7 @@ import com.silk.smartdoc.View.MedicineSearch;
 public class DisplayManager{
     private SmartDocManager sdm;
     public void displayDiagnosticCenter(){}
-    public void displayMedicines(){}
+
     public void postQuery(){}
     public void displayAnswerQuery(){}
     public void displayAnswer(Answer answer[]){}
@@ -24,5 +25,8 @@ public class DisplayManager{
     {
         //Intent intents = new Intent(context,MedicineSearch.class);
         context.startActivity(new Intent(context,MedicineSearch.class));
+    }
+    public void displayMedicineResult(Context context, String value){
+        context.startActivity(new Intent(context,MedicineResult.class).putExtra("searchValue", value));
     }
 }
