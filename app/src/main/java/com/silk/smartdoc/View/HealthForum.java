@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.silk.smartdoc.Controller.SmartDocManager;
 import com.silk.smartdoc.R;
 import com.silk.smartdoc.View.MedicineSearch;
 import com.silk.smartdoc.View.TestSearchActivity;
@@ -95,8 +96,8 @@ public class HealthForum extends AppCompatActivity
             Intent intents = new Intent(this,TestSearchActivity.class);
             startActivity(intents);
         } else if (id == R.id.medicines) {
-            Intent intents = new Intent(this,MedicineSearch.class);
-            startActivity(intents);
+            SmartDocManager sdm = (SmartDocManager) getApplicationContext();
+            sdm.displayMgr.displayMedicineSerachPage(this);
         } else if (id == R.id.my_questions) {
             Intent intents = new Intent(this,HealthForum.class);
             startActivity(intents);

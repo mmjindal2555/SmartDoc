@@ -1,6 +1,7 @@
 package com.silk.smartdoc.View;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.silk.smartdoc.Controller.LoggingController;
+import com.silk.smartdoc.Controller.SmartDocManager;
 import com.silk.smartdoc.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -31,7 +33,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         sdLogo = (TextView)findViewById(R.id.sdLogo);
         usernameET = (EditText)findViewById(R.id.usernameEditText);
         passwordET = (EditText)findViewById(R.id.passwordEditText);

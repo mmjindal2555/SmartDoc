@@ -28,8 +28,8 @@ public class MedicineSearch extends AppCompatActivity {
 
         searchListView = (ListView)findViewById(R.id.searchListView);
         al = new ArrayList<String>();
-        al.add("Paracetamol");
-        al.add("Itraconozole");
+        al.add("Peracetamol");
+        al.add("Itraconazole");
         al.add("Terbanifine");
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,al);
@@ -39,8 +39,9 @@ public class MedicineSearch extends AppCompatActivity {
         searchListView.setOnItemClickListener (new AdapterView.OnItemClickListener(){
                @Override
                public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
-                   String text = searchListView.getItemAtPosition(i).toString();
+                   String value = searchListView.getItemAtPosition(i).toString();
                    Intent intent = new Intent(MedicineSearch.this,MedicineResult.class);
+                   intent.putExtra("searchValue",value);
                    startActivity(intent);
                }
         });

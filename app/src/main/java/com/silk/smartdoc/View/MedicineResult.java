@@ -2,78 +2,58 @@ package com.silk.smartdoc.View;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.firebase.client.Firebase;
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.silk.smartdoc.Model.Medicine;
 import com.silk.smartdoc.R;
 
-import java.util.ArrayList;
-class MessageDetails {
 
-    String MName;
-    String MChemicalName;
-    String MPrice;
-
-    public String getMName() {
-        return MName;
-    }
-
-    public void setMName(String name) {
-        this.MName = name;
-    }
-
-    public String getMChemicalName() {
-        return MChemicalName;
-    }
-
-    public void setMChemicalName(String sub) {
-        this.MChemicalName = sub;
-    }
-
-    public String getMPrice() {
-        return MPrice;
-    }
-
-    public void setMPrice(String price) {
-        this.MPrice = price ;
-    }
-}
 public class MedicineResult extends AppCompatActivity {
 
     ListView msgList;
-    ArrayList<MessageDetails> details;
     AdapterView.AdapterContextMenuInfo info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicine_result);
+
+        Bundle searchData = getIntent().getExtras();
+        final String searchValue = searchData.getString("searchValue");
+
         msgList = (ListView) findViewById(R.id.MedicineDetails);
-        details = new ArrayList<MessageDetails>();
 
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("medicine");
+        final FirebaseListAdapter<Medicine> firebaseListAdapter = new FirebaseListAdapter<Medicine>(
+                MedicineResult.this,
+                Medicine.class,
+                R.layout.medicine_card,
+                databaseReference
+        ) {
+            TextView genericName;
+            TextView manufacturer;
+            TextView medicinePrice;
+            @Override
+            protected void populateView(View v, Medicine model, int position) {
+                if(model.chemicalName.equalsIgnoreCase(searchValue)||model.medicineName.equalsIgnoreCase(searchValue)) {
+                    genericName = (TextView) v.findViewById(R.id.genericName);
+                    manufacturer = (TextView) v.findViewById(R.id.manufacturer);
+                    medicinePrice = (TextView) v.findViewById(R.id.medicinePrice);
 
+                    genericName.setText(model.chemicalName);
+                    manufacturer.setText(model.medicineName);
+                    medicinePrice.setText(model.price);
+                }
+            }
+        };
 
-        MessageDetails Detail;
-        Detail = new MessageDetails();
-        Detail.setMName("P650");
-        Detail.setMChemicalName("Peracetamol");
-        Detail.setMPrice("Rs 5.00");
-        details.add(Detail);
-
-
-        Detail = new MessageDetails();
-        Detail.setMName("Itrasys");
-        Detail.setMChemicalName("Itraconozole");
-        Detail.setMPrice("Rs 12.00");
-        details.add(Detail);
-
-        Detail = new MessageDetails();
-        Detail.setMName("IFN");
-        Detail.setMChemicalName("Terbanifine");
-        Detail.setMPrice("Rs 12.00");
-        details.add(Detail);
-
-
-        msgList.setAdapter(new MedicineCustomAdapter( this,details));
+        msgList.setAdapter(firebaseListAdapter);
     }
 }
