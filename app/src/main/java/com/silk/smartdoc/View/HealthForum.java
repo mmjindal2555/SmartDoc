@@ -31,6 +31,7 @@ public class HealthForum extends AppCompatActivity
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
         setSupportActionBar(toolbar);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarcolor));
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.setBackgroundColor(getResources().getColor(R.color.accentcolor));
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

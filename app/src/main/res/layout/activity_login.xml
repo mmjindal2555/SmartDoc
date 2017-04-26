@@ -41,6 +41,7 @@
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
+            android:textColor="#fff"
             android:textColorHint="#9effffff"
             android:textSize="15dp" />
 
@@ -57,6 +58,7 @@
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
+            android:textColor="#fff"
             android:textColorHint="#9effffff"
             android:textSize="15dp" />
 

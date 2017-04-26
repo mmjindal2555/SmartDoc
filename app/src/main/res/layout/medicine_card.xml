@@ -1,44 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-    <RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00aaaaaa">
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_margin="4dp"
+        card_view:cardCornerRadius="4dp"
+        android:elevation="4dp">
 
-        android:id="@+id/relativeLayout"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
-        android:paddingRight="5dp"
-        android:paddingLeft="5dp">
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="BrazzersLab"
-            android:id="@+id/genericName"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="2M"
-            android:id="@+id/medicinePrice"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/genericName"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Danny D"
-            android:id="@+id/manufacturer"
-            android:layout_below="@+id/genericName"
-            android:layout_marginTop="0dp"
-            android:layout_alignLeft="@+id/genericName" />
-    </RelativeLayout>
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/manufacturerLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Manufactured By - "
+                android:layout_marginTop="7dp"
+                android:textSize="12dp"
+                android:layout_below="@+id/genericName"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/genericName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Some Medicine"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/com_facebook_button_send_background_color" />
+
+            <TextView
+                android:id="@+id/medicinePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/genericName"
+                android:text="\u20B9 20"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/holo_green_dark" />
+
+            <TextView
+                android:id="@+id/manufacturer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignLeft="@+id/manufacturerLabel"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/manufacturerLabel"
+                android:text="Some Company"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/com_facebook_button_send_background_color_pressed"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/isGenericLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/manufacturerLabel"
+                android:text="Availability in Generic Stores"
+                android:textSize="12dp" />
+
+            <ImageView
+                android:id="@+id/isGenericLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/isGenericLabel"
+                android:layout_below="@id/isGenericLabel"
+                android:layout_margin="4dp"
+                app:srcCompat="@drawable/ic_check_circle" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
 </RelativeLayout>
