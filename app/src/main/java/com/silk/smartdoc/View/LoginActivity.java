@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (usernameET.getText().toString().equals("a") && passwordET.getText().toString().equals("b")) {
+                if (usernameET.getText().toString().equals("akash") && passwordET.getText().toString().equals("agarwal")) {
                     Intent intent = new Intent(LoginActivity.this, HealthForum.class);
                     startActivity(intent);
                 }

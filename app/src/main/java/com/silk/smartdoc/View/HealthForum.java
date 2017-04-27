@@ -26,12 +26,15 @@ public class HealthForum extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_health_forum);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.primarycolor));
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-
+        toolbar.setOverflowIcon(getDrawable(R.drawable.ic_action_more_vert));
+        toolbar.setNavigationIcon(R.drawable.ic_action_dehaze);
         setSupportActionBar(toolbar);
         getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarcolor));
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.setBackgroundColor(getResources().getColor(R.color.accentcolor));
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
