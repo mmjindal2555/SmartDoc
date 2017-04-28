@@ -90,15 +90,15 @@ public class HealthForum extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        SmartDocManager sdm = (SmartDocManager)getApplicationContext();
         if (id == R.id.health_forum) {
             Intent intents = new Intent(this,HealthForum.class);
             startActivity(intents);
         } else if (id == R.id.medical_tests) {
-            Intent intents = new Intent(this,TestSearchActivity.class);
-            startActivity(intents);
+            sdm.displayMgr.displayTestSearchPage(this);
+            //Intent intents = new Intent(this,TestSearchActivity.class);
+            //startActivity(intents);
         } else if (id == R.id.medicines) {
-            SmartDocManager sdm = (SmartDocManager)getApplicationContext();
             sdm.displayMgr.displayMedicineSerachPage(this);
         } else if (id == R.id.my_questions) {
             Intent intents = new Intent(this,HealthForum.class);

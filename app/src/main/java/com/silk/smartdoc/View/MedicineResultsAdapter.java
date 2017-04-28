@@ -49,7 +49,7 @@ public class MedicineResultsAdapter extends BaseAdapter {
             holder.genericName=(TextView)convertView.findViewById(R.id.genericName);
             holder.price =(TextView)convertView.findViewById(R.id.medicinePrice);
             holder.manufacturer = (TextView)convertView.findViewById(R.id.manufacturer);
-            holder.isGenericImage = (ImageView)convertView.findViewById(R.id.isGenericLogo);
+           // holder.isGenericImage = (ImageView)convertView.findViewById(R.id.isGenericLogo);
             convertView.setTag(holder);
             //convertView.setLongClickable(true);
 
@@ -65,10 +65,10 @@ public class MedicineResultsAdapter extends BaseAdapter {
         holder.manufacturer.setText(object.getMedicineName());
 
         if(object.getIsGeneric().equals("1")){
-            holder.isGenericImage.setImageResource(R.drawable.ic_check_circle);
+            //holder.isGenericImage.setImageResource(R.drawable.ic_check_circle);
         }
         else{
-            holder.isGenericImage.setImageResource(R.drawable.ic_cancel);
+            //holder.isGenericImage.setImageResource(R.drawable.ic_cancel);
         }
         return convertView;
     }

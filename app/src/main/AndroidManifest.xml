@@ -22,8 +22,9 @@
             android:name=".View.SignUp"
             android:label="@string/title_activity_sign_up"></activity>
         <activity
+            android:theme= "@style/AppTheme2"
             android:name=".View.TestSearchActivity"
-            android:label="@string/title_activity_test_search"></activity>
+            android:label="Search tests"></activity>
         <activity
             android:name=".View.TestSearchResultsActivity"
             android:label="@string/title_activity_test_search_results"></activity>

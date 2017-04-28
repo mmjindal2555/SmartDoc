@@ -9,6 +9,8 @@ import android.content.Intent;
 import com.silk.smartdoc.Model.Answer;
 import com.silk.smartdoc.View.MedicineResult;
 import com.silk.smartdoc.View.MedicineSearch;
+import com.silk.smartdoc.View.TestSearchActivity;
+import com.silk.smartdoc.View.TestSearchResultsActivity;
 
 /**
  * Created by dodobhoot on 4/22/2017.
@@ -28,5 +30,15 @@ public class DisplayManager{
     }
     public void displayMedicineResult(Context context, String value){
         context.startActivity(new Intent(context,MedicineResult.class).putExtra("searchValue", value));
+    }
+
+    public void displayTestSearchPage(Context context)
+    {
+        context.startActivity(new Intent(context, TestSearchActivity.class));
+    }
+
+    public void displayTestResult(Context context,String value)
+    {
+        context.startActivity(new Intent(context, TestSearchResultsActivity.class).putExtra("searchkey",value));
     }
 }
