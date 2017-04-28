@@ -1,5 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.silk.smartdoc.View.TestSearchResultsActivity"
     android:background="#ddd">
@@ -11,16 +13,60 @@
         android:background="#bbbbbb"
         android:logo="@mipmap/ic_launcher"
         xmlns:android="http://schemas.android.com/apk/res/android"/>
-<ListView
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        card_view:cardCornerRadius="4dp"
+        android:elevation="4dp"
+        android:layout_below="@+id/medicine_result_toolbar">
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Description"
+                android:id="@+id/descriptionTextView"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Availability in Generic Stores"
+                android:id="@+id/genericTextView"
+                android:layout_below="@+id/descriptionTextView" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/genericIconImageView"
+                android:src="@drawable/ic_check_circle"
+                android:layout_toRightOf="@+id/genericTextView"
+                android:layout_alignTop="@+id/genericTextView"
+                android:paddingLeft="10dp" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <ListView
         android:id="@+id/medicine_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         tools:layout_editor_absoluteY="0dp"
-        android:layout_below="@+id/medicine_result_toolbar"
+        android:layout_below="@+id/card_view"
         android:divider="@android:color/transparent"
         android:dividerHeight="1dp"
-        tools:layout_width="match_parent"></ListView>
+        tools:layout_width="match_parent"
+        android:paddingTop="10dp"></ListView>
 
 
 

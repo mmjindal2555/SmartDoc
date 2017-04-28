@@ -1,6 +1,7 @@
 package com.silk.smartdoc.Controller;
 
 import com.silk.smartdoc.Model.Answer;
+import com.silk.smartdoc.Model.Chemical;
 import com.silk.smartdoc.Model.DiagnosticCenter;
 import com.silk.smartdoc.Model.Medicine;
 import com.silk.smartdoc.Model.Query;
@@ -26,6 +27,9 @@ public class SearchManager {
     }
     public ArrayList<Medicine> searchMedicine(String medicineName){
         return sdm.dataMgr.getReqMedicine(medicineName);
+    }
+    public ArrayList<Chemical> searchChemical(String medicineName){
+        return sdm.dataMgr.getReqDescription(medicineName);
     }
     public Answer[] searchQueryForAnswer(Query query){
         return new Answer[1];

@@ -39,18 +39,39 @@ public class MedicineSearch extends AppCompatActivity {
         setContentView(R.layout.activity_medicine_search);
 
         searchListView = (ListView) findViewById(R.id.searchListView);
-
-
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("medicineList");
         medArrayList = new ArrayList<String>();
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+        DatabaseReference databaseReferenceMed = FirebaseDatabase.getInstance().getReference().child("Medicines");
+        databaseReferenceMed.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children= dataSnapshot.getChildren();
                 for (DataSnapshot child: children) {
-                    String medName = child.getValue(String.class);
-                    medArrayList.add(medName);
+                    String medName = child.child("name").getValue(String.class);
+                    if(medName!=null)
+                        medArrayList.add(medName);
+                }
+                //searchListView.setAdapter(new ArrayAdapter<String>(MedicineSearch.this, android.R.layout.simple_list_item_1, medArrayList));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        DatabaseReference databaseReferenceChem = FirebaseDatabase.getInstance().getReference().child("Chemicals");
+        databaseReferenceChem.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children= dataSnapshot.getChildren();
+                for (DataSnapshot child: children) {
+                    String chemName = child.child("name").getValue(String.class);
+                    medArrayList.add(chemName);
                 }
                 searchListView.setAdapter(new ArrayAdapter<String>(MedicineSearch.this, android.R.layout.simple_list_item_1, medArrayList));
             }
@@ -60,7 +81,6 @@ public class MedicineSearch extends AppCompatActivity {
 
             }
         });
-
 
         /*
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("medicineList");
