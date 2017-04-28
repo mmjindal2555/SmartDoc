@@ -22,5 +22,6 @@
     <string name="title_activity_user_answer_query">UserAnswerQuery</string>
     <string name="title_activity_health_forum">HealthForum</string>
     <string name="title_activity_post_query_experience">PostQueryExperience</string>
+    <string name="title_activity_admin_control">AdminControl</string>
 
 </resources>

@@ -16,6 +16,7 @@ import com.silk.smartdoc.Model.Medicine;
 import com.silk.smartdoc.Model.Patient;
 import com.silk.smartdoc.Model.Query;
 import com.silk.smartdoc.Model.Test;
+import com.silk.smartdoc.Model.Chemical;
 import com.silk.smartdoc.View.MedicineResult;
 import com.silk.smartdoc.View.MedicineResultsAdapter;
 
@@ -45,20 +46,48 @@ public class DataManager {
     String searchValue;
     public ArrayList<Medicine> getReqMedicine(String medName){
         searchValue = medName;
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("medicine");
+
+        DatabaseReference databaseReferenceMed = FirebaseDatabase.getInstance().getReference().child("Medicines");
         medResultArrayList = new ArrayList<Medicine>();
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReferenceMed.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                     Medicine medicine = postSnapshot.getValue(Medicine.class);
 
-                    String medChemName = medicine.chemicalName;
-                    String medName = medicine.medicineName;
-
-                    if(medChemName.equalsIgnoreCase(searchValue) || medName.equalsIgnoreCase(searchValue))
+                    String medName = medicine.name;
+                    Log.e("Dodo",medName);
+                    if(medName.equalsIgnoreCase(searchValue))
                         medResultArrayList.add(medicine);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        return medResultArrayList;
+    }
+
+
+    ArrayList<Chemical> chemResultArrayList;
+    public ArrayList<Chemical> getReqDescription(String medName){
+        DatabaseReference databaseReferenceChem = FirebaseDatabase.getInstance().getReference().child("Chemicals");
+        chemResultArrayList = new ArrayList<Chemical>();
+        databaseReferenceChem.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                    Chemical chemical = postSnapshot.getValue(Chemical.class);
+
+                    String chemName = chemical.getName();
+
+                    if(chemName.equalsIgnoreCase(searchValue))
+                        chemResultArrayList.add(chemical);
 
                 }
 
@@ -71,8 +100,10 @@ public class DataManager {
 
             }
         });
-        return medResultArrayList;
+        return chemResultArrayList;
     }
+
+
     public Query[] getAnswerQuery(Test test){
         return new Query[1];
     }

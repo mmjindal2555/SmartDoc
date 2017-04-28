@@ -16,41 +16,39 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".View.SignUp"
-            android:label="@string/title_activity_sign_up"></activity>
+            android:label="@string/title_activity_sign_up" />
         <activity
-            android:theme= "@style/AppTheme2"
             android:name=".View.TestSearchActivity"
-            android:label="Search tests"></activity>
+            android:label="@string/title_activity_test_search" />
         <activity
             android:name=".View.TestSearchResultsActivity"
-            android:label="@string/title_activity_test_search_results"></activity>
+            android:label="@string/title_activity_test_search_results" />
         <activity
             android:name=".View.AnswerQuery"
-            android:label="@string/title_activity_answer_query"></activity>
+            android:label="@string/title_activity_answer_query" />
         <activity
             android:name=".View.MedicineResult"
-            android:label="@string/title_activity_medicine_result"></activity>
+            android:label="@string/title_activity_medicine_result" />
         <activity
-            android:theme= "@style/AppTheme2"
             android:name=".View.MedicineSearch"
-            android:label="@string/title_activity_medicine_search">
-        </activity>
+            android:label="@string/title_activity_medicine_search"
+            android:theme="@style/AppTheme2"></activity>
         <activity
             android:name=".View.UserAnswerQuery"
-            android:label="@string/title_activity_user_answer_query"></activity>
+            android:label="@string/title_activity_user_answer_query" />
         <activity
             android:name=".View.HealthForum"
-            android:label="@string/title_activity_health_forum">
-
-        </activity>
+            android:label="@string/title_activity_health_forum"></activity>
         <activity
             android:name=".View.PostQueryExperience"
-            android:label="@string/title_activity_post_query_experience"></activity>
-
+            android:label="@string/title_activity_post_query_experience" />
+        <activity
+            android:name=".View.AdminControl"
+            android:label="@string/title_activity_admin_control"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

@@ -18,7 +18,7 @@ android {
     }
     productFlavors {
     }
-    packagingOptions{
+    packagingOptions {
         exclude 'META-INF/NOTICE' // will not include NOTICE file
         exclude 'META-INF/LICENSE' // will not include LICENSE file
         // as noted by @Vishnuvathsan you may also need to include

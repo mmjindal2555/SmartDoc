@@ -5,26 +5,17 @@ package com.silk.smartdoc.Model;
  */
 public class Medicine {
     public String chemicalName;
-    public String description;
-    public String isGeneric;
-    public String medicineId;
-    public String medicineName;
-    public String price;
+    public String name;
+    public double price;
 
     public Medicine(){
         this.chemicalName="";
-        this.description="";
-        this.isGeneric = "";
-        this.medicineId = "";
-        this.medicineName = "";
-        this.price = "";
+        this.name = "";
+        this.price = 0;
     }
-    public Medicine(String chemicalName, String description, String isGeneric, String medicineId, String medicineName, String price) {
+    public Medicine(String chemicalName,  String medicineName, double price) {
         this.chemicalName = chemicalName;
-        this.description = description;
-        this.isGeneric = isGeneric;
-        this.medicineId = medicineId;
-        this.medicineName = medicineName;
+        this.name = medicineName;
         this.price = price;
     }
 
@@ -32,23 +23,12 @@ public class Medicine {
         return chemicalName;
     }
 
-    public String getDescription() {
-        return description;
+
+    public String getName() {
+        return name;
     }
 
-    public String getIsGeneric() {
-        return isGeneric;
-    }
-
-    public String getMedicineId() {
-        return medicineId;
-    }
-
-    public String getMedicineName() {
-        return medicineName;
-    }
-
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 }

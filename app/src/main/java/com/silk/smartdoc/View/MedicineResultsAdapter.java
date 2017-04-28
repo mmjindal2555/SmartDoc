@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.silk.smartdoc.Model.Medicine;
 import com.silk.smartdoc.R;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 /**
@@ -46,10 +48,9 @@ public class MedicineResultsAdapter extends BaseAdapter {
         {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.medicine_card, null);
             holder = new ViewHolder();
-            holder.genericName=(TextView)convertView.findViewById(R.id.genericName);
             holder.price =(TextView)convertView.findViewById(R.id.medicinePrice);
             holder.manufacturer = (TextView)convertView.findViewById(R.id.manufacturer);
-           // holder.isGenericImage = (ImageView)convertView.findViewById(R.id.isGenericLogo);
+            holder.genericName = (TextView)convertView.findViewById(R.id.genericName);
             convertView.setTag(holder);
             //convertView.setLongClickable(true);
 
@@ -62,14 +63,9 @@ public class MedicineResultsAdapter extends BaseAdapter {
 
         holder.genericName.setText(object.getChemicalName());
         holder.price.setText("\u20B9"+object.getPrice());
-        holder.manufacturer.setText(object.getMedicineName());
+        holder.manufacturer.setText(object.getName());
 
-        if(object.getIsGeneric().equals("1")){
-            //holder.isGenericImage.setImageResource(R.drawable.ic_check_circle);
-        }
-        else{
-            //holder.isGenericImage.setImageResource(R.drawable.ic_cancel);
-        }
+
         return convertView;
     }
 
@@ -78,6 +74,5 @@ public class MedicineResultsAdapter extends BaseAdapter {
         TextView genericName;
         TextView manufacturer;
         TextView price;
-        ImageView isGenericImage;
     }
 }

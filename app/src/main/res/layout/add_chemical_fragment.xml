@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/chemicalNameET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Chemical Name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/chemicalDescriptinText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Add Desciption."
+        android:inputType="textMultiLine" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.01">
+
+        <Switch
+            android:id="@+id/isGenericSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="3dp"
+            android:layout_weight="1"
+            android:checked="false"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/isGenericTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/isGenericSwitch"
+
+            android:layout_marginRight="15dp"
+            android:layout_toStartOf="@+id/isGenericSwitch"
+            android:text="Available in Generic Stores?"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000"
+            android:textSize="14dp" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/commitAddChemical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Commit" />
+
+</LinearLayout>
