@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.silk.smartdoc.Model.Medicine;
 import com.silk.smartdoc.R;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 /**
@@ -48,6 +50,7 @@ public class MedicineResultsAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.price =(TextView)convertView.findViewById(R.id.medicinePrice);
             holder.manufacturer = (TextView)convertView.findViewById(R.id.manufacturer);
+            holder.genericName = (TextView)convertView.findViewById(R.id.genericName);
             convertView.setTag(holder);
             //convertView.setLongClickable(true);
 
@@ -60,7 +63,7 @@ public class MedicineResultsAdapter extends BaseAdapter {
 
         holder.genericName.setText(object.getChemicalName());
         holder.price.setText("\u20B9"+object.getPrice());
-        holder.manufacturer.setText(object.getMedicineName());
+        holder.manufacturer.setText(object.getName());
 
 
         return convertView;

@@ -29,7 +29,8 @@ public class MedicineResult extends AppCompatActivity {
     ArrayList <Medicine> medResultArrayList;
     ArrayList <Chemical> chemResultArrayList;
     ListView medicinesList;
-
+    TextView description;
+    ImageView genericIcon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,12 +48,12 @@ public class MedicineResult extends AppCompatActivity {
         final String searchValue = searchData.getString("searchValue");
         SmartDocManager sdm = (SmartDocManager) getApplicationContext();
         medResultArrayList = sdm.searchMgr.searchMedicine(searchValue);
-        chemResultArrayList = sdm.searchMgr.searchChemical(searchValue);
+        //chemResultArrayList = sdm.searchMgr.searchChemical(searchValue);
         toolbar.setTitle(searchValue);
         setSupportActionBar(toolbar);
-
-        TextView description = (TextView) findViewById(R.id.descriptionTextView);
-        ImageView genericIcon = (ImageView) findViewById(R.id.genericIconImageView);
+/*
+        description = (TextView) findViewById(R.id.descriptionTextView);
+        genericIcon = (ImageView) findViewById(R.id.genericIconImageView);
         for (Chemical chemical : chemResultArrayList){
             if(!chemical.isGeneric()){
                 genericIcon.setImageResource(R.drawable.ic_cancel);
@@ -61,7 +62,7 @@ public class MedicineResult extends AppCompatActivity {
                 genericIcon.setImageResource(R.drawable.ic_check_circle);
             description.setText(chemical.getDescription());
         }
-
+*/
         medicinesList.setAdapter(new MedicineResultsAdapter(medResultArrayList,MedicineResult.this));
 
     }

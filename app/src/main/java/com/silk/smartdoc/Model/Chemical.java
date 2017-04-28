@@ -8,32 +8,25 @@ import java.util.ArrayList;
 
 public class Chemical {
     private String name;
-    private String id;
     private String description;
     private boolean isGeneric;
-    private ArrayList<String> medicineIds;
+    private ArrayList<String> medicines;
 
     public Chemical(){
         this.name = "";
-        this.id = "";
         this.description = "";
         this.isGeneric = false;
-        this.medicineIds = new ArrayList<>();
+        this.medicines = new ArrayList<>();
     }
-    public Chemical(String name, String id, String description, boolean isGeneric, ArrayList<String> medicineIds) {
+    public Chemical(String name, String description, boolean isGeneric, ArrayList<String> medicineIds) {
         this.name = name;
-        this.id = id;
         this.description = description;
         this.isGeneric = isGeneric;
-        this.medicineIds = medicineIds;
+        this.medicines = medicineIds;
     }
 
     public String getName() {
         return name;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getDescription() {
@@ -45,6 +38,6 @@ public class Chemical {
     }
 
     public ArrayList<String> getMedicineIds() {
-        return medicineIds;
+        return medicines;
     }
 }
