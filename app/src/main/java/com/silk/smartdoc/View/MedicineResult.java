@@ -46,23 +46,47 @@ public class MedicineResult extends AppCompatActivity {
         Bundle searchData = getIntent().getExtras();
 
         final String searchValue = searchData.getString("searchValue");
-        SmartDocManager sdm = (SmartDocManager) getApplicationContext();
-        medResultArrayList = sdm.searchMgr.searchMedicine(searchValue);
-        //chemResultArrayList = sdm.searchMgr.searchChemical(searchValue);
-        toolbar.setTitle(searchValue);
-        setSupportActionBar(toolbar);
-/*
         description = (TextView) findViewById(R.id.descriptionTextView);
         genericIcon = (ImageView) findViewById(R.id.genericIconImageView);
-        for (Chemical chemical : chemResultArrayList){
-            if(!chemical.isGeneric()){
-                genericIcon.setImageResource(R.drawable.ic_cancel);
+
+        SmartDocManager sdm = (SmartDocManager) getApplicationContext();
+        medResultArrayList = sdm.searchMgr.searchMedicine(searchValue);
+
+        if(medResultArrayList.size()==0 || medResultArrayList==null){
+            chemResultArrayList = sdm.searchMgr.searchChemical(searchValue);
+            for (Chemical chemical : chemResultArrayList){
+                if(!chemical.isGeneric()){
+                    genericIcon.setImageResource(R.drawable.ic_cancel);
+                }
+                else
+                    genericIcon.setImageResource(R.drawable.ic_check_circle);
+                description.setText(chemical.getDescription());
             }
-            else
-                genericIcon.setImageResource(R.drawable.ic_check_circle);
-            description.setText(chemical.getDescription());
+            ArrayList <String> searchValues;
+            searchValues = chemResultArrayList.get(0).getMedicineIds();
+            ArrayList <Medicine> tempResultArrayList;
+            for(String searchTokens:searchValues){
+                tempResultArrayList = sdm.searchMgr.searchMedicine(searchTokens);
+                medResultArrayList.addAll(0,tempResultArrayList);
+            }
         }
-*/
+        else{
+            String chemSearchValue = medResultArrayList.get(0).getChemicalName();
+            chemResultArrayList = sdm.searchMgr.searchChemical(chemSearchValue);
+            for (Chemical chemical : chemResultArrayList){
+                if(!chemical.isGeneric()){
+                    genericIcon.setImageResource(R.drawable.ic_cancel);
+                }
+                else
+                    genericIcon.setImageResource(R.drawable.ic_check_circle);
+                description.setText(chemical.getDescription());
+            }
+        }
+        toolbar.setTitle(searchValue);
+        setSupportActionBar(toolbar);
+
+
+
         medicinesList.setAdapter(new MedicineResultsAdapter(medResultArrayList,MedicineResult.this));
 
     }
