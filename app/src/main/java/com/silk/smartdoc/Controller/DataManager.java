@@ -46,6 +46,7 @@ public class DataManager {
     String searchValue;
     public ArrayList<Medicine> getReqMedicine(String medName){
         searchValue = medName;
+
         DatabaseReference databaseReferenceMed = FirebaseDatabase.getInstance().getReference().child("Medicines");
         medResultArrayList = new ArrayList<Medicine>();
         databaseReferenceMed.addValueEventListener(new ValueEventListener() {
@@ -55,16 +56,12 @@ public class DataManager {
                 for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                     Medicine medicine = postSnapshot.getValue(Medicine.class);
 
-                    String medChemName = medicine.chemicalName;
                     String medName = medicine.name;
-
-                    if(medChemName.equalsIgnoreCase(searchValue) || medName.equalsIgnoreCase(searchValue))
+                    Log.e("Dodo",medName);
+                    if(medName.equalsIgnoreCase(searchValue))
                         medResultArrayList.add(medicine);
 
                 }
-
-                //medicinesList.setAdapter(new MedicineResultsAdapter(medResultArrayList,MedicineResult.this));
-                //Log.e("dodo",medResultArrayList.toString());
             }
 
             @Override
