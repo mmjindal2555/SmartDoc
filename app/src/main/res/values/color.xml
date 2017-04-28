@@ -2,6 +2,8 @@
 <resources>
     <color name="statusbarcolor">#1f51ad</color>
     <color name="primarycolor">#0078d7</color>
-    <color name="accentcolor">#ff0000</color>
+    <color name="primarydarkcolor">#004680</color>
+    <color name="accentcolor">#ff3f5c</color>
+    <color name="accentdarkcolor">#cc001f</color>
     <color name="white">#fff</color>
 </resources>
