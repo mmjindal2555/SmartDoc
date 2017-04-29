@@ -46,13 +46,16 @@ public class MedicineResult extends AppCompatActivity {
         Bundle searchData = getIntent().getExtras();
 
         final String searchValue = searchData.getString("searchValue");
+        toolbar.setTitle(searchValue);
+        setSupportActionBar(toolbar);
+
         description = (TextView) findViewById(R.id.descriptionTextView);
         genericIcon = (ImageView) findViewById(R.id.genericIconImageView);
 
         SmartDocManager sdm = (SmartDocManager) getApplicationContext();
         medResultArrayList = sdm.searchMgr.searchMedicine(searchValue);
 
-        if(medResultArrayList.size()==0 || medResultArrayList==null){
+        if(medResultArrayList.size()==0){
             chemResultArrayList = sdm.searchMgr.searchChemical(searchValue);
             for (Chemical chemical : chemResultArrayList){
                 if(!chemical.isGeneric()){
@@ -62,12 +65,16 @@ public class MedicineResult extends AppCompatActivity {
                     genericIcon.setImageResource(R.drawable.ic_check_circle);
                 description.setText(chemical.getDescription());
             }
-            ArrayList <String> searchValues;
+            ArrayList <String> searchValues = new ArrayList<String>();
+            //searchValues.add("Lofecam");
             searchValues = chemResultArrayList.get(0).getMedicineIds();
             ArrayList <Medicine> tempResultArrayList;
             for(String searchTokens:searchValues){
                 tempResultArrayList = sdm.searchMgr.searchMedicine(searchTokens);
-                medResultArrayList.addAll(0,tempResultArrayList);
+                if(medResultArrayList.size()==0)
+                    medResultArrayList = tempResultArrayList;
+                else
+                    medResultArrayList.addAll(0,tempResultArrayList);
             }
         }
         else{
@@ -82,8 +89,6 @@ public class MedicineResult extends AppCompatActivity {
                 description.setText(chemical.getDescription());
             }
         }
-        toolbar.setTitle(searchValue);
-        setSupportActionBar(toolbar);
 
 
 

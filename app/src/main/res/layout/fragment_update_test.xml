@@ -9,16 +9,43 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/medsearchET2"
+            android:id="@+id/centreSearchET2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Medicine Name"
+            android:hint="Diagnostic centre "
             android:inputType="textPersonName" />
 
         <Button
-            android:id="@+id/searchMedButon"
+            android:id="@+id/searchCentreButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:elevation="3dp"
+            android:text="Search" />
+    </LinearLayout>
+    <Spinner
+        android:id="@+id/searchedCentresSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/testSearchET2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Test Name"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/searchTestButon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
@@ -27,7 +54,7 @@
     </LinearLayout>
 
     <Spinner
-        android:id="@+id/searchedMedsSpinner"
+        android:id="@+id/searchedTestsSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -37,7 +64,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/newPriceET"
+            android:id="@+id/newTestPriceET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -46,7 +73,7 @@
             android:inputType="number" />
 
         <Button
-            android:id="@+id/commitButton4"
+            android:id="@+id/commitButton7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"

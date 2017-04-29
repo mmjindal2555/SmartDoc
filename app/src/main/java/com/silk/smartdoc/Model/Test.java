@@ -5,6 +5,24 @@ package com.silk.smartdoc.Model;
  */
 public class Test {
     private String name;
-    private String testId;
-    private Float price;
+    private String description;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Test() {
+        this.name ="";
+        this.description="";
+    }
+
+    public Test(String name, String description) {
+
+        this.name = name;
+        this.description = description;
+    }
 }

@@ -77,7 +77,7 @@ public class AdminControl extends AppCompatActivity {
                 setMedicineButtonsLook(2);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container, addMedicineFragment);
-                fragmentTransaction.addToBackStack(null);
+
                 fragmentTransaction.commit();
 
             }

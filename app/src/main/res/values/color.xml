@@ -3,7 +3,7 @@
     <color name="statusbarcolor">#1f51ad</color>
     <color name="primarycolor">#0078d7</color>
     <color name="primarydarkcolor">#004680</color>
-    <color name="accentcolor">#ff3f5c</color>
-    <color name="accentdarkcolor">#cc001f</color>
+    <color name="accentcolor">#4eca63</color>
+    <color name="accentdarkcolor">#36b34a</color>
     <color name="white">#fff</color>
 </resources>

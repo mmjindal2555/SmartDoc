@@ -2,6 +2,7 @@ package com.silk.smartdoc.Controller;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,7 +33,7 @@ public class DataManager {
     private ForumQuery forumQueries;
     private Patient allPatients[];
     private Doctor allDoctors[];
-
+    ArrayList<Medicine> medicines;
     DataManager(SmartDocManager sdm)
     {
         this.sdm=sdm;
@@ -44,8 +45,8 @@ public class DataManager {
 
     ArrayList<Medicine> medResultArrayList;
     String searchValue;
-    public ArrayList<Medicine> getReqMedicine(String medName){
-        searchValue = medName;
+    public ArrayList<Medicine> getReqMedicine(final String mediName){
+        /*searchValue = mediName;
 
         DatabaseReference databaseReferenceMed = FirebaseDatabase.getInstance().getReference().child("Medicines");
         medResultArrayList = new ArrayList<Medicine>();
@@ -68,13 +69,32 @@ public class DataManager {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
-        return medResultArrayList;
+        });*/
+        medicines=new ArrayList<>();
+        if(!(mediName.equals(""))){
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Medicines");
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
+                    Iterable<DataSnapshot> children= dataSnapshot.getChildren();
+                    for (DataSnapshot child: children) {
+                        Medicine medName = child.getValue(Medicine.class);
+                        if(medName!=null && medName.getName().contains(mediName))
+                            medicines.add(medName);
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
+        return medicines;
     }
 
 
     ArrayList<Chemical> chemResultArrayList;
-    public ArrayList<Chemical> getReqDescription(String medName){
+    public ArrayList<Chemical> getReqDescription(String mediName) {
+        searchValue = mediName;
         DatabaseReference databaseReferenceChem = FirebaseDatabase.getInstance().getReference().child("Chemicals");
         chemResultArrayList = new ArrayList<Chemical>();
         databaseReferenceChem.addValueEventListener(new ValueEventListener() {
@@ -85,7 +105,7 @@ public class DataManager {
                     Chemical chemical = postSnapshot.getValue(Chemical.class);
 
                     String chemName = chemical.getName();
-
+                    Log.e("dodo",chemName);
                     if(chemName.equalsIgnoreCase(searchValue))
                         chemResultArrayList.add(chemical);
 

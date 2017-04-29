@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Spinner
+        android:id="@+id/chemicalsSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/medNameET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Complete name of the Medicine"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/testDescriptionET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Description"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/commitButton2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Commit" />
+</LinearLayout>

@@ -26,7 +26,7 @@
     </LinearLayout>
 
     <Spinner
-        android:id="@+id/spinner3"
+        android:id="@+id/medicineSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -36,7 +36,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/commitButton"
+            android:id="@+id/commitButton3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"

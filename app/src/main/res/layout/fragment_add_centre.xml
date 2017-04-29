@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/centreNameET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Name of Diagnostic Centre"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/adressET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Address"
+        android:inputType="textPostalAddress" />
+
+    <EditText
+        android:id="@+id/certifiedET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Certified By"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/urlET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Website URL"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/commitAddChemical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Commit" />
+
+</LinearLayout>
