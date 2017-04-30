@@ -52,47 +52,169 @@ public class MedicineResult extends AppCompatActivity {
         description = (TextView) findViewById(R.id.descriptionTextView);
         genericIcon = (ImageView) findViewById(R.id.genericIconImageView);
 
-        SmartDocManager sdm = (SmartDocManager) getApplicationContext();
-        medResultArrayList = sdm.searchMgr.searchMedicine(searchValue);
+        //SmartDocManager sdm = (SmartDocManager) getApplicationContext();
+        //medResultArrayList = sdm.searchMgr.searchMedicine(searchValue);
+        //medicinesList.setAdapter(new MedicineResultsAdapter(medResultArrayList,MedicineResult.this));
 
-        if(medResultArrayList.size()==0){
-            chemResultArrayList = sdm.searchMgr.searchChemical(searchValue);
-            for (Chemical chemical : chemResultArrayList){
-                if(!chemical.isGeneric()){
-                    genericIcon.setImageResource(R.drawable.ic_cancel);
+        DatabaseReference databaseReferenceMed = FirebaseDatabase.getInstance().getReference().child("Medicines");
+        medResultArrayList = new ArrayList<Medicine>();
+        databaseReferenceMed.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                    Medicine medicine = postSnapshot.getValue(Medicine.class);
+
+                    String medName = medicine.getName();
+                    if(medName.equalsIgnoreCase(searchValue)) {
+                        final String chemiName = medicine.getChemicalName();
+
+
+                        DatabaseReference databaseReferenceChem = FirebaseDatabase.getInstance().getReference().child("Chemicals");
+                        chemResultArrayList = new ArrayList<Chemical>();
+                        databaseReferenceChem.addValueEventListener(new ValueEventListener() {
+
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                                    String name = postSnapshot.child("name").getValue(String.class);
+                                    String desc = postSnapshot.child("description").getValue(String.class);
+                                    Boolean gene = postSnapshot.child("generic").getValue(Boolean.class);
+                                    ArrayList<String> medNames = new ArrayList<String>();
+
+                                    for(DataSnapshot childPostSnapshot : postSnapshot.child("medicines").getChildren()){
+                                        String medName = childPostSnapshot.getValue(String.class);
+                                        medNames.add(medName);
+                                    }
+
+                                    Chemical chemical = new Chemical(name,desc,gene,medNames);
+
+                                    String medName = chemical.getName();
+                                    if(medName.equalsIgnoreCase(chemiName)) {
+
+                                        if(chemical.isGeneric()== true){
+                                            genericIcon.setImageResource(R.drawable.ic_check_circle);
+                                        }
+                                        else {
+                                            genericIcon.setImageResource(R.drawable.ic_cancel);
+                                        }
+                                        description.setText(chemical.getDescription());
+
+                                        medNames = chemical.getMedicineIds();
+
+                                        for(final String medSearch : medNames){
+                                            DatabaseReference databaseReferenceMed = FirebaseDatabase.getInstance().getReference().child("Medicines");
+                                            medResultArrayList = new ArrayList<Medicine>();
+                                            databaseReferenceMed.addValueEventListener(new ValueEventListener() {
+
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                                                        Medicine medicine = postSnapshot.getValue(Medicine.class);
+
+                                                        String medName = medicine.getName();
+                                                        if(medName.equalsIgnoreCase(medSearch)) {
+                                                            medResultArrayList.add(medicine);
+                                                        }
+                                                    }
+                                                    medicinesList.setAdapter(new MedicineResultsAdapter(medResultArrayList,MedicineResult.this));
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                }
+                                            });
+
+                                        }
+
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
                 }
-                else
-                    genericIcon.setImageResource(R.drawable.ic_check_circle);
-                description.setText(chemical.getDescription());
             }
-            ArrayList <String> searchValues = new ArrayList<String>();
-            //searchValues.add("Lofecam");
-            searchValues = chemResultArrayList.get(0).getMedicineIds();
-            ArrayList <Medicine> tempResultArrayList;
-            for(String searchTokens:searchValues){
-                tempResultArrayList = sdm.searchMgr.searchMedicine(searchTokens);
-                if(medResultArrayList.size()==0)
-                    medResultArrayList = tempResultArrayList;
-                else
-                    medResultArrayList.addAll(0,tempResultArrayList);
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
-        }
-        else{
-            String chemSearchValue = medResultArrayList.get(0).getChemicalName();
-            chemResultArrayList = sdm.searchMgr.searchChemical(chemSearchValue);
-            for (Chemical chemical : chemResultArrayList){
-                if(!chemical.isGeneric()){
-                    genericIcon.setImageResource(R.drawable.ic_cancel);
+        });
+
+        DatabaseReference databaseReferenceChem = FirebaseDatabase.getInstance().getReference().child("Chemicals");
+        chemResultArrayList = new ArrayList<Chemical>();
+        databaseReferenceChem.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                    String name = postSnapshot.child("name").getValue(String.class);
+                    String desc = postSnapshot.child("description").getValue(String.class);
+                    Boolean gene = postSnapshot.child("generic").getValue(Boolean.class);
+                    ArrayList<String> medNames = new ArrayList<String>();
+
+                    for(DataSnapshot childPostSnapshot : postSnapshot.child("medicines").getChildren()){
+                        String medName = childPostSnapshot.getValue(String.class);
+                        medNames.add(medName);
+                    }
+
+                    Chemical chemical = new Chemical(name,desc,gene,medNames);
+
+                    String medName = chemical.getName();
+                    if(medName.equalsIgnoreCase(searchValue)) {
+
+                        if(chemical.isGeneric()== true){
+                            genericIcon.setImageResource(R.drawable.ic_check_circle);
+                        }
+                        else {
+                            genericIcon.setImageResource(R.drawable.ic_cancel);
+                        }
+                        description.setText(chemical.getDescription());
+
+                        medNames = chemical.getMedicineIds();
+
+                        for(final String medSearch : medNames){
+                            DatabaseReference databaseReferenceMed = FirebaseDatabase.getInstance().getReference().child("Medicines");
+                            medResultArrayList = new ArrayList<Medicine>();
+                            databaseReferenceMed.addValueEventListener(new ValueEventListener() {
+
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                                        Medicine medicine = postSnapshot.getValue(Medicine.class);
+
+                                        String medName = medicine.getName();
+                                        Log.e("Dodo",medName);
+                                        if(medName.equalsIgnoreCase(medSearch)) {
+                                            medResultArrayList.add(medicine);
+                                        }
+                                    }
+                                    medicinesList.setAdapter(new MedicineResultsAdapter(medResultArrayList,MedicineResult.this));
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+                        }
+
+                    }
                 }
-                else
-                    genericIcon.setImageResource(R.drawable.ic_check_circle);
-                description.setText(chemical.getDescription());
             }
-        }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-
-        medicinesList.setAdapter(new MedicineResultsAdapter(medResultArrayList,MedicineResult.this));
+            }
+        });
 
     }
 }
