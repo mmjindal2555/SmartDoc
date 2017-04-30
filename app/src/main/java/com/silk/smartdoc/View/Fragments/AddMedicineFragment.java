@@ -49,7 +49,7 @@ public class AddMedicineFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.add_medicine_fragment, container, false);
-        chemicalsSpinner = (Spinner)view.findViewById(R.id.chemicalsSpinner);
+        chemicalsSpinner = (Spinner)view.findViewById(R.id.spinnerx);
         medNameET = (EditText)view.findViewById(R.id.medNameET);
         manunfacturerNameET = (EditText)view.findViewById(R.id.manufacturerET);
         priceET = (EditText)view.findViewById(R.id.priceET);
@@ -58,7 +58,7 @@ public class AddMedicineFragment extends Fragment{
         medicines = new ArrayList<>();
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Chemicals");
-        chemArrayList = new ArrayList<String>();
+        chemArrayList = new ArrayList<>();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -69,8 +69,11 @@ public class AddMedicineFragment extends Fragment{
                     if(medName!=null)
                     chemArrayList.add(medName);
                 }
-                chemicalsSpinner.setAdapter(new ArrayAdapter<String>(getActivity(),
-                        android.R.layout.simple_spinner_item,chemArrayList));
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(),
+                        android.R.layout.simple_spinner_item,chemArrayList);
+                arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                chemicalsSpinner.setAdapter(arrayAdapter);
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

@@ -20,7 +20,7 @@
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/manufacturerLabel"
+                android:id="@+id/certificationsLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Manufactured By - "
@@ -38,7 +38,7 @@
                 android:textColor="@color/com_facebook_button_send_background_color" />
 
             <TextView
-                android:id="@+id/medicinePrice"
+                android:id="@+id/testPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -48,13 +48,13 @@
                 android:textColor="@android:color/holo_green_dark" />
 
             <TextView
-                android:id="@+id/manufacturer"
+                android:id="@+id/certifications"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_alignLeft="@+id/manufacturerLabel"
+                android:layout_alignLeft="@+id/certificationsLabel"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/manufacturerLabel"
+                android:layout_below="@+id/certificationsLabel"
                 android:text="Some Company"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/com_facebook_button_send_background_color_pressed"

@@ -48,10 +48,8 @@ public class RemoveMedicineFragment extends Fragment{
                 medSequence = medSearchET.getText().toString();
                 if(!(medSequence.equals(""))){
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Medicines");
-                    medicines = new ArrayList<String>();
-                    medicines.add("");
+                    medicines = new ArrayList<>();
                     databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-
                         @Override
                         public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
                             Iterable<DataSnapshot> children= dataSnapshot.getChildren();
@@ -60,8 +58,10 @@ public class RemoveMedicineFragment extends Fragment{
                                 if(medName!=null && medName.contains(medSequence))
                                     medicines.add(medName);
                             }
-                            medSpinner.setAdapter(new ArrayAdapter<String>(getActivity(),
-                                    android.R.layout.simple_spinner_item,medicines));
+                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(),
+                                    android.R.layout.simple_spinner_item,medicines);
+                            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            medSpinner.setAdapter(arrayAdapter);
                         }
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
@@ -78,8 +78,10 @@ public class RemoveMedicineFragment extends Fragment{
                     String medicineToDelete = medSpinner.getSelectedItem().toString();
                     databaseReference.child(medicineToDelete).removeValue();
                     medSearchET.setText("");
-                    medSpinner.setAdapter(new ArrayAdapter<String>(getActivity(),
-                            android.R.layout.simple_spinner_item,new ArrayList<String>()));
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
+                            android.R.layout.simple_spinner_item,new ArrayList<String>());
+                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    medSpinner.setAdapter(arrayAdapter);
                     Toast.makeText(getActivity(),"Medicine is deleted.",Toast.LENGTH_LONG).show();
                 }
             }
