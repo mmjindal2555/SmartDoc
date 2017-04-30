@@ -11,6 +11,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.silk.smartdoc.Controller.SmartDocManager;
 import com.silk.smartdoc.R;
 
@@ -27,24 +32,28 @@ public class TestSearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test_search);
         testSearchListView = (ListView) findViewById(R.id.searchTestListView);
         testArrayList = new ArrayList<String>();
-        testArrayList.add("B12 test");
-        testArrayList.add("thyroid");
-        testArrayList.add("Uric Acid Test");
-        testArrayList.add("jjjjj");
-        testArrayList.add("gggg");
-        testArrayList.add("uytre");
-        testArrayList.add("hghghgh");
-        testArrayList.add("jjjjj");
-        testArrayList.add("B12 testm");
-        testArrayList.add("thyroidk");
-        testArrayList.add("Uric Acikd Test");
-        testArrayList.add("jjjjjk");
-        testArrayList.add("gggmg");
-        testArrayList.add("uytrke");
-        testArrayList.add("hghgkhgh");
-        testArrayList.add("jjjjkj");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference = databaseReference.child("Tests");
 
-        testSearchListView.setAdapter(new ArrayAdapter<String>(TestSearchActivity.this,android.R.layout.simple_list_item_1, testArrayList));
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children= dataSnapshot.getChildren();
+                for (DataSnapshot child: children) {
+                    String testName = child.child("name").getValue(String.class);
+                    testArrayList.add(testName);
+                }
+                testSearchListView.setAdapter(new ArrayAdapter<String>(TestSearchActivity.this,
+                        android.R.layout.simple_list_item_1, testArrayList));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
         testSearchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
