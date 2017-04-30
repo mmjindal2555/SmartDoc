@@ -46,7 +46,7 @@ public class DataManager {
     ArrayList<Medicine> medResultArrayList;
     String searchValue;
     public ArrayList<Medicine> getReqMedicine(final String mediName){
-        /*searchValue = mediName;
+        searchValue = mediName;
 
         DatabaseReference databaseReferenceMed = FirebaseDatabase.getInstance().getReference().child("Medicines");
         medResultArrayList = new ArrayList<Medicine>();
@@ -69,7 +69,10 @@ public class DataManager {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });*/
+        });
+        return medResultArrayList;
+
+        /*
         medicines=new ArrayList<>();
         if(!(mediName.equals(""))){
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Medicines");
@@ -89,6 +92,7 @@ public class DataManager {
             });
         }
         return medicines;
+        */
     }
 
 

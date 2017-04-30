@@ -26,11 +26,11 @@
                 android:text="Manufactured By - "
                 android:layout_marginTop="7dp"
                 android:textSize="12dp"
-                android:layout_below="@+id/genericName"
+                android:layout_below="@+id/medicineName"
                 android:layout_alignParentStart="true" />
 
             <TextView
-                android:id="@+id/genericName"
+                android:id="@+id/medicineName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Some Medicine"
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_alignTop="@+id/genericName"
+                android:layout_alignTop="@+id/medicineName"
                 android:text="\u20B9 20"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@android:color/holo_green_dark" />
@@ -60,24 +60,6 @@
                 android:textColor="@color/com_facebook_button_send_background_color_pressed"
                 android:textSize="14dp" />
 
-            <TextView
-                android:id="@+id/isGenericLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_alignParentEnd="true"
-                android:layout_alignTop="@+id/manufacturerLabel"
-                android:text="Availability in Generic Stores"
-                android:textSize="12dp" />
-
-            <ImageView
-                android:id="@+id/isGenericLogo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@id/isGenericLabel"
-                android:layout_below="@id/isGenericLabel"
-                android:layout_margin="4dp"
-                android:src="@drawable/ic_check_circle" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>

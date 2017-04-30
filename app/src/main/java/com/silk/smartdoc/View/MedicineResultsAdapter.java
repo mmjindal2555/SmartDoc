@@ -50,7 +50,7 @@ public class MedicineResultsAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.price =(TextView)convertView.findViewById(R.id.medicinePrice);
             holder.manufacturer = (TextView)convertView.findViewById(R.id.manufacturer);
-            holder.genericName = (TextView)convertView.findViewById(R.id.genericName);
+            holder.medicineName = (TextView)convertView.findViewById(R.id.medicineName);
             convertView.setTag(holder);
             //convertView.setLongClickable(true);
 
@@ -61,9 +61,9 @@ public class MedicineResultsAdapter extends BaseAdapter {
         Medicine object = mObjects.get(position);
 
 
-        holder.genericName.setText(object.getChemicalName());
+        holder.medicineName.setText(object.getName());
         holder.price.setText("\u20B9"+object.getPrice());
-        holder.manufacturer.setText(object.getName());
+        holder.manufacturer.setText(object.getChemicalName());
 
 
         return convertView;
@@ -71,7 +71,7 @@ public class MedicineResultsAdapter extends BaseAdapter {
 
     public static class ViewHolder{
 
-        TextView genericName;
+        TextView medicineName;
         TextView manufacturer;
         TextView price;
     }
