@@ -12,11 +12,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.silk.smartdoc.Controller.LoggingController;
 import com.silk.smartdoc.Controller.SmartDocManager;
+import com.silk.smartdoc.Model.Person;
 import com.silk.smartdoc.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -50,16 +55,36 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = usernameET.getText().toString();
-                String password = passwordET.getText().toString();
-                if (username.equals("a") && password.equals("b")) {
-                    Intent intent = new Intent(LoginActivity.this, HealthForum.class);
-                    startActivity(intent);
-                }
-                else if(username.equals("admin") && password.equals("admin")){
+                final String username = usernameET.getText().toString();
+                final String password = passwordET.getText().toString();
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                reference = reference.child("Users");
+                final LoggingController loggingController = new LoggingController();
+                if(username.equals("admin") && password.equals("admin")){
                     Intent intent = new Intent(LoginActivity.this, AdminControl.class);
                     startActivity(intent);
                 }
+                else {
+                    reference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Person person = loggingController.isValid(dataSnapshot, username, password);
+                            if(person!=null) {
+                                Intent intent = new Intent(LoginActivity.this, HealthForum.class);
+                                startActivity(intent);
+                            }
+                            else {
+                                Toast.makeText(LoginActivity.this, "Incorrect Username and/or Password"
+                                        , Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+
             }
         });
 

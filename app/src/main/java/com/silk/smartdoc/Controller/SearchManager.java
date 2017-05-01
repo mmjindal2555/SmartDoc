@@ -1,15 +1,9 @@
 package com.silk.smartdoc.Controller;
 
-import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.silk.smartdoc.Model.Answer;
+import com.silk.smartdoc.Model.CentreAndPrice;
 import com.silk.smartdoc.Model.Chemical;
 import com.silk.smartdoc.Model.DiagnosticCenter;
 import com.silk.smartdoc.Model.Medicine;
@@ -95,5 +89,68 @@ public class SearchManager{
 
     public Answer[] searchQueryForAnswer(Query query){
         return new Answer[1];
+    }
+
+    public ArrayList<String> getAllTestName(DataSnapshot dataSnapshot)
+    {
+        ArrayList<String> test;
+        test=new ArrayList<String>();
+        Iterable<DataSnapshot> children= dataSnapshot.getChildren();
+        for (DataSnapshot child: children) {
+            String testName = child.child("name").getValue(String.class);
+            test.add(testName);
+        }
+        return test;
+    }
+
+    public ArrayList<CentreAndPrice> getCentreIdAndPrice(DataSnapshot dataSnapshot,String searchValue)
+    {
+        ArrayList<CentreAndPrice> centreAndPrice;
+        centreAndPrice=new ArrayList<CentreAndPrice>();
+        String testName;
+        for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+            testName = postSnapshot.child("name").getValue(String.class);
+            if(testName.equalsIgnoreCase(searchValue))
+            {
+                for(DataSnapshot childPostSnapshot : postSnapshot.child("centres").getChildren()){
+                    centreAndPrice.add(new CentreAndPrice(childPostSnapshot.child("centreId").getValue(String.class),
+                            childPostSnapshot.child("price").getValue(double.class)));
+                }
+                break;
+            }
+        }
+        return centreAndPrice;
+    }
+
+    public String isTestExit(DataSnapshot dataSnapshot,String searchValue)
+    {
+        String description = null,testName;
+        for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+            testName = postSnapshot.child("name").getValue(String.class);
+            if(testName.equalsIgnoreCase(searchValue))
+            {
+                description=postSnapshot.child("description").getValue(String.class);
+                break;
+            }
+
+        }
+        return description;
+    }
+
+    public ArrayList<DiagnosticCenter> isDiagnosticCentersResultArrayList(DataSnapshot dataSnapshot,ArrayList<CentreAndPrice> centreAndPrices)
+    {
+        ArrayList<DiagnosticCenter> diagnosticCentersResultArrayList=new ArrayList<DiagnosticCenter>();
+        for(CentreAndPrice cp:centreAndPrices){
+            String id = cp.getCentreId();
+            double pri = cp.getPrice();
+            DiagnosticCenter diagnosticCenter=new DiagnosticCenter(
+                    dataSnapshot.child(id).child("name").getValue(String.class),
+                    dataSnapshot.child(id).child("location").getValue(String.class),
+                    dataSnapshot.child(id).child("certification").getValue(String.class),
+                    dataSnapshot.child(id).child("url").getValue(String.class),
+                    id);
+            diagnosticCentersResultArrayList.add(diagnosticCenter);
+        }
+        return diagnosticCentersResultArrayList;
     }
 }

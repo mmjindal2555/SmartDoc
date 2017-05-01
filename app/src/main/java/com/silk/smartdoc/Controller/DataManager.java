@@ -136,4 +136,5 @@ public class DataManager {
     public void addMedicine(Medicine medicine){}
     public void addDiagnosticCenter(DiagnosticCenter diagnosticCenter){}
 
+
 }

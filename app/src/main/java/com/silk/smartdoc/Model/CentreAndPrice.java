@@ -5,8 +5,8 @@ package com.silk.smartdoc.Model;
  */
 
 public class CentreAndPrice {
-    private String centreId;
-    private double price;
+    public String centreId;
+    public double price;
 
     public CentreAndPrice() {
         this.centreId = "";
