@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
+    android:visibility="visible"
     tools:context="com.silk.smartdoc.View.SplashScreen">
 
 
@@ -10,12 +11,12 @@
         android:id="@+id/weText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="70dp"
         android:text="we"
         android:textColor="#fff"
-        android:textSize="14sp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/areText"
@@ -24,10 +25,10 @@
         android:layout_alignBaseline="@+id/weText"
         android:layout_alignParentTop="false"
         android:layout_marginStart="5dp"
-        android:textSize="14sp"
         android:layout_toEndOf="@+id/weText"
         android:text="are"
-        android:textColor="#fff" />
+        android:textColor="#fff"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/smartText"
@@ -36,10 +37,10 @@
         android:layout_alignBaseline="@+id/areText"
         android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
-        android:textSize="20sp"
         android:layout_toEndOf="@+id/areText"
         android:text="Smart"
-        android:textColor="#fff" />
+        android:textColor="#fff"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/docText"
@@ -48,8 +49,8 @@
         android:layout_alignBaseline="@+id/smartText"
         android:layout_alignParentTop="true"
         android:layout_marginStart="2dp"
-        android:textSize="20dp"
         android:layout_toEndOf="@+id/smartText"
         android:text="Doc"
-        android:textColor="#fff" />
+        android:textColor="#fff"
+        android:textSize="20dp" />
 </RelativeLayout>
