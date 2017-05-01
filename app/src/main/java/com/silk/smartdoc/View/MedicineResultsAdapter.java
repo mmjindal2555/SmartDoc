@@ -47,7 +47,7 @@ public class MedicineResultsAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.price =(TextView)convertView.findViewById(R.id.testPrice);
             holder.manufacturer = (TextView)convertView.findViewById(R.id.certifications);
-            holder.medicineName = (TextView)convertView.findViewById(R.id.medicineName);
+            holder.medicineName = (TextView)convertView.findViewById(R.id.centreNmaeTV);
             convertView.setTag(holder);
             //convertView.setLongClickable(true);
 
