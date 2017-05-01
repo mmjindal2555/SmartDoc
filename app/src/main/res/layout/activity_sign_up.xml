@@ -11,14 +11,14 @@
         android:id="@+id/sdLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="36dp"
         android:text="SmartDoc"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#ffffff"
         android:textSize="50dp"
-        android:typeface="normal" />
+        android:typeface="normal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:checked="false"
+                android:checked="true"
                 android:text="Male"
                 android:textColor="#ccffffff" />
 

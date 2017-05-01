@@ -23,5 +23,7 @@
         android:id="@+id/commitButton6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Commit" />
+        android:background="@drawable/commit_button"
+        android:text="Commit"
+        android:textColor="#fff" />
 </LinearLayout>

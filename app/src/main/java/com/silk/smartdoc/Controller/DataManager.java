@@ -56,9 +56,7 @@ public class DataManager {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                     Medicine medicine = postSnapshot.getValue(Medicine.class);
-
-                    String medName = medicine.name;
-                    Log.e("Dodo",medName);
+                    String medName = medicine.getName();
                     if(medName.equalsIgnoreCase(searchValue))
                         medResultArrayList.add(medicine);
 
@@ -109,7 +107,6 @@ public class DataManager {
                     Chemical chemical = postSnapshot.getValue(Chemical.class);
 
                     String chemName = chemical.getName();
-                    Log.e("dodo",chemName);
                     if(chemName.equalsIgnoreCase(searchValue))
                         chemResultArrayList.add(chemical);
 

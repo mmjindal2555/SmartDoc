@@ -11,6 +11,7 @@ import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -19,6 +20,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.google.firebase.database.DatabaseReference;
@@ -48,9 +50,11 @@ public class SignUp extends AppCompatActivity {
     Calendar myCalendar;
     DatePickerDialog.OnDateSetListener date;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_sign_up);
         sdlogo = (TextView)findViewById(R.id.sdLogo);
         nameET = (EditText)findViewById(R.id.nameEditText);
@@ -134,57 +138,36 @@ public class SignUp extends AppCompatActivity {
                 new DatePickerDialog(SignUp.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                dobET.setBackground(getDrawable(R.drawable.normal_edit_txt));
             }
         });
 
-        nameET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        nameET.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(nameET.getBackground()==getDrawable(R.drawable.error_edit_text)){
-                    nameET.setBackground(getDrawable(R.drawable.normal_edit_txt));
-                    nameET.setTextColor(Color.WHITE);
-                    nameET.setText("");
-                }
+            public boolean onTouch(View v, MotionEvent event) {
+                nameET.setBackground(getDrawable(R.drawable.normal_edit_txt));
+                return false;
             }
         });
-        dobET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        emailEt.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(dobET.getBackground()==getDrawable(R.drawable.error_edit_text)){
-                    dobET.setBackground(getDrawable(R.drawable.normal_edit_txt));
-                    dobET.setTextColor(Color.WHITE);
-                    dobET.setText("");
-                }
+            public boolean onTouch(View v, MotionEvent event) {
+                emailEt.setBackground(getDrawable(R.drawable.normal_edit_txt));
+                return false;
             }
         });
-        emailEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        passwordET.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(emailEt.getBackground()==getDrawable(R.drawable.error_edit_text)){
-                    emailEt.setBackground(getDrawable(R.drawable.normal_edit_txt));
-                    emailEt.setTextColor(Color.WHITE);
-                    emailEt.setText("");
-                }
+            public boolean onTouch(View v, MotionEvent event) {
+                passwordET.setBackground(getDrawable(R.drawable.normal_edit_txt));
+                return false;
             }
         });
-        passwordET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        cnfpassET.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(passwordET.getBackground()==getDrawable(R.drawable.error_edit_text)){
-                    passwordET.setBackground(getDrawable(R.drawable.normal_edit_txt));
-                    passwordET.setTextColor(Color.WHITE);
-                    passwordET.setText("");
-                }
-            }
-        });
-        cnfpassET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(cnfpassET.getBackground()==getDrawable(R.drawable.error_edit_text)){
-                    cnfpassET.setBackground(getDrawable(R.drawable.normal_edit_txt));
-                    cnfpassET.setTextColor(Color.WHITE);
-                    cnfpassET.setText("");
-                }
+            public boolean onTouch(View v, MotionEvent event) {
+                cnfpassET.setBackground(getDrawable(R.drawable.normal_edit_txt));
+                return false;
             }
         });
 
@@ -193,85 +176,90 @@ public class SignUp extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean nameIsValid = true,
+                        dobIsValid = true,
+                        passwordIsValid = true,
+                        cnfPassIsValid = true;
                 String name = nameET.getText().toString();
-                Date dob = new Date(dobET.getText().toString());
+                if(name.equals("")){
+                    nameET.setBackground(getDrawable(R.drawable.error_edit_text));
+                    nameET.setHintTextColor(getResources().getColor(R.color.error_on_blue));
+                    nameET.setHint("Name is required");
+                    nameIsValid = false;
+                }
+                Date dob=new Date();
+                if(dobET.getText().toString().equals("")){
+                    dobET.setBackground(getDrawable(R.drawable.error_edit_text));
+                    dobET.setHintTextColor(getResources().getColor(R.color.error_on_blue));
+                    dobET.setHint("Date of Birth is required");
+                    dobIsValid = false;
+                }
+                else{
+                    dob = new Date(dobET.getText().toString());
+                }
+                Date checkDate = new Date(2010-1900,1,1);
+                if(!dob.before(checkDate)){
+                    dobIsValid = false;
+                    dobET.setBackground(getDrawable(R.drawable.error_edit_text));
+                    dobET.setText("");
+                    dobET.setHintTextColor(getResources().getColor(R.color.error_on_blue));
+                    dobET.setHint("Date of Birth is not valid");
+                }
                 String email = emailEt.getText().toString();
                 String password = passwordET.getText().toString();
                 String cnfpassword = cnfpassET.getText().toString();
                 String regno = registrationET.getText().toString();
                 String sex ;
-                if(rmale.isChecked()==true)
+                boolean sexIsValid = true;
+                if(rmale.isChecked())
                     sex="Male";
-                else if(rmale.isChecked()==true)
+                else if(rfemale.isChecked())
                     sex="Female";
                 else
                     sex="Others";
                 Boolean isDoctor;
-                if(docSwitch.isChecked()==true)
+                if(docSwitch.isChecked())
                     isDoctor = true;
                 else
                     isDoctor = false;
-
-                if(name.equals("")){
-                    nameET.setBackground(getDrawable(R.drawable.error_edit_text));
-                    nameET.setTextColor(Color.RED);
-                    nameET.setText("Enter Your Name");
-                }
-                if(dob.equals("")){
-                    dobET.setBackground(getDrawable(R.drawable.error_edit_text));
-                    dobET.setTextColor(Color.RED);
-                    dobET.setText("Enter Your Date of Birth");
-                }
-                if(email.equals("")){
-                    emailEt.setBackground(getDrawable(R.drawable.error_edit_text));
-                    emailEt.setTextColor(Color.RED);
-                    emailEt.setText("Enter Your Email-id");
-                }
                 Boolean isValidEmail = android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
-                if (isValidEmail == false)
+                if(email.equals("") || (!isValidEmail))
                 {
                     emailEt.setBackground(getDrawable(R.drawable.error_edit_text));
-                    emailEt.setTextColor(Color.RED);
-                    emailEt.setText("Enter Your Email-id in correct format ");
+                    emailEt.setHintTextColor(getResources().getColor(R.color.error_on_blue));
+                    emailEt.setText("");
+                    emailEt.setHint("Enter Your Email-id in correct format ");
+                    isValidEmail = false;
                 }
                 if(password.equals("")){
                     passwordET.setBackground(getDrawable(R.drawable.error_edit_text));
-                    passwordET.setTextColor(Color.RED);
-                    passwordET.setText("Enter Your Password");
+                    passwordET.setHintTextColor(getResources().getColor(R.color.error_on_blue));
+                    passwordET.setHint("Enter Your Password");
+                    passwordIsValid = false;
                 }
-                if(cnfpassword.equals("")){
+                else if(cnfpassword.equals("") || !password.equals(cnfpassword)){
                     cnfpassET.setBackground(getDrawable(R.drawable.error_edit_text));
-                    cnfpassET.setTextColor(Color.RED);
-                    cnfpassET.setText("Enter Your Password Again");
+                    cnfpassET.setHintTextColor(getResources().getColor(R.color.error_on_blue));
+                    cnfpassET.setText("");
+                    cnfpassET.setHint("Passwords don't match");
+                    cnfPassIsValid = false;
                 }
-
-                if(password.equals(cnfpassword)){
-
-                    Person person = new Person(name, email, password, dob, sex, email, isDoctor, regno);
+                if(nameIsValid && dobIsValid && isValidEmail && passwordIsValid && cnfPassIsValid
+                        && sexIsValid){
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users");
-                    ref.child(email).setValue(person);
+                    String id = ref.push().getKey();
+                    Person person = new Person(name, email, password, dob, sex, email, isDoctor, regno,id);
+                    ref.child(id).setValue(person);
+                    Toast.makeText(SignUp.this,"Thank you for Signing Up!",Toast.LENGTH_LONG).show();
+                    finish();
                 }
-                else
-                {
-                    cnfpassET.setBackground(getDrawable(R.drawable.error_edit_text));
-                    cnfpassET.setTextColor(Color.RED);
-                    cnfpassET.setText("Passwords do not match ");
-                    cnfpassET.setInputType(InputType.TYPE_CLASS_TEXT);
-                }
-
-
 
             }
         });
-
-
     }
     private void updateLabel() {
-
         String myFormat = "MM/dd/yy"; //In which you need put here
-
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
         dobET.setText(sdf.format(myCalendar.getTime()));
     }
 }

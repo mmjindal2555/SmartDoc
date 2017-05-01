@@ -13,7 +13,9 @@ public class Person {
     private Date dateOfBirth;
     private String sex;
     private String email;
+    private String id;
 
+    public String getId(){return id;}
     public String getPassword() {
         return password;
     }
@@ -62,12 +64,13 @@ public class Person {
         this.registrationNumber = "";
         this.myQuestions = new ArrayList<Query>();
         this.myExperience = new ArrayList<Query>();
+        this.id="";
 
     }
 
     public Person(String name, String username, String password, Date dateOfBirth, String sex,
                   String email, boolean isDoctor, String registrationNumber,
-                  ArrayList<Query> myQuestions,  ArrayList<Query> myExperience) {
+                  ArrayList<Query> myQuestions,  ArrayList<Query> myExperience,String id) {
         this.name = name;
         this.username = username;
         this.password = password;
@@ -78,13 +81,14 @@ public class Person {
         this.registrationNumber = registrationNumber;
         this.myQuestions = myQuestions;
         this.myExperience = myExperience;
+        this.id = id;
     }
 
     private boolean isDoctor;
     private String registrationNumber;
 
     public Person(String name, String username, String password, Date dateOfBirth, String sex,
-                  String email, boolean isDoctor, String registrationNumber) {
+                  String email, boolean isDoctor, String registrationNumber,String id) {
         this.name = name;
         this.username = username;
         this.password = password;
@@ -93,6 +97,7 @@ public class Person {
         this.email = email;
         this.isDoctor = isDoctor;
         this.registrationNumber = registrationNumber;
+        this.id = id;
     }
 
     private ArrayList<Query> myQuestions;
