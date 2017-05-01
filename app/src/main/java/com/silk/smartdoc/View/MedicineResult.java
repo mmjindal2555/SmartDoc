@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -45,166 +46,115 @@ public class MedicineResult extends AppCompatActivity {
 
         Bundle searchData = getIntent().getExtras();
 
+        // storing the search value
         final String searchValue = searchData.getString("searchValue");
         toolbar.setTitle(searchValue);
         setSupportActionBar(toolbar);
 
+        // referencing the required view objects
         description = (TextView) findViewById(R.id.descriptionTextView);
         genericIcon = (ImageView) findViewById(R.id.genericIconImageView);
 
-
+        // Logic if search value is a medicine
         DatabaseReference databaseReferenceMed = FirebaseDatabase.getInstance().getReference().child("Medicines");
         medResultArrayList = new ArrayList<Medicine>();
         databaseReferenceMed.addValueEventListener(new ValueEventListener() {
 
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                    Medicine medicine = postSnapshot.getValue(Medicine.class);
+           @Override
+           public void onDataChange(DataSnapshot dataSnapshot) {
+               SmartDocManager sdm = (SmartDocManager) getApplicationContext();
+               // passing snapshot to get the chemical name of the medicine
+               final String chemicalName = sdm.searchMgr.searchMedicineForChemicalName(dataSnapshot, searchValue);
 
-                    String medName = medicine.getName();
-                    if(medName.equalsIgnoreCase(searchValue)) {
-                        final String chemiName = medicine.getChemicalName();
+               DatabaseReference databaseReferenceChem = FirebaseDatabase.getInstance().getReference().child("Chemicals");
+               databaseReferenceChem.addValueEventListener(new ValueEventListener() {
+                   ArrayList<String> medNames;
+                   @Override
+                   public void onDataChange(DataSnapshot dataSnapshot) {
+                       SmartDocManager sdm = (SmartDocManager) getApplicationContext();
+                       // passing snapshot to get the chemical having required chemical name
+                       Chemical chemical = sdm.searchMgr.searchForChemicalObject(dataSnapshot, chemicalName);
+                       String medName = chemical.getName();
+                       if (medName.equalsIgnoreCase(chemicalName)) {
+                           if (chemical.isGeneric()) {
+                               genericIcon.setImageResource(R.drawable.ic_check_circle);
+                           } else {
+                               genericIcon.setImageResource(R.drawable.ic_cancel);
+                           }
+                           description.setText(chemical.getDescription());
+                           medNames = chemical.getMedicineIds();
+                           medResultArrayList = new ArrayList<Medicine>();
 
 
-                        DatabaseReference databaseReferenceChem = FirebaseDatabase.getInstance()
-                                .getReference().child("Chemicals");
-                        chemResultArrayList = new ArrayList<Chemical>();
-                        databaseReferenceChem.addValueEventListener(new ValueEventListener() {
+                           // passing snapshot and medNames to fetch arrayList of medicines
+                           DatabaseReference databaseReferenceMed2 = FirebaseDatabase.getInstance().getReference().child("Medicines");
+                           databaseReferenceMed2.addValueEventListener(new ValueEventListener() {
+                               @Override
+                               public void onDataChange(DataSnapshot dataSnapshot) {
+                                   SmartDocManager sdm = (SmartDocManager) getApplicationContext();
+                                   medResultArrayList = sdm.searchMgr.searchForMedicine(dataSnapshot, medNames);
+                                   medicinesList.setAdapter(new MedicineResultsAdapter(medResultArrayList,MedicineResult.this));
+                               }
 
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                                    String name = postSnapshot.child("name").getValue(String.class);
-                                    String desc = postSnapshot.child("description").getValue(String.class);
-                                    Boolean gene = postSnapshot.child("generic").getValue(Boolean.class);
-                                    ArrayList<String> medNames = new ArrayList<String>();
+                               @Override
+                               public void onCancelled(DatabaseError databaseError) {
 
-                                    for(DataSnapshot childPostSnapshot : postSnapshot.child("medicines").getChildren()){
-                                        String medName = childPostSnapshot.getValue(String.class);
-                                        medNames.add(medName);
-                                    }
+                               }
+                           });
+                       }
+                   }
 
-                                    Chemical chemical = new Chemical(name,desc,gene,medNames);
+                   @Override
+                   public void onCancelled(DatabaseError databaseError) {
 
-                                    String medName = chemical.getName();
-                                    if(medName.equalsIgnoreCase(chemiName)) {
+                   }
+               });
+           }
 
-                                        if(chemical.isGeneric()){
-                                            genericIcon.setImageResource(R.drawable.ic_check_circle);
-                                        }
-                                        else {
-                                            genericIcon.setImageResource(R.drawable.ic_cancel);
-                                        }
-                                        description.setText(chemical.getDescription());
+           @Override
+           public void onCancelled(DatabaseError databaseError) {
 
-                                        medNames = chemical.getMedicineIds();
+           }
+       });
 
-                                        for(final String medSearch : medNames){
-                                            DatabaseReference databaseReferenceMed = FirebaseDatabase.getInstance().getReference().child("Medicines");
-                                            medResultArrayList = new ArrayList<Medicine>();
-                                            databaseReferenceMed.addValueEventListener(new ValueEventListener() {
-
-                                                @Override
-                                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                                    for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                                                        Medicine medicine = postSnapshot.getValue(Medicine.class);
-
-                                                        String medName = medicine.getName();
-                                                        if(medName.equalsIgnoreCase(medSearch)) {
-                                                            medResultArrayList.add(medicine);
-                                                        }
-                                                    }
-                                                    medicinesList.setAdapter(new MedicineResultsAdapter(medResultArrayList,MedicineResult.this));
-                                                }
-
-                                                @Override
-                                                public void onCancelled(DatabaseError databaseError) {
-
-                                                }
-                                            });
-
-                                        }
-
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
+        // Logic if search value is a chemical name
         DatabaseReference databaseReferenceChem = FirebaseDatabase.getInstance().getReference().child("Chemicals");
         chemResultArrayList = new ArrayList<Chemical>();
         databaseReferenceChem.addValueEventListener(new ValueEventListener() {
-
+            ArrayList<String> medNames;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                    String name = postSnapshot.child("name").getValue(String.class);
-                    String desc = postSnapshot.child("description").getValue(String.class);
-                    Boolean gene = postSnapshot.child("generic").getValue(Boolean.class);
-                    ArrayList<String> medNames = new ArrayList<String>();
+                SmartDocManager sdm = (SmartDocManager) getApplicationContext();
 
-                    for(DataSnapshot childPostSnapshot : postSnapshot.child("medicines").getChildren()){
-                        String medName = childPostSnapshot.getValue(String.class);
-                        medNames.add(medName);
+                // passing snapshot to get the chemical having required chemical name
+                Chemical chemical = sdm.searchMgr.searchForChemicalObject(dataSnapshot, searchValue);
+                String medName = chemical.getName();
+                if (medName.equalsIgnoreCase(searchValue)) {
+                    if (chemical.isGeneric()) {
+                        genericIcon.setImageResource(R.drawable.ic_check_circle);
+                    } else {
+                        genericIcon.setImageResource(R.drawable.ic_cancel);
                     }
+                    description.setText(chemical.getDescription());
+                    medNames = chemical.getMedicineIds();
+                    medResultArrayList = new ArrayList<Medicine>();
 
-                    Chemical chemical = new Chemical(name,desc,gene,medNames);
 
-                    String medName = chemical.getName();
-                    if(medName.equalsIgnoreCase(searchValue)) {
-
-                        if(chemical.isGeneric()== true){
-                            genericIcon.setImageResource(R.drawable.ic_check_circle);
-                        }
-                        else {
-                            genericIcon.setImageResource(R.drawable.ic_cancel);
-                        }
-                        description.setText(chemical.getDescription());
-
-                        medNames = chemical.getMedicineIds();
-
-                        for(final String medSearch : medNames){
-                            DatabaseReference databaseReferenceMed = FirebaseDatabase.getInstance().getReference().child("Medicines");
-                            medResultArrayList = new ArrayList<Medicine>();
-                            databaseReferenceMed.addValueEventListener(new ValueEventListener() {
-
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                                        Medicine medicine = postSnapshot.getValue(Medicine.class);
-
-                                        String medName = medicine.getName();
-                                        Log.e("Dodo",medName);
-                                        if(medName.equalsIgnoreCase(medSearch)) {
-                                            medResultArrayList.add(medicine);
-                                        }
-                                    }
-                                    medicinesList.setAdapter(new MedicineResultsAdapter(medResultArrayList,MedicineResult.this));
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            });
-
+                    // passing snapshot and medNames to fetch arrayList of medicines
+                    DatabaseReference databaseReferenceMed2 = FirebaseDatabase.getInstance().getReference().child("Medicines");
+                    databaseReferenceMed2.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            SmartDocManager sdm = (SmartDocManager) getApplicationContext();
+                            medResultArrayList = sdm.searchMgr.searchForMedicine(dataSnapshot, medNames);
+                            medicinesList.setAdapter(new MedicineResultsAdapter(medResultArrayList,MedicineResult.this));
                         }
 
-                    }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                 }
             }
 
@@ -213,6 +163,5 @@ public class MedicineResult extends AppCompatActivity {
 
             }
         });
-
     }
 }
