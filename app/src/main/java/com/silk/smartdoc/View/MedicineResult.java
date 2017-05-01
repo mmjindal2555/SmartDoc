@@ -52,9 +52,6 @@ public class MedicineResult extends AppCompatActivity {
         description = (TextView) findViewById(R.id.descriptionTextView);
         genericIcon = (ImageView) findViewById(R.id.genericIconImageView);
 
-        //SmartDocManager sdm = (SmartDocManager) getApplicationContext();
-        //medResultArrayList = sdm.searchMgr.searchMedicine(searchValue);
-        //medicinesList.setAdapter(new MedicineResultsAdapter(medResultArrayList,MedicineResult.this));
 
         DatabaseReference databaseReferenceMed = FirebaseDatabase.getInstance().getReference().child("Medicines");
         medResultArrayList = new ArrayList<Medicine>();

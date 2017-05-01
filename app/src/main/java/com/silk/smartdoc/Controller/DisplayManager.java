@@ -39,6 +39,6 @@ public class DisplayManager{
 
     public void displayTestResult(Context context,String value)
     {
-        context.startActivity(new Intent(context, TestSearchResultsActivity.class).putExtra("searchkey",value));
+        context.startActivity(new Intent(context, TestSearchResultsActivity.class).putExtra("searchKey",value));
     }
 }

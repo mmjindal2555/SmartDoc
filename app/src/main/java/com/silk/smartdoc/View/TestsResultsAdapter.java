@@ -52,7 +52,7 @@ public class TestsResultsAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.price =(TextView)convertView.findViewById(R.id.testPrice);
             holder.certifications = (TextView)convertView.findViewById(R.id.certifications);
-            holder.centreName = (TextView)convertView.findViewById(R.id.medicineName);
+            holder.centreName = (TextView)convertView.findViewById(R.id.centreNmaeTV);
             holder.url = (TextView)convertView.findViewById(R.id.urlTV);
             holder.address = (TextView)convertView.findViewById(R.id.addressTV);
             convertView.setTag(holder);
@@ -63,10 +63,10 @@ public class TestsResultsAdapter extends BaseAdapter {
             holder=(TestsResultsAdapter.ViewHolder)convertView.getTag();
         }
         DiagnosticCenter object = mObjects.get(position);
-
+        CentreAndPrice centreAndPrice=centreAndPrices.get(position);
 
         holder.centreName.setText(object.getName());
-        //holder.price.setText("\u20B9"+object.getPrice());
+        holder.price.setText("\u20B9"+centreAndPrice.getPrice());
         holder.certifications.setText(object.getCertification());
         holder.url.setText(object.getUrl());
         holder.address.setText(object.getLocation());
