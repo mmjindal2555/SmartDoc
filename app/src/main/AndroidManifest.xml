@@ -22,7 +22,8 @@
             android:label="@string/title_activity_sign_up" />
         <activity
             android:name=".View.TestSearchActivity"
-            android:label="@string/title_activity_test_search" />
+            android:label="@string/title_activity_test_search"
+            android:theme="@style/AppTheme2" />
         <activity
             android:name=".View.TestSearchResultsActivity"
             android:label="@string/title_activity_test_search_results" />

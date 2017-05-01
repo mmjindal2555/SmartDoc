@@ -110,6 +110,6 @@
         android:layout_alignParentEnd="true"
         android:background="#fff"
         android:text="Don&apos;t have account? Sign Up"
-        android:textColor="#ff3f5c" />
+        android:textColor="@color/accentcolor" />
 
 </RelativeLayout>

@@ -6,13 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.silk.smartdoc.Model.Medicine;
 import com.silk.smartdoc.R;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -48,9 +45,9 @@ public class MedicineResultsAdapter extends BaseAdapter {
         {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.medicine_card, null);
             holder = new ViewHolder();
-            holder.price =(TextView)convertView.findViewById(R.id.medicinePrice);
-            holder.manufacturer = (TextView)convertView.findViewById(R.id.manufacturer);
-            holder.medicineName = (TextView)convertView.findViewById(R.id.medicineName);
+            holder.price =(TextView)convertView.findViewById(R.id.testPrice);
+            holder.manufacturer = (TextView)convertView.findViewById(R.id.certifications);
+            holder.medicineName = (TextView)convertView.findViewById(R.id.centreNmaeTV);
             convertView.setTag(holder);
             //convertView.setLongClickable(true);
 

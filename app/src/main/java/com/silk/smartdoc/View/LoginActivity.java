@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = usernameET.getText().toString();
                 String password = passwordET.getText().toString();
-                if (username.equals("akash") && password.equals("agarwal")) {
+                if (username.equals("a") && password.equals("b")) {
                     Intent intent = new Intent(LoginActivity.this, HealthForum.class);
                     startActivity(intent);
                 }
