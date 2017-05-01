@@ -1,12 +1,10 @@
 package com.silk.smartdoc.View;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,7 +20,6 @@ import com.silk.smartdoc.Model.Medicine;
 import com.silk.smartdoc.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MedicineResult extends AppCompatActivity {
@@ -30,6 +27,7 @@ public class MedicineResult extends AppCompatActivity {
     ArrayList <Medicine> medResultArrayList;
     ArrayList <Chemical> chemResultArrayList;
     ListView medicinesList;
+    TextView chem;
     TextView description;
     ImageView genericIcon;
     @Override
@@ -52,6 +50,7 @@ public class MedicineResult extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // referencing the required view objects
+        chem = (TextView) findViewById(R.id.chemicalNameTextView);
         description = (TextView) findViewById(R.id.descriptionTextView);
         genericIcon = (ImageView) findViewById(R.id.genericIconImageView);
 
@@ -65,7 +64,15 @@ public class MedicineResult extends AppCompatActivity {
                SmartDocManager sdm = (SmartDocManager) getApplicationContext();
                // passing snapshot to get the chemical name of the medicine
                final String chemicalName = sdm.searchMgr.searchMedicineForChemicalName(dataSnapshot, searchValue);
+               if(chemicalName.equalsIgnoreCase("")) {
+                   chem.setText(" " + searchValue);
+                   chem.setTypeface(null, Typeface.BOLD);
+               }
 
+               else {
+                   chem.setText(" " + chemicalName);
+                   chem.setTypeface(null, Typeface.BOLD);
+               }
                DatabaseReference databaseReferenceChem = FirebaseDatabase.getInstance().getReference().child("Chemicals");
                databaseReferenceChem.addValueEventListener(new ValueEventListener() {
                    ArrayList<String> medNames;
@@ -81,7 +88,9 @@ public class MedicineResult extends AppCompatActivity {
                            } else {
                                genericIcon.setImageResource(R.drawable.ic_cancel);
                            }
-                           description.setText(chemical.getDescription());
+                           description.setText(" "+chemical.getDescription());
+                           description.setTypeface(null, Typeface.BOLD);
+
                            medNames = chemical.getMedicineIds();
                            medResultArrayList = new ArrayList<Medicine>();
 
@@ -135,7 +144,7 @@ public class MedicineResult extends AppCompatActivity {
                     } else {
                         genericIcon.setImageResource(R.drawable.ic_cancel);
                     }
-                    description.setText(chemical.getDescription());
+                    description.setText("Description : "+chemical.getDescription());
                     medNames = chemical.getMedicineIds();
                     medResultArrayList = new ArrayList<Medicine>();
 

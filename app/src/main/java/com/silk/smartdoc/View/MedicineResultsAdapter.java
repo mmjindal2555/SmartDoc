@@ -60,7 +60,7 @@ public class MedicineResultsAdapter extends BaseAdapter {
 
         holder.medicineName.setText(object.getName());
         holder.price.setText("\u20B9"+object.getPrice());
-        holder.manufacturer.setText(object.getChemicalName());
+        holder.manufacturer.setText(object.getManufacturer());
 
 
         return convertView;
