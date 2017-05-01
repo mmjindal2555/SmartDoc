@@ -1,6 +1,10 @@
 package com.silk.smartdoc.Controller;
 
+import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
 import com.silk.smartdoc.Model.Answer;
+import com.silk.smartdoc.Model.CentreAndPrice;
 import com.silk.smartdoc.Model.Chemical;
 import com.silk.smartdoc.Model.DiagnosticCenter;
 import com.silk.smartdoc.Model.Medicine;
@@ -33,5 +37,51 @@ public class SearchManager {
     }
     public Answer[] searchQueryForAnswer(Query query){
         return new Answer[1];
+    }
+
+    public ArrayList<String> getAllTestName(DataSnapshot dataSnapshot)
+    {
+        ArrayList<String> test;
+        test=new ArrayList<String>();
+        Iterable<DataSnapshot> children= dataSnapshot.getChildren();
+        for (DataSnapshot child: children) {
+            String testName = child.child("name").getValue(String.class);
+            test.add(testName);
+        }
+        return test;
+    }
+
+    public ArrayList<CentreAndPrice> getCentreIdAndPrice(DataSnapshot dataSnapshot,String searchValue)
+    {
+        ArrayList<CentreAndPrice> centreAndPrice;
+        centreAndPrice=new ArrayList<CentreAndPrice>();
+        String testName;
+        for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+            testName = postSnapshot.child("name").getValue(String.class);
+            if(testName.equalsIgnoreCase(searchValue))
+            {
+                for(DataSnapshot childPostSnapshot : postSnapshot.child("centres").getChildren()){
+                    centreAndPrice.add(new CentreAndPrice(childPostSnapshot.child("centreId").getValue(String.class),
+                            childPostSnapshot.child("price").getValue(double.class)));
+                }
+                break;
+            }
+        }
+        return centreAndPrice;
+    }
+
+    public String isTestExit(DataSnapshot dataSnapshot,String searchValue)
+    {
+        String description = null,testName;
+        for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+            testName = postSnapshot.child("name").getValue(String.class);
+            if(testName.equalsIgnoreCase(searchValue))
+            {
+                description=postSnapshot.child("description").getValue(String.class);
+                break;
+            }
+
+        }
+        return description;
     }
 }
