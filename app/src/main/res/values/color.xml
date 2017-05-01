@@ -8,8 +8,10 @@
     <color name="white">#fff</color>
     <color name="base">#ccc</color>
     <color name="highlight">#888</color>
-    <color name="error">#f00</color>
+    <color name="error">#f4511e</color>
+    <color name="error_on_blue">#fecc00</color>
     <color name="hint">#555</color>
     <color name="arrow">#555</color>
     <color name="floating_label">#333</color>
+
 </resources>

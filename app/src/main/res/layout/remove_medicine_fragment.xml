@@ -21,8 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
+            android:background="@drawable/button_unpressed"
             android:elevation="3dp"
-            android:text="Search" />
+            android:text="Search"
+            android:textColor="#fff" />
     </LinearLayout>
 
     <Spinner
@@ -40,7 +42,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
+            android:background="@drawable/delete_button"
             android:elevation="3dp"
-            android:text="Remove !" />
+            android:text="Remove !"
+            android:textColor="#fff" />
     </LinearLayout>
 </LinearLayout>

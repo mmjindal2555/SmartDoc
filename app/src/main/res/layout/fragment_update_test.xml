@@ -24,7 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="Search" />
+            android:background="@drawable/button_unpressed"
+            android:text="Search"
+            android:textColor="#fff" />
 
     </LinearLayout>
 
@@ -53,8 +55,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
+            android:background="@drawable/button_unpressed"
             android:elevation="3dp"
-            android:text="Search" />
+            android:text="Search"
+            android:textColor="#fff" />
     </LinearLayout>
 
     <Spinner
@@ -81,7 +85,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
+            android:background="@drawable/commit_button"
             android:elevation="3dp"
-            android:text="Commit" />
+            android:text="Commit"
+            android:textColor="#fff" />
     </LinearLayout>
 </LinearLayout>

@@ -70,7 +70,8 @@ public class MedicineResult extends AppCompatActivity {
                         final String chemiName = medicine.getChemicalName();
 
 
-                        DatabaseReference databaseReferenceChem = FirebaseDatabase.getInstance().getReference().child("Chemicals");
+                        DatabaseReference databaseReferenceChem = FirebaseDatabase.getInstance()
+                                .getReference().child("Chemicals");
                         chemResultArrayList = new ArrayList<Chemical>();
                         databaseReferenceChem.addValueEventListener(new ValueEventListener() {
 
@@ -92,7 +93,7 @@ public class MedicineResult extends AppCompatActivity {
                                     String medName = chemical.getName();
                                     if(medName.equalsIgnoreCase(chemiName)) {
 
-                                        if(chemical.isGeneric()== true){
+                                        if(chemical.isGeneric()){
                                             genericIcon.setImageResource(R.drawable.ic_check_circle);
                                         }
                                         else {

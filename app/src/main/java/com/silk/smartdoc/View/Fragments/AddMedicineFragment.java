@@ -28,6 +28,7 @@ import com.silk.smartdoc.View.MedicineSearch;
 import org.w3c.dom.Comment;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -44,6 +45,10 @@ public class AddMedicineFragment extends Fragment{
     EditText priceET;
     Button commitButton;
     ArrayList<String> medicines;
+    DatabaseReference databaseReference;
+    String medicineName;
+    String chemicalName;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,9 +62,9 @@ public class AddMedicineFragment extends Fragment{
 
         medicines = new ArrayList<>();
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Chemicals");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Chemicals");
         chemArrayList = new ArrayList<>();
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
@@ -83,34 +88,43 @@ public class AddMedicineFragment extends Fragment{
         commitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                String medicineName = medNameET.getText().toString();
+                databaseReference = FirebaseDatabase.getInstance().getReference();
+                medicineName = medNameET.getText().toString();
                 String manufacturerName = manunfacturerNameET.getText().toString();
                 double price =0;
                 price = Double.parseDouble(priceET.getText().toString());
-                String chemicalName = chemicalsSpinner.getSelectedItem().toString();
+                chemicalName = chemicalsSpinner.getSelectedItem().toString();
 
                 if(medicineName.equals("") || manufacturerName.equals("") || price==0){
                     Toast.makeText(getActivity(),"Something is Wrong!!",Toast.LENGTH_LONG).show();
                 }
                 else {
-                    Medicine medicine = new Medicine(chemicalName, medicineName, price);
+                    Medicine medicine = new Medicine(chemicalName, medicineName, price, manufacturerName);
                     databaseReference.child("Medicines").child(medicineName).setValue(medicine);
                     databaseReference.child("Chemicals").child(chemicalName).child("medicines")
                             .addListenerForSingleValueEvent(new ValueEventListener() {
 
                         @Override
                         public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
-                            medicines = (ArrayList<String>) dataSnapshot.getValue();
+                            //medicines = dataSnapshot.getValue();
+                            Iterable<DataSnapshot> children= dataSnapshot.getChildren();
+                            int i=0;
+                            for (DataSnapshot child: children) {
+                                String medName = child.getValue(String.class);
+                                    medicines.add(medName);
+                            }
+                            if(medicines==null)
+                                medicines = new ArrayList<String>();
+                            medicines.add(medicineName);
+                            databaseReference.child("Chemicals").child(chemicalName)
+                                    .child("medicines").setValue(medicines);
+                            medicines = new ArrayList<>();
                         }
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                         }
                     });
-                    if(medicines==null)
-                        medicines = new ArrayList<String>();
-                    medicines.add(medicineName);
-                    databaseReference.child("Chemicals").child(chemicalName).child("medicines").setValue(medicines);
+
                     medNameET.setText("");
                     priceET.setText("");
                     manunfacturerNameET.setText("");
