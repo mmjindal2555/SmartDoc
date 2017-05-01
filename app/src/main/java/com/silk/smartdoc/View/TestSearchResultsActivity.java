@@ -44,15 +44,12 @@ public class TestSearchResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_search_results);
         ArrayList<Test> testResultArrayList;
-
-
         diagnosticCentreListView = (ListView)findViewById(R.id.searchResultListView);
         toolbar=(Toolbar)findViewById(R.id.test_search_result_toolbar);
         descriptionCard = (TextView)findViewById(R.id.testDescription);
         toolbar.setBackgroundColor(getResources().getColor(R.color.primarycolor));
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarcolor));
-
         data=getIntent().getExtras();
         searchValue = data.getString("searchKey");
 
@@ -68,13 +65,13 @@ public class TestSearchResultsActivity extends AppCompatActivity {
                 String testDescription;
 
                 testDescription=sdm.searchMgr.isTestExit(dataSnapshot,searchValue);
+                centreAndPrices=sdm.searchMgr.getCentreIdAndPrice(dataSnapshot,searchValue);
                 if(testDescription!=null)
                 {
                     descriptionCard.setText(testDescription);
                     toolbar.setTitle(searchValue);
                     setSupportActionBar(toolbar);
                 }
-                centreAndPrices=sdm.searchMgr.getCentreIdAndPrice(dataSnapshot,searchValue);
                 diagnosticCentersResultArrayList = new ArrayList<DiagnosticCenter>();
                 centerAndPriceArrayList = new ArrayList<CentreAndPrice>();
                 DatabaseReference databaseReferenceCentre = FirebaseDatabase.getInstance().getReference().child("Centres");
@@ -82,22 +79,8 @@ public class TestSearchResultsActivity extends AppCompatActivity {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for(CentreAndPrice cp:centreAndPrices){
-                            String id = cp.getCentreId();
-                            double pri = cp.getPrice();
-                            DiagnosticCenter diagnosticCenter=new DiagnosticCenter(
-                                    dataSnapshot.child(id).child("name").getValue(String.class),
-                                    dataSnapshot.child(id).child("location").getValue(String.class),
-                                    dataSnapshot.child(id).child("certification").getValue(String.class),
-                                    dataSnapshot.child(id).child("url").getValue(String.class),
-                                    id);
-                            CentreAndPrice centreAndPrice = new CentreAndPrice(id,pri);
-                            diagnosticCentersResultArrayList.add(diagnosticCenter);
-                            centerAndPriceArrayList.add(centreAndPrice);
-                        }
-
-                        diagnosticCentreListView.setAdapter(new TestsResultsAdapter(diagnosticCentersResultArrayList,centerAndPriceArrayList,TestSearchResultsActivity.this));
-
+                        diagnosticCentersResultArrayList=sdm.searchMgr.isDiagnosticCentersResultArrayList(dataSnapshot,centreAndPrices);
+                        diagnosticCentreListView.setAdapter(new TestsResultsAdapter(diagnosticCentersResultArrayList,centreAndPrices,TestSearchResultsActivity.this));
                     }
 
                     @Override

@@ -84,4 +84,21 @@ public class SearchManager {
         }
         return description;
     }
+
+    public ArrayList<DiagnosticCenter> isDiagnosticCentersResultArrayList(DataSnapshot dataSnapshot,ArrayList<CentreAndPrice> centreAndPrices)
+    {
+        ArrayList<DiagnosticCenter> diagnosticCentersResultArrayList=new ArrayList<DiagnosticCenter>();
+        for(CentreAndPrice cp:centreAndPrices){
+            String id = cp.getCentreId();
+            double pri = cp.getPrice();
+            DiagnosticCenter diagnosticCenter=new DiagnosticCenter(
+                    dataSnapshot.child(id).child("name").getValue(String.class),
+                    dataSnapshot.child(id).child("location").getValue(String.class),
+                    dataSnapshot.child(id).child("certification").getValue(String.class),
+                    dataSnapshot.child(id).child("url").getValue(String.class),
+                    id);
+            diagnosticCentersResultArrayList.add(diagnosticCenter);
+        }
+        return diagnosticCentersResultArrayList;
+    }
 }
