@@ -91,6 +91,8 @@ public class SearchManager{
         return new Answer[1];
     }
 
+
+    //returns all the name of the test to the testSearchActivity Page
     public ArrayList<String> getAllTestName(DataSnapshot dataSnapshot)
     {
         ArrayList<String> test;
@@ -102,7 +104,7 @@ public class SearchManager{
         }
         return test;
     }
-
+    //return the centreId and Price for the given tests
     public ArrayList<CentreAndPrice> getCentreIdAndPrice(DataSnapshot dataSnapshot,String searchValue)
     {
         ArrayList<CentreAndPrice> centreAndPrice;
@@ -121,7 +123,7 @@ public class SearchManager{
         }
         return centreAndPrice;
     }
-
+    //isTestExit returns the description of the tests if the given test exits else return null
     public String isTestExit(DataSnapshot dataSnapshot,String searchValue)
     {
         String description = null,testName;
@@ -136,7 +138,7 @@ public class SearchManager{
         }
         return description;
     }
-
+    //getDiagnosticCentersResultArrayList returns the details of diagnostic centres of the correspondence tests.
     public ArrayList<DiagnosticCenter> isDiagnosticCentersResultArrayList(DataSnapshot dataSnapshot,ArrayList<CentreAndPrice> centreAndPrices)
     {
         ArrayList<DiagnosticCenter> diagnosticCentersResultArrayList=new ArrayList<DiagnosticCenter>();

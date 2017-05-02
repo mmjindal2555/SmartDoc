@@ -30,10 +30,6 @@ public class TestSearchResultsActivity extends AppCompatActivity {
     ArrayList<CentreAndPrice> centerAndPriceArrayList;
     SmartDocManager sdm;
     ArrayList<CentreAndPrice> centreAndPrices;
-    String[] centerCertification = new String[1];
-    String[] centerLocation = new String[1];
-    String[] centerName = new String[1];
-    String[] centerUrl = new String[1];
     ListView diagnosticCentreListView;
     Toolbar toolbar;
     TextView descriptionCard;
@@ -53,9 +49,8 @@ public class TestSearchResultsActivity extends AppCompatActivity {
         data=getIntent().getExtras();
         searchValue = data.getString("searchKey");
 
-
+        //Make a reference of child "Tests" from database
         DatabaseReference databaseReferenceTest = FirebaseDatabase.getInstance().getReference().child("Tests");
-        testResultArrayList = new ArrayList<Test>();
         centreAndPrices=new ArrayList<CentreAndPrice>();
         sdm=new SmartDocManager();
         databaseReferenceTest.addValueEventListener(new ValueEventListener() {
@@ -63,8 +58,9 @@ public class TestSearchResultsActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 String testDescription;
-
+                //check whether the given test exits or not
                 testDescription=sdm.searchMgr.isTestExit(dataSnapshot,searchValue);
+                //if exits then collect all the centerId and their respective price in the ArrayList<CentreAndPrice>
                 centreAndPrices=sdm.searchMgr.getCentreIdAndPrice(dataSnapshot,searchValue);
                 if(testDescription!=null)
                 {
@@ -79,7 +75,9 @@ public class TestSearchResultsActivity extends AppCompatActivity {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        //Collect the details of the diagnostic centre in the diagnosticCentersResultArrayList
                         diagnosticCentersResultArrayList=sdm.searchMgr.isDiagnosticCentersResultArrayList(dataSnapshot,centreAndPrices);
+                        //set the adapter
                         diagnosticCentreListView.setAdapter(new TestsResultsAdapter(diagnosticCentersResultArrayList,centreAndPrices,TestSearchResultsActivity.this));
                     }
 
