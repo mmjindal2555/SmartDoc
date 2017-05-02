@@ -1,5 +1,6 @@
 package com.silk.smartdoc.View;
 
+import android.os.storage.StorageManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 public class TestSearchActivity extends AppCompatActivity {
     ListView testSearchListView;
     ArrayList<String> testArrayList;
-
+    SmartDocManager sdm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -34,16 +35,13 @@ public class TestSearchActivity extends AppCompatActivity {
         testArrayList = new ArrayList<String>();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference = databaseReference.child("Tests");
-
+        sdm= new SmartDocManager();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> children= dataSnapshot.getChildren();
-                for (DataSnapshot child: children) {
-                    String testName = child.child("name").getValue(String.class);
-                    testArrayList.add(testName);
-                }
+                testArrayList=sdm.searchMgr.getAllTestName(dataSnapshot);
+
                 testSearchListView.setAdapter(new ArrayAdapter<String>(TestSearchActivity.this,
                         android.R.layout.simple_list_item_1, testArrayList));
             }

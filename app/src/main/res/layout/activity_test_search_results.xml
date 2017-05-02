@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Description"
-                android:id="@+id/descriptionTextView"
+                android:id="@+id/descriptionFixedTextView"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true" />
 
@@ -40,7 +40,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Test Description"
                 android:id="@+id/testDescription"
-                android:layout_below="@+id/descriptionTextView" />
+                android:layout_below="@+id/descriptionFixedTextView" />
 
         </RelativeLayout>
 

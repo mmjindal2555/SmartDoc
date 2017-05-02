@@ -1,9 +1,11 @@
 package com.silk.smartdoc.Model;
 
+import android.support.annotation.NonNull;
+
 /**
  * Created by dodobhoot on 4/22/2017.
  */
-public class Medicine {
+public class Medicine implements Comparable<Medicine>{
     private String chemicalName;
     private String name;
     private double price;
@@ -35,5 +37,11 @@ public class Medicine {
 
     public double getPrice() {
         return price;
+    }
+
+    @Override
+    public int compareTo(@NonNull Medicine o) {
+        double compareQuantity = o.getPrice();
+        return (int)(this.getPrice()-compareQuantity);
     }
 }

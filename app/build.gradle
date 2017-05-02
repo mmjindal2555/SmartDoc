@@ -5,10 +5,12 @@ android {
     buildToolsVersion '25.0.2'
     defaultConfig {
         applicationId "com.silk.smartdoc"
-        minSdkVersion 22
+        minSdkVersion 21
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -42,5 +44,12 @@ dependencies {
     compile 'com.firebase:firebase-client-android:2.3.1'
     compile 'com.firebaseui:firebase-ui:0.4.3'
     compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:multidex:1.0.1'
+
+    androidTestCompile 'com.android.support:support-v4:25.3.1'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
+
 }
 apply plugin: 'com.google.gms.google-services'
