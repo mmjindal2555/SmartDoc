@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -157,6 +158,10 @@ public class UpdateTest extends Fragment {
                                                 Test uTest = new Test(tst.getName(),tst.getDescription(),tst.getId(),cndp);
                                                 DatabaseReference db = FirebaseDatabase.getInstance().getReference();
                                                 db.child("Tests").child(testId).setValue(uTest);
+                                                centreSearchET.setText("");
+                                                testSearchET.setText("");
+                                                priceET.setText("");
+                                                Toast.makeText(getActivity(),"Updated!",Toast.LENGTH_LONG).show();
                                             }
 
                                         }

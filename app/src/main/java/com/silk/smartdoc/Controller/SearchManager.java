@@ -12,6 +12,8 @@ import com.silk.smartdoc.Model.Test;
 import com.silk.smartdoc.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Created by dodobhoot on 4/22/2017.
@@ -83,7 +85,7 @@ public class SearchManager{
                 }
             }
         }
-
+        Collections.sort(medResultArrayList);
         return medResultArrayList;
     }
 
@@ -91,8 +93,6 @@ public class SearchManager{
         return new Answer[1];
     }
 
-
-    //returns all the name of the test to the testSearchActivity Page
     public ArrayList<String> getAllTestName(DataSnapshot dataSnapshot)
     {
         ArrayList<String> test;
@@ -104,7 +104,7 @@ public class SearchManager{
         }
         return test;
     }
-    //return the centreId and Price for the given tests
+
     public ArrayList<CentreAndPrice> getCentreIdAndPrice(DataSnapshot dataSnapshot,String searchValue)
     {
         ArrayList<CentreAndPrice> centreAndPrice;
@@ -123,7 +123,7 @@ public class SearchManager{
         }
         return centreAndPrice;
     }
-    //isTestExit returns the description of the tests if the given test exits else return null
+
     public String isTestExit(DataSnapshot dataSnapshot,String searchValue)
     {
         String description = null,testName;
@@ -138,9 +138,10 @@ public class SearchManager{
         }
         return description;
     }
-    //getDiagnosticCentersResultArrayList returns the details of diagnostic centres of the correspondence tests.
-    public ArrayList<DiagnosticCenter> isDiagnosticCentersResultArrayList(DataSnapshot dataSnapshot,ArrayList<CentreAndPrice> centreAndPrices)
+
+    public ArrayList<DiagnosticCenter> getDiagnosticCentersResultArrayList(DataSnapshot dataSnapshot, ArrayList<CentreAndPrice> centreAndPrices)
     {
+        Collections.sort(centreAndPrices);
         ArrayList<DiagnosticCenter> diagnosticCentersResultArrayList=new ArrayList<DiagnosticCenter>();
         for(CentreAndPrice cp:centreAndPrices){
             String id = cp.getCentreId();
