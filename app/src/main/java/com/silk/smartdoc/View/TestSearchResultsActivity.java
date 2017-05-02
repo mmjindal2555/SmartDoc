@@ -1,11 +1,8 @@
 package com.silk.smartdoc.View;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,13 +14,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.silk.smartdoc.Controller.SmartDocManager;
 import com.silk.smartdoc.Model.CentreAndPrice;
 import com.silk.smartdoc.Model.DiagnosticCenter;
-import com.silk.smartdoc.Model.Medicine;
 import com.silk.smartdoc.Model.Test;
 import com.silk.smartdoc.R;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.StringTokenizer;
 
 public class TestSearchResultsActivity extends AppCompatActivity {
     ArrayList<DiagnosticCenter> diagnosticCentersResultArrayList;
@@ -79,7 +73,7 @@ public class TestSearchResultsActivity extends AppCompatActivity {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        diagnosticCentersResultArrayList=sdm.searchMgr.isDiagnosticCentersResultArrayList(dataSnapshot,centreAndPrices);
+                        diagnosticCentersResultArrayList=sdm.searchMgr.getDiagnosticCentersResultArrayList(dataSnapshot,centreAndPrices);
                         diagnosticCentreListView.setAdapter(new TestsResultsAdapter(diagnosticCentersResultArrayList,centreAndPrices,TestSearchResultsActivity.this));
                     }
 

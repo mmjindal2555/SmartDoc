@@ -12,6 +12,8 @@ import com.silk.smartdoc.Model.Test;
 import com.silk.smartdoc.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Created by dodobhoot on 4/22/2017.
@@ -83,7 +85,7 @@ public class SearchManager{
                 }
             }
         }
-
+        Collections.sort(medResultArrayList);
         return medResultArrayList;
     }
 
@@ -137,8 +139,9 @@ public class SearchManager{
         return description;
     }
 
-    public ArrayList<DiagnosticCenter> isDiagnosticCentersResultArrayList(DataSnapshot dataSnapshot,ArrayList<CentreAndPrice> centreAndPrices)
+    public ArrayList<DiagnosticCenter> getDiagnosticCentersResultArrayList(DataSnapshot dataSnapshot, ArrayList<CentreAndPrice> centreAndPrices)
     {
+        Collections.sort(centreAndPrices);
         ArrayList<DiagnosticCenter> diagnosticCentersResultArrayList=new ArrayList<DiagnosticCenter>();
         for(CentreAndPrice cp:centreAndPrices){
             String id = cp.getCentreId();
