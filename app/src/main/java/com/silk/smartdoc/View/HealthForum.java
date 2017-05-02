@@ -47,13 +47,13 @@ public class HealthForum extends AppCompatActivity
     }
 
     public void openPostQueryActivity(View view){
-        Intent intent = new Intent(this,PostQueryExperience.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this,PostQueryExperience.class);
+        //startActivity(intent);
     }
 
     public void openAnswerQueryActivity(View view){
-        Intent intent = new Intent(this,AnswerQuery.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this,AnswerQuery.class);
+        //startActivity(intent);
     }
 
     @Override

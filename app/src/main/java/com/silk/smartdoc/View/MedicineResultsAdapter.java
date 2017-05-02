@@ -20,7 +20,7 @@ public class MedicineResultsAdapter extends BaseAdapter {
     List<Medicine> mObjects;
     private Context mContext;
     private SparseBooleanArray mSelectedItemsIds;
-    MedicineResultsAdapter(List<Medicine> objects, Context context){
+    public MedicineResultsAdapter(List<Medicine> objects, Context context){
         //super(context,R.layout.contents_layout,objects);
         this.mObjects = objects;
         mContext = context;
@@ -45,9 +45,9 @@ public class MedicineResultsAdapter extends BaseAdapter {
         {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.medicine_card, null);
             holder = new ViewHolder();
-            holder.price =(TextView)convertView.findViewById(R.id.testPrice);
-            holder.manufacturer = (TextView)convertView.findViewById(R.id.certifications);
-            holder.medicineName = (TextView)convertView.findViewById(R.id.centreNmaeTV);
+            holder.price =(TextView)convertView.findViewById(R.id.medPrice);
+            holder.manufacturer = (TextView)convertView.findViewById(R.id.manufacturerTextView);
+            holder.medicineName = (TextView)convertView.findViewById(R.id.medNameTV);
             convertView.setTag(holder);
             //convertView.setLongClickable(true);
 
@@ -71,5 +71,9 @@ public class MedicineResultsAdapter extends BaseAdapter {
         TextView medicineName;
         TextView manufacturer;
         TextView price;
+    }
+
+    public Context getmContext(){
+        return this.mContext;
     }
 }
