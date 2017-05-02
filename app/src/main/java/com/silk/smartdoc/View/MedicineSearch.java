@@ -112,14 +112,7 @@ public class MedicineSearch extends AppCompatActivity {
 
         //get focus
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setIconifiedByDefault(false);
-        //searchView.setEnabled(true);
 
-        //get input method
-        searchView.setQuery("test",true);
-        searchView.setFocusable(true);
-        searchView.setIconified(false);
-        searchView.requestFocusFromTouch();
 
         //InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         //imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);

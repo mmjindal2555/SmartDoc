@@ -51,6 +51,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/searchResultListView"
         android:layout_below="@+id/card_view"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="1dp"
         android:layout_centerHorizontal="true"
         />
 

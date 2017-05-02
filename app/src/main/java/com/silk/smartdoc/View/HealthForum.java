@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.silk.smartdoc.Controller.SmartDocManager;
 import com.silk.smartdoc.R;
@@ -47,12 +48,22 @@ public class HealthForum extends AppCompatActivity
     }
 
     public void openPostQueryActivity(View view){
+
         //Intent intent = new Intent(this,PostQueryExperience.class);
+
+        Toast.makeText(HealthForum.this, "This funcionality is coming soon",Toast.LENGTH_LONG).show();
+        
+
         //startActivity(intent);
     }
 
     public void openAnswerQueryActivity(View view){
+
         //Intent intent = new Intent(this,AnswerQuery.class);
+
+        Toast.makeText(HealthForum.this, "This funcionality is coming soon",Toast.LENGTH_LONG).show();
+        
+
         //startActivity(intent);
     }
 
