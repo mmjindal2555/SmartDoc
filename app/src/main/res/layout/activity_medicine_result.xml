@@ -71,7 +71,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Availability in Generic Stores"
                 android:id="@+id/genericTextView"
-                android:layout_below="@+id/descriptionFixedTextView" />
+                android:layout_below="@+id/descriptionTextView" />
 
             <ImageView
                 android:id="@+id/genericIconImageView"

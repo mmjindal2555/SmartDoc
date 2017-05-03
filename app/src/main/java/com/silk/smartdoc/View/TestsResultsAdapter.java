@@ -1,7 +1,6 @@
 package com.silk.smartdoc.View;
 
 import android.content.Context;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 
 import com.silk.smartdoc.Model.CentreAndPrice;
 import com.silk.smartdoc.Model.DiagnosticCenter;
-import com.silk.smartdoc.Model.Medicine;
 import com.silk.smartdoc.R;
 
 import java.util.List;
@@ -25,7 +23,7 @@ public class TestsResultsAdapter extends BaseAdapter {
     private Context mContext;
     List<CentreAndPrice> centreAndPrices;
 
-    TestsResultsAdapter(List<DiagnosticCenter> objects, List<CentreAndPrice> centreAndPrices, Context context){
+    public TestsResultsAdapter(List<DiagnosticCenter> objects, List<CentreAndPrice> centreAndPrices, Context context){
         //super(context,R.layout.contents_layout,objects);
         this.mObjects = objects;
         mContext = context;
@@ -51,8 +49,8 @@ public class TestsResultsAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.test_center_card, null);
             holder = new ViewHolder();
             holder.price =(TextView)convertView.findViewById(R.id.testPrice);
-            holder.certifications = (TextView)convertView.findViewById(R.id.certifications);
-            holder.centreName = (TextView)convertView.findViewById(R.id.centreNmaeTV);
+            holder.certifications = (TextView)convertView.findViewById(R.id.certificatesTextView);
+            holder.centreName = (TextView)convertView.findViewById(R.id.centreNameTV);
             holder.url = (TextView)convertView.findViewById(R.id.urlTV);
             holder.address = (TextView)convertView.findViewById(R.id.addressTV);
             convertView.setTag(holder);
