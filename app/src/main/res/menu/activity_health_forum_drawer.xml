@@ -23,5 +23,12 @@
                 android:title="My Experiences" />
         </menu>
     </item>
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/logout"
+                android:title="Log Out" />
+        </menu>
+    </item>
 
 </menu>
