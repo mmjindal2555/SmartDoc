@@ -23,26 +23,25 @@
                 android:id="@+id/urlTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/certifications"
-                android:layout_alignBottom="@+id/card_view"
-                android:layout_alignEnd="@+id/card_view"
-                android:layout_alignRight="@+id/testPrice"
+                android:layout_alignBaseline="@+id/certificatesTextView"
+                android:layout_alignParentRight="true"
+
+
                 android:layout_marginBottom="4dp"
                 android:layout_marginEnd="4dp"
                 android:text="Werbsite URL" />
 
             <TextView
-                android:id="@+id/certificationsLabel"
+                android:id="@+id/manufacturedFixedTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/centreNmaeTV"
-                android:layout_marginTop="7dp"
                 android:text="Certified By - "
-                android:textSize="12dp" />
+                android:textSize="12dp"
+                android:layout_below="@+id/centreNameTV"
+                android:layout_alignParentStart="true" />
 
             <TextView
-                android:id="@+id/centreNmaeTV"
+                android:id="@+id/centreNameTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name of Centre"
@@ -54,19 +53,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_alignTop="@+id/centreNmaeTV"
+                android:layout_alignTop="@+id/medNameTV"
                 android:text="\u20B9 20"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@android:color/holo_green_dark" />
 
             <TextView
-                android:id="@+id/certifications"
+                android:id="@+id/certificatesTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_alignLeft="@+id/certificationsLabel"
+                android:layout_alignLeft="@+id/manufacturedFixedTV"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/certificationsLabel"
+                android:layout_below="@+id/manufacturedFixedTV"
                 android:text="Certifications"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/com_facebook_button_send_background_color_pressed"
@@ -76,10 +75,10 @@
                 android:id="@+id/addressTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/certifications"
-                android:layout_alignLeft="@+id/certifications"
-                android:layout_marginTop="3dp"
-                android:text="Address" />
+                android:text="Address"
+                android:layout_below="@+id/certificatesTextView"
+                android:layout_alignParentLeft="true"
+                android:layout_toStartOf="@+id/urlTV" />
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
