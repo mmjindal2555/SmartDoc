@@ -144,7 +144,8 @@ public class MedicineResult extends AppCompatActivity {
                     } else {
                         genericIcon.setImageResource(R.drawable.ic_cancel);
                     }
-                    description.setText("Description : "+chemical.getDescription());
+                    description.setText(" "+chemical.getDescription());
+                    description.setTypeface(null, Typeface.BOLD);
                     medNames = chemical.getMedicineIds();
                     medResultArrayList = new ArrayList<Medicine>();
 
