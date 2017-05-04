@@ -66,11 +66,13 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else {
                     reference.addValueEventListener(new ValueEventListener() {
-                        @Override
+                          @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             Person person = loggingController.isValid(dataSnapshot, username, password);
                             if(person!=null) {
                                 Intent intent = new Intent(LoginActivity.this, HealthForum.class);
+                                intent.putExtra("Name",person.getName());
+                                intent.putExtra("Username",person.getEmail());
                                 startActivity(intent);
                             }
                             else {
