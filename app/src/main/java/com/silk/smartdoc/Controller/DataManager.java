@@ -46,7 +46,7 @@ public class DataManager {
     ArrayList<Medicine> medResultArrayList;
     String searchValue;
     public ArrayList<Medicine> getReqMedicine(final String mediName){
-        /*searchValue = mediName;
+        searchValue = mediName;
 
         DatabaseReference databaseReferenceMed = FirebaseDatabase.getInstance().getReference().child("Medicines");
         medResultArrayList = new ArrayList<Medicine>();
@@ -56,9 +56,7 @@ public class DataManager {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                     Medicine medicine = postSnapshot.getValue(Medicine.class);
-
-                    String medName = medicine.name;
-                    Log.e("Dodo",medName);
+                    String medName = medicine.getName();
                     if(medName.equalsIgnoreCase(searchValue))
                         medResultArrayList.add(medicine);
 
@@ -69,7 +67,10 @@ public class DataManager {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });*/
+        });
+        return medResultArrayList;
+
+        /*
         medicines=new ArrayList<>();
         if(!(mediName.equals(""))){
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Medicines");
@@ -89,6 +90,7 @@ public class DataManager {
             });
         }
         return medicines;
+        */
     }
 
 
@@ -105,7 +107,6 @@ public class DataManager {
                     Chemical chemical = postSnapshot.getValue(Chemical.class);
 
                     String chemName = chemical.getName();
-                    Log.e("dodo",chemName);
                     if(chemName.equalsIgnoreCase(searchValue))
                         chemResultArrayList.add(chemical);
 
@@ -134,5 +135,6 @@ public class DataManager {
     public void updateForumQuery(Query query){}
     public void addMedicine(Medicine medicine){}
     public void addDiagnosticCenter(DiagnosticCenter diagnosticCenter){}
+
 
 }

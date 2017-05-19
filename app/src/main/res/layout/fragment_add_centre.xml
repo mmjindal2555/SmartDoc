@@ -13,7 +13,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/adressET"
+        android:id="@+id/addressET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -37,9 +37,11 @@
         android:inputType="textPersonName" />
 
     <Button
-        android:id="@+id/commitAddChemical"
+        android:id="@+id/commit5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Commit" />
+        android:background="@drawable/commit_button"
+        android:text="Commit"
+        android:textColor="#fff" />
 
 </LinearLayout>

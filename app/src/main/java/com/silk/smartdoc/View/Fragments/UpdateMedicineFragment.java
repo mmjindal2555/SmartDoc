@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.silk.smartdoc.Model.Medicine;
 import com.silk.smartdoc.R;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class UpdateMedicineFragment extends Fragment{
     EditText medNameET;
     EditText newPriceET;
     Button commitButton;
-    ArrayList<String> medicines;
+    ArrayList<Medicine> medicines;
     Button medSearchButton;
     String medSequence;
     @Override
@@ -50,20 +51,23 @@ public class UpdateMedicineFragment extends Fragment{
                 medSequence = medNameET.getText().toString();
                 if(!(medSequence.equals(""))){
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Medicines");
-                    medicines = new ArrayList<String>();
-                    medicines.add("");
+                    medicines = new ArrayList<Medicine>();
                     databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
                         @Override
                         public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
                             Iterable<DataSnapshot> children= dataSnapshot.getChildren();
+                            ArrayList<String> meds = new ArrayList<String>();
                             for (DataSnapshot child: children) {
-                                String medName = child.child("name").getValue(String.class);
+                                Medicine medicine = child.getValue(Medicine.class);
+                                String medName = medicine.getName();
                                 if(medName!=null && medName.contains(medSequence))
-                                    medicines.add(medName);
+                                    meds.add(medicine.getName());
                             }
-                            searchedMedsSpinner.setAdapter(new ArrayAdapter<String>(getActivity(),
-                                    android.R.layout.simple_spinner_item,medicines));
+                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
+                                    android.R.layout.simple_spinner_item,meds);
+                            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            searchedMedsSpinner.setAdapter(arrayAdapter);
                         }
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
@@ -84,9 +88,8 @@ public class UpdateMedicineFragment extends Fragment{
                     Toast.makeText(getActivity(),"Updated Medicine",Toast.LENGTH_LONG).show();
                     medNameET.setText("");
                     newPriceET.setText("");
-                    searchedMedsSpinner.setAdapter(new ArrayAdapter<String>(getActivity(),
+                    searchedMedsSpinner.setAdapter(new ArrayAdapter<>(getActivity(),
                             android.R.layout.simple_spinner_item,new ArrayList<String>()));
-
                 }
                 else{
                     Toast.makeText(getActivity(),"Select medicine first!!",Toast.LENGTH_LONG).show();

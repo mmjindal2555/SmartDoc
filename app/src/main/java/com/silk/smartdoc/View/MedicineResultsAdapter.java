@@ -6,13 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.silk.smartdoc.Model.Medicine;
 import com.silk.smartdoc.R;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -23,7 +20,7 @@ public class MedicineResultsAdapter extends BaseAdapter {
     List<Medicine> mObjects;
     private Context mContext;
     private SparseBooleanArray mSelectedItemsIds;
-    MedicineResultsAdapter(List<Medicine> objects, Context context){
+    public MedicineResultsAdapter(List<Medicine> objects, Context context){
         //super(context,R.layout.contents_layout,objects);
         this.mObjects = objects;
         mContext = context;
@@ -48,9 +45,9 @@ public class MedicineResultsAdapter extends BaseAdapter {
         {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.medicine_card, null);
             holder = new ViewHolder();
-            holder.price =(TextView)convertView.findViewById(R.id.medicinePrice);
-            holder.manufacturer = (TextView)convertView.findViewById(R.id.manufacturer);
-            holder.genericName = (TextView)convertView.findViewById(R.id.genericName);
+            holder.price =(TextView)convertView.findViewById(R.id.medPrice);
+            holder.manufacturer = (TextView)convertView.findViewById(R.id.manufacturerTextView);
+            holder.medicineName = (TextView)convertView.findViewById(R.id.medNameTV);
             convertView.setTag(holder);
             //convertView.setLongClickable(true);
 
@@ -61,9 +58,9 @@ public class MedicineResultsAdapter extends BaseAdapter {
         Medicine object = mObjects.get(position);
 
 
-        holder.genericName.setText(object.getChemicalName());
+        holder.medicineName.setText(object.getName());
         holder.price.setText("\u20B9"+object.getPrice());
-        holder.manufacturer.setText(object.getName());
+        holder.manufacturer.setText(object.getManufacturer());
 
 
         return convertView;
@@ -71,8 +68,12 @@ public class MedicineResultsAdapter extends BaseAdapter {
 
     public static class ViewHolder{
 
-        TextView genericName;
+        TextView medicineName;
         TextView manufacturer;
         TextView price;
+    }
+
+    public Context getmContext(){
+        return this.mContext;
     }
 }

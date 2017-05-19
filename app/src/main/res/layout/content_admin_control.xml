@@ -8,179 +8,183 @@
     tools:context="com.silk.smartdoc.View.AdminControl"
     tools:showIn="@layout/activity_admin_control">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="1dp">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_view_medicine"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="7dp"
-            android:elevation="4dp"
-            card_view:cardCornerRadius="4dp">
+            android:divider="@android:color/transparent"
+            android:dividerHeight="1dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp">
 
-
-            <LinearLayout
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/card_view_medicine"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="5dp">
+                android:layout_height="wrap_content"
+                android:layout_margin="7dp"
+                android:layout_marginTop="14dp"
+                android:elevation="4dp"
+                card_view:cardCornerRadius="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
-                    <Button
-                        android:id="@+id/addChemButton"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/button_unpressed"
-                        android:elevation="6dp"
-                        android:text="Add Chemical"
-                        android:textColor="#fff" />
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/addMedButton"
+                        <Button
+                            android:id="@+id/addChemButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/button_unpressed"
+                            android:elevation="6dp"
+                            android:text="Add Chemical"
+                            android:textColor="#fff" />
+
+                        <Button
+                            android:id="@+id/addMedButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/button_unpressed"
+                            android:elevation="6dp"
+                            android:text="Add Medicine"
+                            android:textColor="#fff" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/button_unpressed"
-                        android:elevation="6dp"
-                        android:text="Add Medicine"
-                        android:textColor="#fff" />
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/updateMedButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/button_unpressed"
+                            android:elevation="6dp"
+                            android:text="Update Medicine"
+                            android:textColor="#fff" />
+
+                        <Button
+                            android:id="@+id/removeMedButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/button_unpressed"
+                            android:elevation="6dp"
+                            android:text="Remove Medicine"
+                            android:textColor="#fff" />
+                    </LinearLayout>
+
+                    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/fragment_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp" />
+
 
                 </LinearLayout>
+            </android.support.v7.widget.CardView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/updateMedButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/button_unpressed"
-                        android:elevation="6dp"
-                        android:text="Update Medicine"
-                        android:textColor="#fff" />
-
-                    <Button
-                        android:id="@+id/removeMedButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/button_unpressed"
-                        android:elevation="6dp"
-                        android:text="Remove Medicine"
-                        android:textColor="#fff" />
-                </LinearLayout>
-
-                <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/fragment_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"/>
-
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_view_tests"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:elevation="4dp"
-            card_view:cardCornerRadius="4dp">
-
-            <LinearLayout
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/card_view_tests"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="5dp">
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:elevation="4dp"
+                card_view:cardCornerRadius="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
-                    <Button
-                        android:id="@+id/addCentreButton"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/button_unpressed"
-                        android:elevation="6dp"
-                        android:text="Add Diagnostic Centre"
-                        android:textColor="#fff" />
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/addTestButton"
+                        <Button
+                            android:id="@+id/addCentreButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/button_unpressed"
+                            android:elevation="6dp"
+                            android:text="Add Centre"
+                            android:textColor="#fff" />
+
+                        <Button
+                            android:id="@+id/addTestButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/button_unpressed"
+                            android:elevation="6dp"
+                            android:text="Add Test"
+                            android:textColor="#fff" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/button_unpressed"
-                        android:elevation="6dp"
-                        android:text="Add Test"
-                        android:textColor="#fff" />
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/updateCentreButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/button_unpressed"
+                            android:elevation="6dp"
+                            android:text="Update Test Details"
+                            android:textColor="#fff" />
+
+                        <Button
+                            android:id="@+id/removeTestButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/button_unpressed"
+                            android:elevation="6dp"
+                            android:text="Remove Test"
+                            android:textColor="#fff" />
+                    </LinearLayout>
+
+                    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/test_fragment_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp" />
+
 
                 </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/updateTestButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/button_unpressed"
-                        android:elevation="6dp"
-                        android:text="Update Test Details"
-                        android:textColor="#fff" />
-
-                    <Button
-                        android:id="@+id/removeTestButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/button_unpressed"
-                        android:elevation="6dp"
-                        android:text="Remove Test"
-                        android:textColor="#fff" />
-                </LinearLayout>
-
-                <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/test_fragment_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp" />
-
-
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-    </LinearLayout>
 </RelativeLayout>

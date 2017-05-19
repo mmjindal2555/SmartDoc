@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.silk.smartdoc.R;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Manish on 4/27/2017.
@@ -32,6 +33,9 @@ public class RemoveMedicineFragment extends Fragment{
     Button commitButton;
     ArrayList<String> medicines;
     String medSequence;
+    String keyOfMedicineToDelete;
+    DatabaseReference databaseReference;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,10 +52,8 @@ public class RemoveMedicineFragment extends Fragment{
                 medSequence = medSearchET.getText().toString();
                 if(!(medSequence.equals(""))){
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Medicines");
-                    medicines = new ArrayList<String>();
-                    medicines.add("");
+                    medicines = new ArrayList<>();
                     databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-
                         @Override
                         public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
                             Iterable<DataSnapshot> children= dataSnapshot.getChildren();
@@ -60,8 +62,10 @@ public class RemoveMedicineFragment extends Fragment{
                                 if(medName!=null && medName.contains(medSequence))
                                     medicines.add(medName);
                             }
-                            medSpinner.setAdapter(new ArrayAdapter<String>(getActivity(),
-                                    android.R.layout.simple_spinner_item,medicines));
+                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(),
+                                    android.R.layout.simple_spinner_item,medicines);
+                            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            medSpinner.setAdapter(arrayAdapter);
                         }
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
@@ -73,13 +77,37 @@ public class RemoveMedicineFragment extends Fragment{
         commitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Medicines");
+                databaseReference = FirebaseDatabase.getInstance().getReference();
                 if(!(medSpinner.getSelectedItem()==null)) {
-                    String medicineToDelete = medSpinner.getSelectedItem().toString();
-                    databaseReference.child(medicineToDelete).removeValue();
+                    final String medicineToDelete = medSpinner.getSelectedItem().toString();
+                    databaseReference.child("Medicines").child(medicineToDelete).removeValue();
+                    databaseReference.child("Chemicals").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
+                            Iterable<DataSnapshot> children= dataSnapshot.getChildren();
+                            for (DataSnapshot child: children) {
+                                String name = child.child("name").getValue(String.class);
+                                for(DataSnapshot childPostSnapshot : child.child("medicines").getChildren()){
+                                    String medName = childPostSnapshot.getValue(String.class);
+                                    if(medName.equals(medicineToDelete)){
+                                        keyOfMedicineToDelete = childPostSnapshot.getKey();
+                                        DatabaseReference dbr = FirebaseDatabase.getInstance()
+                                                .getReference().child("Chemicals").child(name)
+                                                .child("medicines").child(keyOfMedicineToDelete);
+                                        dbr.removeValue();
+                                    }
+                                }
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
                     medSearchET.setText("");
-                    medSpinner.setAdapter(new ArrayAdapter<String>(getActivity(),
-                            android.R.layout.simple_spinner_item,new ArrayList<String>()));
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
+                            android.R.layout.simple_spinner_item,new ArrayList<String>());
+                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    medSpinner.setAdapter(arrayAdapter);
                     Toast.makeText(getActivity(),"Medicine is deleted.",Toast.LENGTH_LONG).show();
                 }
             }

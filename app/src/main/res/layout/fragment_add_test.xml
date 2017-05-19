@@ -3,17 +3,12 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Spinner
-        android:id="@+id/chemicalsSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <EditText
-        android:id="@+id/medNameET"
+        android:id="@+id/testNameET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Complete name of the Medicine"
+        android:hint="Complete name of the Test"
         android:inputType="textPersonName" />
 
     <EditText
@@ -25,8 +20,10 @@
         android:inputType="textMultiLine" />
 
     <Button
-        android:id="@+id/commitButton2"
+        android:id="@+id/commitButton6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Commit" />
+        android:background="@drawable/commit_button"
+        android:text="Commit"
+        android:textColor="#fff" />
 </LinearLayout>

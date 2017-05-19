@@ -1,5 +1,6 @@
 package com.silk.smartdoc.View;
 
+import android.os.storage.StorageManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.silk.smartdoc.Controller.SmartDocManager;
 import com.silk.smartdoc.R;
 
@@ -19,7 +25,7 @@ import java.util.ArrayList;
 public class TestSearchActivity extends AppCompatActivity {
     ListView testSearchListView;
     ArrayList<String> testArrayList;
-
+    SmartDocManager sdm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -27,25 +33,30 @@ public class TestSearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test_search);
         testSearchListView = (ListView) findViewById(R.id.searchTestListView);
         testArrayList = new ArrayList<String>();
-        testArrayList.add("B12 test");
-        testArrayList.add("thyroid");
-        testArrayList.add("Uric Acid Test");
-        testArrayList.add("jjjjj");
-        testArrayList.add("gggg");
-        testArrayList.add("uytre");
-        testArrayList.add("hghghgh");
-        testArrayList.add("jjjjj");
-        testArrayList.add("B12 testm");
-        testArrayList.add("thyroidk");
-        testArrayList.add("Uric Acikd Test");
-        testArrayList.add("jjjjjk");
-        testArrayList.add("gggmg");
-        testArrayList.add("uytrke");
-        testArrayList.add("hghgkhgh");
-        testArrayList.add("jjjjkj");
 
-        testSearchListView.setAdapter(new ArrayAdapter<String>(TestSearchActivity.this,android.R.layout.simple_list_item_1, testArrayList));
+        //connect to the database
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        //make a reference of tests
+        databaseReference = databaseReference.child("Tests");
+        sdm= new SmartDocManager();
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //collect all the tests name in testArrayList
+                testArrayList=sdm.searchMgr.getAllTestName(dataSnapshot);
+                //set all the tests name in the ListView
+                testSearchListView.setAdapter(new ArrayAdapter<String>(TestSearchActivity.this,
+                        android.R.layout.simple_list_item_1, testArrayList));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //Set on onClickListener
         testSearchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long l) {

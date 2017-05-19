@@ -11,11 +11,48 @@
         android:background="#bbbbbb"
         android:logo="@mipmap/ic_launcher"
         xmlns:android="http://schemas.android.com/apk/res/android"/>
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        card_view:cardCornerRadius="4dp"
+        android:elevation="4dp"
+        android:layout_below="@+id/test_search_result_toolbar">
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Description"
+                android:id="@+id/descriptionFixedTextView"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Test Description"
+                android:id="@+id/testDescription"
+                android:layout_below="@+id/descriptionFixedTextView" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/searchResultListView"
-        android:layout_below="@+id/test_search_result_toolbar"
+        android:layout_below="@+id/card_view"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="1dp"
         android:layout_centerHorizontal="true"
         />
 

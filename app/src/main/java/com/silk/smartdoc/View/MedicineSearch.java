@@ -1,7 +1,9 @@
 package com.silk.smartdoc.View;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -10,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -36,6 +40,7 @@ public class MedicineSearch extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_medicine_search);
 
         searchListView = (ListView) findViewById(R.id.searchListView);
@@ -82,22 +87,6 @@ public class MedicineSearch extends AppCompatActivity {
             }
         });
 
-        /*
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("medicineList");
-        final FirebaseListAdapter<String> firebaseListAdapter = new FirebaseListAdapter<String>(
-                MedicineSearch.this,
-                String.class,
-                android.R.layout.simple_list_item_1,
-                databaseReference
-        ) {
-            @Override
-            protected void populateView(View v, String model, int position) {
-                TextView text = (TextView)v.findViewById(android.R.id.text1);
-                text.setText(model);
-            }
-
-        };
-        */
 
         searchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -108,6 +97,7 @@ public class MedicineSearch extends AppCompatActivity {
                 sdm.displayMgr.displayMedicineResult(MedicineSearch.this,value);
             }
         });
+
     }
 
 
@@ -119,7 +109,14 @@ public class MedicineSearch extends AppCompatActivity {
         inflater.inflate(R.menu.menu_medicine_search,menu);
 
         MenuItem searchItem = menu.findItem(R.id.medicine_search);
+
+        //get focus
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+
+        //InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        //imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
