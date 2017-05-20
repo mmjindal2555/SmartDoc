@@ -10,8 +10,8 @@ public class ForumManager {
     private SmartDocManager sdm;
     public void postQuery(Query query){}
     public void saveQuery(Query query){}
-    public Query answerQuery(Query query,Answer answer){
+    /*public Query answerQuery(Query query,Answer answer){
         Query q = new Query();
         return q;
-    }
+    }*/
 }

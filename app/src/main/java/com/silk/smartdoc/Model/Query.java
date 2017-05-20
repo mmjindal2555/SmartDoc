@@ -10,10 +10,11 @@ public class Query {
     ArrayList<Statement> answer;
     ArrayList<String> tags;
     String id;
-    /*
-    private String tags[];
-    private Question question;
-    private Answer answers[];
-    private boolean isAnswered;
-    private Boolean isExperience;*/
+    public Query(Statement question, ArrayList<Statement> answer,ArrayList<String> tags, String id )
+    {
+        this.question = question;
+        this.answer = answer;
+        this.tags = tags;
+        this.id = id;
+    }
 }
