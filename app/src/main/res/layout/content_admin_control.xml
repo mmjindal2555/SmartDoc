@@ -160,7 +160,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/button_unpressed"
                             android:elevation="6dp"
-                            android:text="Update Test Details"
+                            android:text="Link a Test"
                             android:textColor="#fff" />
 
                         <Button

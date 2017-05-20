@@ -4,8 +4,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Spinner;
 
+import com.silk.smartdoc.Model.StateVO;
 import com.silk.smartdoc.R;
+
+import java.util.ArrayList;
 
 public class PostQueryExperience extends AppCompatActivity {
 
@@ -13,6 +17,22 @@ public class PostQueryExperience extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_query_experience);
+        final String[] select_qualification = {
+                "Select Qualification", "10th / Below", "12th", "Diploma", "UG",
+                "PG", "Phd"};
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+
+        ArrayList<StateVO> listVOs = new ArrayList<>();
+
+        for (int i = 0; i < select_qualification.length; i++) {
+            StateVO stateVO = new StateVO();
+            stateVO.setTitle(select_qualification[i]);
+            stateVO.setSelected(false);
+            listVOs.add(stateVO);
+        }
+        MyAdapter myAdapter = new MyAdapter(PostQueryExperience.this, 0,
+                listVOs);
+        spinner.setAdapter(myAdapter);
     }
 
     @Override

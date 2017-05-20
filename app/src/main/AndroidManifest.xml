@@ -70,7 +70,7 @@
         <activity
             android:name=".View.CentreWebsite"
             android:label="@string/title_activity_centre_website"
-            android:theme="@style/AppTheme2"></activity>
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
