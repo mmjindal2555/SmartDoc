@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
-
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
     <application
         android:name=".Controller.SmartDocManager"
@@ -56,13 +56,21 @@
             android:name=".View.AdminControl"
             android:label="@string/title_activity_admin_control"
             android:theme="@style/AppTheme" />
+
         <service android:name=".Controller.AuthenticatorService">
-        <intent-filter>
-            <action android:name="android.accounts.AccountAuthenticator" />
-        </intent-filter>
-        <meta-data android:name="android.accounts.AccountAuthenticator"
-            android:resource="@xml/authenticator" />
-    </service>
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+
+        <activity
+            android:name=".View.CentreWebsite"
+            android:label="@string/title_activity_centre_website"
+            android:theme="@style/AppTheme2"></activity>
     </application>
 
 </manifest>
