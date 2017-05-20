@@ -30,7 +30,7 @@ import com.silk.smartdoc.View.TestSearchActivity;
 
 public class HealthForum extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    Person person;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +46,7 @@ public class HealthForum extends AppCompatActivity
 
         // getting Person who logged in
         Intent loginIntent = getIntent();
-        Person person = loginIntent.getParcelableExtra("Person");
+        person = loginIntent.getParcelableExtra("Person");
 
 
 
@@ -69,9 +69,10 @@ public class HealthForum extends AppCompatActivity
     }
 
     public void openPostQueryActivity(View view){
-        Toast.makeText(HealthForum.this, "This functionality is coming soon",Toast.LENGTH_LONG).show();
-        //Intent intent = new Intent(this,PostQueryExperience.class);
-        //startActivity(intent);
+        //Toast.makeText(HealthForum.this, "This functionality is coming soon",Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this,PostQueryExperience.class);
+        intent.putExtra("Person",person);
+        startActivity(intent);
     }
 
     public void openAnswerQueryActivity(View view){
