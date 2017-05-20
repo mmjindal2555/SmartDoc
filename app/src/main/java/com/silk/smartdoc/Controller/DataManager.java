@@ -128,10 +128,10 @@ public class DataManager {
     public Query[] getAnswerQuery(Test test){
         return new Query[1];
     }
-    public Query updateQuery(Answer queryAnswer){
-        Query q = new Query();
-        return q;
-    }
+    /*public Query updateQuery(Answer queryAnswer){
+        //Query q = new Query();
+        return null;
+    }*/
     public void updateForumQuery(Query query){}
     public void addMedicine(Medicine medicine){}
     public void addDiagnosticCenter(DiagnosticCenter diagnosticCenter){}
