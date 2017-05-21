@@ -76,9 +76,9 @@ public class HealthForum extends AppCompatActivity
     }
 
     public void openAnswerQueryActivity(View view){
-        Toast.makeText(HealthForum.this, "This functionality is coming soon",Toast.LENGTH_LONG).show();
-        //Intent intent = new Intent(this,AnswerQuery.class);
-        //startActivity(intent);
+        //Toast.makeText(HealthForum.this, "This functionality is coming soon",Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this,AnswerQuery.class);
+        startActivity(intent);
     }
 
     @Override

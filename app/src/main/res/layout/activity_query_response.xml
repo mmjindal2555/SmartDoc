@@ -1,0 +1,108 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.silk.smartdoc.View.TestSearchResultsActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/test_search_result_toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:background="#bbbbbb"
+        android:logo="@mipmap/ic_launcher"
+        xmlns:android="http://schemas.android.com/apk/res/android"/>
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="4dp"
+        android:elevation="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="37dp">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/profilePicImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="false"
+                android:minHeight="30dp"
+                android:minWidth="30dp"
+                android:src="@drawable/ic_user" />
+
+            <TextView
+                android:id="@+id/usernameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/profilePicImageView"
+                android:text="username"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/queryTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/usernameTextView"
+                android:layout_below="@+id/usernameTextView"
+                android:text="query"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <ImageView
+                android:id="@+id/thumbsUpImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/usernameTextView"
+                android:layout_below="@+id/queryTextView"
+                android:src="@drawable/ic_action_thumb_up" />
+
+            <TextView
+                android:id="@+id/upVoteTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/thumbsUpImageView"
+                android:layout_toEndOf="@+id/thumbsUpImageView"
+                android:text="TextView" />
+
+            <ImageView
+                android:id="@+id/thumbsDownImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/thumbsUpImageView"
+                android:layout_toEndOf="@+id/upVoteTextView"
+                android:src="@drawable/ic_action_thumb_down"
+                />
+            <TextView
+                android:id="@+id/downVoteTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:layout_alignTop="@+id/thumbsDownImageView"
+                android:layout_toEndOf="@+id/thumbsDownImageView" />
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchResultListView"
+        android:layout_below="@+id/card_view"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="1dp"
+        android:layout_centerHorizontal="true"
+        />
+
+
+
+</RelativeLayout>

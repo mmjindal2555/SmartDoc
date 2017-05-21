@@ -5,7 +5,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:id="@+id/relativeLayout2">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -34,30 +35,23 @@
             android:layout_below="@+id/usernameTextView"
             android:layout_alignLeft="@+id/usernameTextView" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/thumbsUpImageView"
-            android:layout_below="@+id/queryTextView"
-            android:src="@drawable/ic_action_thumb_up"
-            android:layout_centerHorizontal="true" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/thumbsDownImageView"
-            android:src="@drawable/ic_action_thumb_down"
-            android:layout_toRightOf="@+id/thumbsUpImageView"
-            android:layout_alignTop="@+id/thumbsUpImageView"
-            android:paddingLeft="20dp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/reportAbuseImageView"
-            android:src="@drawable/ic_action_angry_64"
-            android:layout_alignTop="@+id/thumbsUpImageView"
-            android:layout_toRightOf="@+id/thumbsDownImageView"
-            android:paddingLeft="20dp" />
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/numberOfAnswers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView7"
+        android:layout_alignBottom="@+id/textView7"
+        android:layout_toStartOf="@+id/textView7"
+        android:padding="5dp" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/relativeLayout2"
+        android:layout_alignParentEnd="true"
+        android:padding="5dp"
+        android:text="Replies" />
 </RelativeLayout>

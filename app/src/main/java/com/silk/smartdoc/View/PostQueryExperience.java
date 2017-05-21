@@ -7,9 +7,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.silk.smartdoc.Model.KeyPairBoolData;
 import com.silk.smartdoc.Model.Person;
 import com.silk.smartdoc.Model.Query;
+import com.silk.smartdoc.Model.Question;
 import com.silk.smartdoc.Model.Statement;
 import com.silk.smartdoc.Model.Test;
 import com.silk.smartdoc.R;
@@ -101,15 +104,69 @@ public class PostQueryExperience extends AppCompatActivity {
                         });
 
 
-                        String res="";
                         for (int i = 0; i < items.size(); i++) {
                             if (items.get(i).isSelected()) {
                                 tags.add(items.get(i).getName());
-                                res += items.get(i).getName() + " : " + items.get(i).isSelected()+"\n";
                             }
                         }
-                        Toast.makeText(getApplicationContext(),
-                                res, Toast.LENGTH_LONG).show();
+
+
+
+
+
+                        //Fetch from DataBase and filter by tags
+                        final ArrayList<Query> queries = new ArrayList<Query>();
+                        final ListView listView = (ListView) findViewById(R.id.listView);
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Query query = queries.get(position);
+                                Intent i = new Intent(PostQueryExperience.this,QueryResponse.class);
+                                i.putExtra("Query",query);
+                                startActivity(i);
+                            }
+                        });
+                        DatabaseReference databaseReferenceMed = FirebaseDatabase.getInstance().getReference().child("Query");
+                        databaseReferenceMed.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                Iterable<DataSnapshot> children= dataSnapshot.getChildren();
+
+                                for (DataSnapshot child: children) {
+                                    ArrayList<String> questionTags = (ArrayList<String>)child.child("tags").getValue();
+
+                                    for(String t : tags)
+                                    {
+                                        if(questionTags.contains(t))
+                                        {
+                                            queries.add(child.getValue(Query.class));
+                                            break;
+                                        }
+                                    }
+                                }
+                                //searchListView.setAdapter(new ArrayAdapter<String>(MedicineSearch.this, android.R.layout.simple_list_item_1, medArrayList));
+                                listView.setAdapter(new PostQueryAdapter(queries,PostQueryExperience.this));
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+
+
+
+
+
+
+
+
+
+
+
                         commitButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
