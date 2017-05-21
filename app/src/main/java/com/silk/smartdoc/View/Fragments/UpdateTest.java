@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -57,7 +58,28 @@ public class UpdateTest extends Fragment {
         commitButton = (Button)view.findViewById(R.id.commitButton7);
         searchCentre = (Button)view.findViewById(R.id.searchCentre2);
         searchTest = (Button)view.findViewById(R.id.searchTestButon);
+        centreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                centreSearchET.setText(centreSpinner.getSelectedItem().toString());
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        testSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                testSearchET.setText(testSpinner.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         searchCentre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +96,7 @@ public class UpdateTest extends Fragment {
                             for (DataSnapshot child: children) {
                                 DiagnosticCenter centre = child.getValue(DiagnosticCenter.class);
                                 String name = centre.getName();
-                                if(name!=null && name.contains(sequence))
+                                if(name!=null && name.toLowerCase().contains(sequence.toLowerCase()))
                                     cens.add(centre.getName());
                             }
                             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(),
@@ -104,7 +126,7 @@ public class UpdateTest extends Fragment {
                             for (DataSnapshot child: children) {
                                 Test t = child.getValue(Test.class);
                                 String name = t.getName();
-                                if(name!=null && name.contains(testSequence))
+                                if(name!=null && name.toLowerCase().contains(testSequence.toLowerCase()))
                                     ts.add(t.getName());
                             }
                             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
@@ -161,7 +183,7 @@ public class UpdateTest extends Fragment {
                                                 centreSearchET.setText("");
                                                 testSearchET.setText("");
                                                 priceET.setText("");
-                                                Toast.makeText(getActivity(),"Updated!",Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getActivity(),"Test linked to centre",Toast.LENGTH_LONG).show();
                                             }
 
                                         }

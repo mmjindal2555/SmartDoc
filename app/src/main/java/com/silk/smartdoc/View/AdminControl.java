@@ -176,7 +176,7 @@ public class AdminControl extends AppCompatActivity {
         medicineButtonClicked = newButtonIndex;
     }
     private void setTestButtonsLook(int newButtonIndex) {
-        switch(medicineButtonClicked){
+        switch(testButtonClicked){
             case 2: addTestButton.setBackground(getDrawable(R.drawable.button_unpressed)); break;
             case 3: updateCentreButton.setBackground(getDrawable(R.drawable.button_unpressed)); break;
             case 1: addCentreButton.setBackground(getDrawable(R.drawable.button_unpressed)); break;
@@ -190,6 +190,6 @@ public class AdminControl extends AppCompatActivity {
             //case 4: removeMedicineButton.setBackground(getDrawable(R.drawable.button_pressed)); break;
 
         }
-        medicineButtonClicked = newButtonIndex;
+        testButtonClicked = newButtonIndex;
     }
 }

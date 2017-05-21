@@ -50,6 +50,7 @@ public class AddChemicalFragment extends Fragment{
                 else {
                     Chemical chemical = new Chemical( name, description, isGeneric, new ArrayList<String>());
                     databaseReference.child(name).setValue(chemical);
+                    Toast.makeText(getActivity(),"Chemical is added!",Toast.LENGTH_LONG).show();
                     descriptionET.setText("");
                     nameET.setText("");
                     isGenericSwitch.setChecked(false);

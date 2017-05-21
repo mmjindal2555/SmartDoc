@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -64,6 +65,7 @@ public class AddMedicineFragment extends Fragment{
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Chemicals");
         chemArrayList = new ArrayList<>();
+
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -119,6 +121,7 @@ public class AddMedicineFragment extends Fragment{
                             databaseReference.child("Chemicals").child(chemicalName)
                                     .child("medicines").setValue(medicines);
                             medicines = new ArrayList<>();
+                            Toast.makeText(getActivity(),"Medicine Is added",Toast.LENGTH_LONG).show();
                         }
                         @Override
                         public void onCancelled(DatabaseError databaseError) {

@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
 
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+
     <application
         android:name=".Controller.SmartDocManager"
         android:allowBackup="true"
@@ -66,7 +69,14 @@
                 android:resource="@xml/authenticator" />
         </service>
 
+
         <activity android:name=".View.QueryResponse"></activity>
+
+        <activity
+            android:name=".View.CentreWebsite"
+            android:label="@string/title_activity_centre_website"
+            android:theme="@style/AppTheme"></activity>
+
     </application>
 
 </manifest>
