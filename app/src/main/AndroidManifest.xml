@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
 
-
     <application
         android:name=".Controller.SmartDocManager"
         android:allowBackup="true"
@@ -56,13 +55,18 @@
             android:name=".View.AdminControl"
             android:label="@string/title_activity_admin_control"
             android:theme="@style/AppTheme" />
+
         <service android:name=".Controller.AuthenticatorService">
-        <intent-filter>
-            <action android:name="android.accounts.AccountAuthenticator" />
-        </intent-filter>
-        <meta-data android:name="android.accounts.AccountAuthenticator"
-            android:resource="@xml/authenticator" />
-    </service>
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+
+        <activity android:name=".View.QueryResponse"></activity>
     </application>
 
 </manifest>
