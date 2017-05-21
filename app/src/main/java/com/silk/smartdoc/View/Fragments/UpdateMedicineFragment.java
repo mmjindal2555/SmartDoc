@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,7 +45,17 @@ public class UpdateMedicineFragment extends Fragment{
         newPriceET = (EditText)view.findViewById(R.id.newPriceET);
         commitButton = (Button)view.findViewById(R.id.commitButton4);
         medSearchButton = (Button)view.findViewById(R.id.searchMedButon);
+        searchedMedsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                medNameET.setText(searchedMedsSpinner.getSelectedItem().toString());
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         medSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,7 +72,7 @@ public class UpdateMedicineFragment extends Fragment{
                             for (DataSnapshot child: children) {
                                 Medicine medicine = child.getValue(Medicine.class);
                                 String medName = medicine.getName();
-                                if(medName!=null && medName.contains(medSequence))
+                                if(medName!=null && medName.toLowerCase().contains(medSequence.toLowerCase()))
                                     meds.add(medicine.getName());
                             }
                             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
@@ -85,7 +96,7 @@ public class UpdateMedicineFragment extends Fragment{
                     String priceString = newPriceET.getText().toString();
                     double price = Double.parseDouble(priceString);
                     databaseReference.child(medicineToDelete).child("price").setValue(price);
-                    Toast.makeText(getActivity(),"Updated Medicine",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),"Updated Medicine!",Toast.LENGTH_LONG).show();
                     medNameET.setText("");
                     newPriceET.setText("");
                     searchedMedsSpinner.setAdapter(new ArrayAdapter<>(getActivity(),

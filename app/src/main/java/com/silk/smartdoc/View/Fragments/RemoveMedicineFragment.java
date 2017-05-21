@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,6 +47,17 @@ public class RemoveMedicineFragment extends Fragment{
         medSpinner = (Spinner)view.findViewById(R.id.medicineSpinner);
         commitButton = (Button)view.findViewById(R.id.commitButton3);
 
+        medSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                medSearchET.setText(medSpinner.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         medSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,7 +71,7 @@ public class RemoveMedicineFragment extends Fragment{
                             Iterable<DataSnapshot> children= dataSnapshot.getChildren();
                             for (DataSnapshot child: children) {
                                 String medName = child.child("name").getValue(String.class);
-                                if(medName!=null && medName.contains(medSequence))
+                                if(medName!=null && medName.toLowerCase().contains(medSequence.toLowerCase()))
                                     medicines.add(medName);
                             }
                             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(),
