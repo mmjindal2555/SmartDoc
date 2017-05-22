@@ -48,7 +48,7 @@ public class SearchableSpinner extends android.support.v7.widget.AppCompatSpinne
         final int N = a.getIndexCount();
         for (int i = 0; i < N; ++i) {
             int attr = a.getIndex(i);
-            if (attr == R.styleable.SearchableSpinner_hintText) {
+            if (attr == R.styleable.SearchableSpinner_hintText1) {
                 _strHintText = a.getString(attr);
             }
         }
