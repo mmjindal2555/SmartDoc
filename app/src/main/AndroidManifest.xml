@@ -72,7 +72,10 @@
             android:name=".View.CentreWebsite"
             android:label="@string/title_activity_centre_website"
             android:theme="@style/AppTheme" />
-        <activity android:name=".View.AnswerResponse"></activity>
+        <activity android:name=".View.AnswerResponse" />
+        <activity android:name=".View.MyQuestions" />
+        <activity android:name=".View.MyQuestionsResponse" />
+        <activity android:name=".View.MyAnswers"></activity>
     </application>
 
 </manifest>

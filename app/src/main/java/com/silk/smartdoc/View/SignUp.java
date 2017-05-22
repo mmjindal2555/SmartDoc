@@ -29,6 +29,7 @@ import com.silk.smartdoc.Model.Person;
 import com.silk.smartdoc.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -255,7 +256,7 @@ public class SignUp extends AppCompatActivity {
                         && sexIsValid && isDocValid){
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users");
                     String id = ref.push().getKey();
-                    Person person = new Person(name, email, password, dob, sex, email, isDoctor, regno,id);
+                    Person person = new Person(name, email, password, dob, sex, email, isDoctor, regno,new ArrayList<String>(),new ArrayList<String>(),id);
                     ref.child(id).setValue(person);
                     Toast.makeText(SignUp.this,"Thank you for Signing Up!",Toast.LENGTH_LONG).show();
                     finish();

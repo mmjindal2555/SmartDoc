@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static com.silk.smartdoc.R.id.listView;
+import static com.silk.smartdoc.R.id.my_questions;
 
 public class AnswerResponse extends AppCompatActivity {
     boolean flag=false;
@@ -64,7 +65,7 @@ public class AnswerResponse extends AppCompatActivity {
             public void onClick(View v) {
                 EditText answerText = (EditText) findViewById(R.id.answerText);
                 String answer = answerText.getText().toString();
-                if(answerText.toString().trim().equals("")||answerText==null){
+                if(answerText.toString().trim().equals("")){
                     Toast.makeText(AnswerResponse.this,"Enter your answer",Toast.LENGTH_LONG).show();
                 }
                 else{
@@ -73,6 +74,68 @@ public class AnswerResponse extends AppCompatActivity {
                     String id = db.push().getKey();
                     Statement statement = new Statement(person.getEmail(),id,answer, new Date(),new ArrayList<String>(),new ArrayList<String>());
                     db.child(id).setValue(statement);
+
+                    /*/Person
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users");
+                    String email = person.getEmail() ;
+                    String user_id = person.getId();
+                    ArrayList<String> myExperience = person.getMyExperience();
+                    if(myExperience==null)
+                        myExperience = new ArrayList<String>();
+                    ArrayList<String> myQuestion = person.getMyQuestions();
+                    if(myQuestion==null)
+                        myQuestion = new ArrayList<String>();
+
+                    myExperience.add(query.getId());
+                    Person p = new Person(person.getName(), email, person.getPassword(), person.getDateOfBirth()
+                            , person.getSex(), email, person.getIsDoctor(), person.getRegistrationNumber(),
+                            myQuestion,myExperience,
+                            user_id);
+                    //person.setMyExperience(myExperience);
+                    ref.child(user_id).setValue(p);*/
+
+
+
+                    ///////////////////////////////
+                    final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users");
+                    //reference = reference;
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Iterable<DataSnapshot> children= dataSnapshot.getChildren();
+                            ArrayList<String> myExperience = new ArrayList<String>();;
+                            ArrayList<String> myQuestion = new ArrayList<String>();;
+                            String email = person.getEmail() ;
+                            String user_id = person.getId();
+                            for (DataSnapshot child: children) {
+                                String id=child.child("id").getValue(String.class);
+                                user_id = person.getId();
+                                if(id.equals(user_id))
+                                {
+                                    myExperience = (ArrayList<String>) child.child("myExperience").getValue();
+                                    if(myExperience==null)
+                                        myExperience = new ArrayList<String>();
+                                    myExperience.add(query.getId());
+
+                                    myQuestion =(ArrayList<String>) child.child("myQuestions").getValue();
+                                    if(myQuestion==null)
+                                        myQuestion = new ArrayList<String>();
+                                    break;
+
+                                }
+                            }
+                            Person p = new Person(person.getName(), email, person.getPassword(), person.getDateOfBirth()
+                                    , person.getSex(), email, person.getIsDoctor(), person.getRegistrationNumber(),
+                                    myQuestion,myExperience,
+                                    user_id);
+                            //person.setMyExperience(myExperience);
+                            reference.child(user_id).setValue(p);
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
 
                     //Query
                     DatabaseReference db1 = FirebaseDatabase.getInstance().getReference().child("Query");
