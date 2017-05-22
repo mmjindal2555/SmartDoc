@@ -1,9 +1,13 @@
 package com.silk.smartdoc.View;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,11 +24,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.silk.smartdoc.Controller.LoggingController;
+import com.silk.smartdoc.Controller.SmartDocAccountManager;
 import com.silk.smartdoc.Controller.SmartDocManager;
 import com.silk.smartdoc.Model.Person;
 import com.silk.smartdoc.R;
 
 public class LoginActivity extends AppCompatActivity {
+
+
+    public final static String ARG_ACCOUNT_TYPE = "ACCOUNT_TYPE";
+    public final static String ARG_AUTH_TYPE = "AUTH_TYPE";
+    public final static String AUTH_TOKEN_TYPE = "silk.smartdoc.com";
+    public final static String ARG_ACCOUNT_NAME = "ACCOUNT_NAME";
+    public final static String ARG_IS_ADDING_NEW_ACCOUNT = "IS_ADDING_ACCOUNT";
+
 
     TextView sdLogo;
     EditText usernameET;
@@ -37,6 +50,28 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AccountManager am = AccountManager.get(this); // "this" references the current Context
+        Account[] accounts = am.getAccountsByType(AUTH_TOKEN_TYPE);
+        loggingController = new LoggingController();
+        if(accounts.length > 0){
+            final String user = accounts[0].name;
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+            ref = ref.child("Users");
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Person person = loggingController.getAlreadyPerson(dataSnapshot,user);
+                    startHealthForumActivity(person);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
         setContentView(R.layout.activity_login);
         sdLogo = (TextView)findViewById(R.id.sdLogo);
         usernameET = (EditText)findViewById(R.id.usernameEditText);
@@ -47,10 +82,6 @@ public class LoginActivity extends AppCompatActivity {
         Typeface myCustomFont = Typeface.createFromAsset(getAssets(), "font/Satisfy-Regular.ttf");
         sdLogo.setTypeface(myCustomFont);
         getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarcolor));
-        // Write a message to the database
-        //FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //DatabaseReference myRef = database.getReference("message");
-        //myRef.setValue("Hello, World!");
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,21 +90,19 @@ public class LoginActivity extends AppCompatActivity {
                 final String password = passwordET.getText().toString();
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                 reference = reference.child("Users");
-                final LoggingController loggingController = new LoggingController();
                 if(username.equals("admin") && password.equals("admin")){
                     Intent intent = new Intent(LoginActivity.this, AdminControl.class);
                     startActivity(intent);
                 }
                 else {
                     reference.addValueEventListener(new ValueEventListener() {
-                          @Override
+                        @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
+
                             Person person = loggingController.isValid(dataSnapshot, username, password);
                             if(person!=null) {
-                                Intent intent = new Intent(LoginActivity.this, HealthForum.class);
-                                intent.putExtra("Name",person.getName());
-                                intent.putExtra("Username",person.getEmail());
-                                startActivity(intent);
+                                finishLogin(person);
+
                             }
                             else {
                                 Toast.makeText(LoginActivity.this, "Incorrect Username and/or Password"
@@ -100,4 +129,26 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+    private void finishLogin(Person person) {
+
+        AccountManager mAccountManager = AccountManager.get(LoginActivity.this);
+        String accountName = person.getEmail();
+        String accountPassword = person.getPassword();
+        final Account account = new Account(accountName, AUTH_TOKEN_TYPE);
+
+        // Creating the account on the device and setting the auth token we got
+        // (Not setting the auth token will cause another call to the server to authenticate the user)
+        String authtokenType = "Bearer";
+        mAccountManager.addAccountExplicitly(account, accountPassword, null);
+        mAccountManager.setAuthToken(account, authtokenType, accountName);
+        startHealthForumActivity(person);
+    }
+    public void startHealthForumActivity(Person person){
+        Intent i = new Intent(LoginActivity.this, HealthForum.class);
+        i.putExtra("Person",person);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+    }
+
 }

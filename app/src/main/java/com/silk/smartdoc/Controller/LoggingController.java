@@ -21,5 +21,18 @@ public class LoggingController {
         }
         return pers;
     }
+    public Person getAlreadyPerson(DataSnapshot snapshot, String username){
+        Person pers = null;
+        for(DataSnapshot users: snapshot.getChildren()){
+            Person person = users.getValue(Person.class);
+            String dataUsername = person.getEmail();
+            String dataPassword = person.getPassword();
+            if(username.equals(dataUsername)){
+                pers = person;
+                break;
+            }
+        }
+        return pers;
+    }
     
 }

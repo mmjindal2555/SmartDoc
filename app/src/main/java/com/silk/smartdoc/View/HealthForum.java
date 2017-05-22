@@ -1,9 +1,14 @@
 package com.silk.smartdoc.View;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.accounts.AccountManagerCallback;
+import android.accounts.AccountManagerFuture;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,16 +18,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.silk.smartdoc.Controller.SmartDocAccountManager;
 import com.silk.smartdoc.Controller.SmartDocManager;
+import com.silk.smartdoc.Model.Person;
 import com.silk.smartdoc.R;
 import com.silk.smartdoc.View.MedicineSearch;
 import com.silk.smartdoc.View.TestSearchActivity;
 
 public class HealthForum extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    Person person;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,35 +44,42 @@ public class HealthForum extends AppCompatActivity
         setSupportActionBar(toolbar);
         getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarcolor));
 
+        // getting Person who logged in
+        Intent loginIntent = getIntent();
+        person = loginIntent.getParcelableExtra("Person");
+
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+        TextView nameTV = (TextView)header.findViewById(R.id.nameTV);
+        TextView emailTV = (TextView)header.findViewById(R.id.emailTV);
+
+        nameTV.setText(person.getName());
+        emailTV.setText(person.getEmail());
         drawer.setBackgroundColor(getResources().getColor(R.color.accentcolor));
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(this);
     }
 
     public void openPostQueryActivity(View view){
-
-        //Intent intent = new Intent(this,PostQueryExperience.class);
-
-        Toast.makeText(HealthForum.this, "This funcionality is coming soon",Toast.LENGTH_LONG).show();
-        
-
-        //startActivity(intent);
+        //Toast.makeText(HealthForum.this, "This functionality is coming soon",Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this,PostQueryExperience.class);
+        intent.putExtra("Person",person);
+        startActivity(intent);
     }
 
     public void openAnswerQueryActivity(View view){
-
-        //Intent intent = new Intent(this,AnswerQuery.class);
-
-        Toast.makeText(HealthForum.this, "This funcionality is coming soon",Toast.LENGTH_LONG).show();
-        
-
-        //startActivity(intent);
+        //Toast.makeText(HealthForum.this, "This functionality is coming soon",Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this,AnswerQuery.class);
+        intent.putExtra("Person",person);
+        startActivity(intent);
     }
 
     @Override
@@ -106,22 +121,47 @@ public class HealthForum extends AppCompatActivity
         int id = item.getItemId();
         SmartDocManager sdm = (SmartDocManager)getApplicationContext();
         if (id == R.id.health_forum) {
-            Intent intents = new Intent(this,HealthForum.class);
-            startActivity(intents);
+            Toast.makeText(HealthForum.this, "This funcionality is coming soon",Toast.LENGTH_LONG).show();
         } else if (id == R.id.medical_tests) {
-            sdm.displayMgr.displayTestSearchPage(this);
-            //Intent intents = new Intent(this,TestSearchActivity.class);
-            //startActivity(intents);
-        } else if (id == R.id.medicines) {
-            sdm.displayMgr.displayMedicineSerachPage(this);
-        } else if (id == R.id.my_questions) {
-            Intent intents = new Intent(this,HealthForum.class);
-            startActivity(intents);
-        } else if (id == R.id.my_experiences) {
-            Intent intents = new Intent(this,HealthForum.class);
-            startActivity(intents);
-        }
 
+            sdm.displayMgr.displayTestSearchPage(this);
+
+        } else if (id == R.id.medicines) {
+
+            sdm.displayMgr.displayMedicineSerachPage(this);
+
+        } else if (id == R.id.my_questions) {
+            Intent intent = new Intent(this,MyQuestions.class);
+            intent.putExtra("Person",person);
+            startActivity(intent);
+        } else if (id == R.id.my_experiences) {
+            Intent intent = new Intent(this,MyAnswers.class);
+            intent.putExtra("Person",person);
+            startActivity(intent);
+        }
+        else if(id == R.id.logout){
+            AccountManager accountManager = AccountManager.get(HealthForum.this);
+            Account[] accounts = accountManager.getAccountsByType(LoginActivity.AUTH_TOKEN_TYPE);
+            for(Account account : accounts) {
+                accountManager.removeAccount(account, new AccountManagerCallback<Boolean>() {
+                    @Override
+                    public void run(AccountManagerFuture<Boolean> future) {
+                        try {
+                            if (future.getResult()) {
+                                // do something
+                                Intent i = new Intent(HealthForum.this, LoginActivity.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(i);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, null);
+            }
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

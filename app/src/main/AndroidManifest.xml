@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.silk.smartdoc">
 
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".Controller.SmartDocManager"
         android:allowBackup="true"
@@ -52,6 +57,25 @@
             android:label="@string/title_activity_admin_control"
             android:theme="@style/AppTheme" />
 
+        <service android:name=".Controller.AuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+
+        <activity android:name=".View.QueryResponse" />
+        <activity
+            android:name=".View.CentreWebsite"
+            android:label="@string/title_activity_centre_website"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".View.AnswerResponse" />
+        <activity android:name=".View.MyQuestions" />
+        <activity android:name=".View.MyQuestionsResponse" />
+        <activity android:name=".View.MyAnswers"></activity>
     </application>
 
 </manifest>

@@ -75,6 +75,8 @@ public class AdminControl extends AppCompatActivity {
         addCentreFragment = new AddCentre();
         updateTestFragment = new UpdateTest();
 
+        setTestButtonsLook(1);
+
         fragmentTransaction.add(R.id.fragment_container, addChemicalFragment);
         fragmentTransaction.add(R.id.test_fragment_container, addCentreFragment);
 
@@ -84,10 +86,10 @@ public class AdminControl extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setMedicineButtonsLook(1);
+                setTestButtonsLook(testButtonClicked);
                 addChemicalButton.setBackground(getDrawable(R.drawable.button_pressed));
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container, addChemicalFragment);
-
                 fragmentTransaction.commit();
             }
         });
@@ -95,9 +97,9 @@ public class AdminControl extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setMedicineButtonsLook(2);
+                setTestButtonsLook(testButtonClicked);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container, addMedicineFragment);
-
                 fragmentTransaction.commit();
 
             }
@@ -106,6 +108,7 @@ public class AdminControl extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setMedicineButtonsLook(3);
+                setTestButtonsLook(testButtonClicked);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container, updateMedicineFragment);
                 fragmentTransaction.commit();
@@ -116,6 +119,7 @@ public class AdminControl extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setMedicineButtonsLook(4);
+                setTestButtonsLook(testButtonClicked);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container, removeMedicineFragment);
                 fragmentTransaction.commit();
@@ -126,6 +130,7 @@ public class AdminControl extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setTestButtonsLook(2);
+                setMedicineButtonsLook(medicineButtonClicked);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.test_fragment_container, addTestFragment);
                 fragmentTransaction.commit();
@@ -135,6 +140,7 @@ public class AdminControl extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setTestButtonsLook(1);
+                setMedicineButtonsLook(medicineButtonClicked);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.test_fragment_container, addCentreFragment);
                 fragmentTransaction.commit();
@@ -144,6 +150,7 @@ public class AdminControl extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setTestButtonsLook(3);
+                setMedicineButtonsLook(medicineButtonClicked);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.test_fragment_container, updateTestFragment);
                 fragmentTransaction.commit();
@@ -169,7 +176,7 @@ public class AdminControl extends AppCompatActivity {
         medicineButtonClicked = newButtonIndex;
     }
     private void setTestButtonsLook(int newButtonIndex) {
-        switch(medicineButtonClicked){
+        switch(testButtonClicked){
             case 2: addTestButton.setBackground(getDrawable(R.drawable.button_unpressed)); break;
             case 3: updateCentreButton.setBackground(getDrawable(R.drawable.button_unpressed)); break;
             case 1: addCentreButton.setBackground(getDrawable(R.drawable.button_unpressed)); break;
@@ -183,6 +190,6 @@ public class AdminControl extends AppCompatActivity {
             //case 4: removeMedicineButton.setBackground(getDrawable(R.drawable.button_pressed)); break;
 
         }
-        medicineButtonClicked = newButtonIndex;
+        testButtonClicked = newButtonIndex;
     }
 }

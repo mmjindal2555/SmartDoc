@@ -29,6 +29,7 @@ import com.silk.smartdoc.Model.Person;
 import com.silk.smartdoc.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -222,6 +223,7 @@ public class SignUp extends AppCompatActivity {
                     isDoctor = true;
                 else
                     isDoctor = false;
+                boolean isDocValid = true;
                 Boolean isValidEmail = android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
                 if(email.equals("") || (!isValidEmail))
                 {
@@ -230,6 +232,12 @@ public class SignUp extends AppCompatActivity {
                     emailEt.setText("");
                     emailEt.setHint("Enter Your Email-id in correct format ");
                     isValidEmail = false;
+                }
+                if(isDoctor && regno.equals("")){
+                    registrationET.setBackground(getDrawable(R.drawable.error_edit_text));
+                    registrationET.setHintTextColor(getResources().getColor(R.color.error_on_blue));
+                    registrationET.setHint("Registration Number Required");
+                    isDocValid = false;
                 }
                 if(password.equals("")){
                     passwordET.setBackground(getDrawable(R.drawable.error_edit_text));
@@ -245,10 +253,10 @@ public class SignUp extends AppCompatActivity {
                     cnfPassIsValid = false;
                 }
                 if(nameIsValid && dobIsValid && isValidEmail && passwordIsValid && cnfPassIsValid
-                        && sexIsValid){
+                        && sexIsValid && isDocValid){
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users");
                     String id = ref.push().getKey();
-                    Person person = new Person(name, email, password, dob, sex, email, isDoctor, regno,id);
+                    Person person = new Person(name, email, password, dob, sex, email, isDoctor, regno,new ArrayList<String>(),new ArrayList<String>(),id);
                     ref.child(id).setValue(person);
                     Toast.makeText(SignUp.this,"Thank you for Signing Up!",Toast.LENGTH_LONG).show();
                     finish();
