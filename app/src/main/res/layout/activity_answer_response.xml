@@ -28,6 +28,7 @@
             android:id="@+id/relativeLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
             android:padding="5dp">
 
             <ImageView
@@ -65,10 +66,10 @@
                 android:src="@drawable/ic_action_thumb_up" />
 
             <TextView
-                android:id="@+id/upVoteTextView"
+                android:id="@+id/upVoteTextView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/thumbsUpImageView"
+                android:layout_alignTop="@+id/thumbsDownImageView"
                 android:layout_toEndOf="@+id/thumbsUpImageView"
                 android:text="TextView" />
 
@@ -77,16 +78,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/thumbsUpImageView"
-                android:layout_toEndOf="@+id/upVoteTextView"
-                android:src="@drawable/ic_action_thumb_down"
-                />
+                android:layout_marginLeft="0dp"
+                android:layout_toEndOf="@+id/upVoteTextView1"
+                android:src="@drawable/ic_action_thumb_down" />
+
             <TextView
-                android:id="@+id/downVoteTextView"
+                android:id="@+id/downVoteTextView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
                 android:layout_alignTop="@+id/thumbsDownImageView"
-                android:layout_toEndOf="@+id/thumbsDownImageView" />
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_toEndOf="@+id/thumbsDownImageView"
+                android:text="TextView" />
 
 
         </RelativeLayout>

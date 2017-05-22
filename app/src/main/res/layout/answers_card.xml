@@ -36,7 +36,7 @@
             android:layout_alignLeft="@+id/usernameTextView" />
 
         <ImageView
-            android:id="@+id/thumbsUpImageView"
+            android:id="@+id/thumbsUpImageView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/usernameTextView"
@@ -44,28 +44,28 @@
             android:src="@drawable/ic_action_thumb_up" />
 
         <TextView
-            android:id="@+id/upVoteTextView"
+            android:id="@+id/upVoteTextView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/thumbsUpImageView"
-            android:layout_toEndOf="@+id/thumbsUpImageView"
+            android:layout_alignTop="@+id/thumbsUpImageView1"
+            android:layout_toEndOf="@+id/thumbsUpImageView1"
             android:text="TextView" />
 
         <ImageView
-            android:id="@+id/thumbsDownImageView"
+            android:id="@+id/thumbsDownImageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/thumbsUpImageView"
-            android:layout_toEndOf="@+id/upVoteTextView"
-            android:src="@drawable/ic_action_thumb_down"
-            />
+            android:layout_alignTop="@+id/thumbsUpImageView1"
+            android:layout_toEndOf="@+id/upVoteTextView1"
+            android:src="@drawable/ic_action_thumb_down" />
+
         <TextView
-            android:id="@+id/downVoteTextView"
+            android:id="@+id/downVoteTextView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:layout_alignTop="@+id/thumbsDownImageView"
-            android:layout_toEndOf="@+id/thumbsDownImageView" />
+            android:layout_alignTop="@+id/thumbsDownImageView2"
+            android:layout_toEndOf="@+id/thumbsDownImageView2"
+            android:text="TextView" />
 
     </RelativeLayout>
 
