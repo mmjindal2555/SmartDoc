@@ -1,35 +1,35 @@
 {
   "project_info": {
-    "project_number": "48120819386",
-    "firebase_url": "https://smartdoctest-8f124.firebaseio.com",
-    "project_id": "smartdoctest-8f124",
-    "storage_bucket": "smartdoctest-8f124.appspot.com"
+    "project_number": "671888903053",
+    "firebase_url": "https://smartdoc-c38da.firebaseio.com",
+    "project_id": "smartdoc-c38da",
+    "storage_bucket": "smartdoc-c38da.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:48120819386:android:bbaba9a01d9cdfb1",
+        "mobilesdk_app_id": "1:671888903053:android:bbaba9a01d9cdfb1",
         "android_client_info": {
           "package_name": "com.silk.smartdoc"
         }
       },
       "oauth_client": [
         {
-          "client_id": "48120819386-ptguvtnlcptp08nqego8ik2gksdgi6gr.apps.googleusercontent.com",
+          "client_id": "671888903053-9ihk6a17kod3icm1gqi1ahpv2mg0i661.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.silk.smartdoc",
-            "certificate_hash": "e7f6dfc263318256b08815d45f439ec379ff1550"
+            "certificate_hash": "3f463ae4841cb51ef570727a60d0e658ed61e5f3"
           }
         },
         {
-          "client_id": "48120819386-lie62k4dkbbq9km3mq51serpk77kt66r.apps.googleusercontent.com",
+          "client_id": "671888903053-pambt56d5gu1l8guu3d4ilr83ji8lvim.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBHX2DgokYdit-PoKrS3gseCA0TayrtK34"
+          "current_key": "AIzaSyCgSTeEdzZEhheAZD_NttQGNXGzAIN6uvo"
         }
       ],
       "services": {
@@ -40,7 +40,14 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "48120819386-lie62k4dkbbq9km3mq51serpk77kt66r.apps.googleusercontent.com",
+              "client_id": "671888903053-mv82ioud4hc1v06pn7f8qsggnitpr1j1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.silk.smartdoc"
+              }
+            },
+            {
+              "client_id": "671888903053-pambt56d5gu1l8guu3d4ilr83ji8lvim.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

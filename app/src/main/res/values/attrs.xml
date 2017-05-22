@@ -5,7 +5,7 @@
          ?android:attr/buttonBarStyle is new as of API 11 so this is
          necessary to support previous API levels. -->
     <declare-styleable name="SearchableSpinner">
-        <attr name="hintText" format="string"/>
+        <attr name="hintText1" format="string"/>
     </declare-styleable>
     <declare-styleable name="ButtonBarContainerTheme">
         <attr name="metaButtonBarStyle" format="reference" />

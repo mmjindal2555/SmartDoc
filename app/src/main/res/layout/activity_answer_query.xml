@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/queryText"
+        android:layout_below="@+id/answerText"
         android:layout_marginTop="18dp"
         android:orientation="horizontal"
         android:weightSum="1">
