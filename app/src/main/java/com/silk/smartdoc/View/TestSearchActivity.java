@@ -33,15 +33,19 @@ public class TestSearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test_search);
         testSearchListView = (ListView) findViewById(R.id.searchTestListView);
         testArrayList = new ArrayList<String>();
+
+        //connect to the database
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        //make a reference of tests
         databaseReference = databaseReference.child("Tests");
         sdm= new SmartDocManager();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                //collect all the tests name in testArrayList
                 testArrayList=sdm.searchMgr.getAllTestName(dataSnapshot);
-
+                //set all the tests name in the ListView
                 testSearchListView.setAdapter(new ArrayAdapter<String>(TestSearchActivity.this,
                         android.R.layout.simple_list_item_1, testArrayList));
             }
@@ -52,7 +56,7 @@ public class TestSearchActivity extends AppCompatActivity {
             }
         });
 
-
+        //Set on onClickListener
         testSearchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
