@@ -15,18 +15,21 @@ public class Statement implements Parcelable{
     String user_id;
     String id;
     String statement;
-    ArrayList<String> votes;
+    ArrayList<String> upVotes;
+    ArrayList<String> downVotes;
     Date timestamp ;
-    public Statement(String user_id,String id,String statement, Date timestamp,ArrayList<String> votes)
+    public Statement(String user_id,String id,String statement, Date timestamp,ArrayList<String> upVotes,ArrayList<String> downVotes)
     {
         this.user_id=user_id;
         this.id=id;
         this.statement=statement;
         this.timestamp=timestamp;
-        this.votes=votes;
+        this.upVotes=upVotes;
+        this.downVotes=downVotes;
     }
     public Statement(){
-        votes = new ArrayList<String>();
+         upVotes = new ArrayList<String>();
+         downVotes = new ArrayList<String>();
          timestamp = new Date() ;
     }
     public String getUser_id() {
@@ -53,12 +56,20 @@ public class Statement implements Parcelable{
         this.statement = statement;
     }
 
-    public ArrayList<String> getVotes() {
-        return votes;
+    public ArrayList<String> getupVotes() {
+        return upVotes;
     }
 
-    public void setVotes(ArrayList<String> votes) {
-        this.votes = votes;
+    public ArrayList<String> getdownVotes() {
+        return downVotes;
+    }
+
+    public void setupVotes(ArrayList<String> upVotes) {
+        this.upVotes = upVotes;
+    }
+
+    public void setdownVotes(ArrayList<String> downVotes) {
+        this.downVotes = downVotes;
     }
 
     public Date getTimestamp() {
@@ -81,7 +92,8 @@ public class Statement implements Parcelable{
         dest.writeString(statement);
 
         dest.writeValue(timestamp);
-        dest.writeList(votes);
+        dest.writeList(upVotes);
+        dest.writeList(downVotes);
 
     }
 
@@ -91,7 +103,8 @@ public class Statement implements Parcelable{
         statement = parcel.readString();
 
         timestamp = (Date) parcel.readValue(null);
-        parcel.readList(votes, List.class.getClassLoader());
+        parcel.readList(upVotes, List.class.getClassLoader());
+        parcel.readList(downVotes, List.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<Statement> CREATOR = new Parcelable.Creator<Statement>(){
