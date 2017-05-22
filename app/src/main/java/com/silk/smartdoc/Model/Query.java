@@ -5,14 +5,15 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by dodobhoot on 4/22/2017.
  */
 public class Query implements Parcelable {
     Statement question;
-    ArrayList<Statement> answer;
-    ArrayList<String> tags;
+    ArrayList<Statement> answer= new ArrayList<>();
+    ArrayList<String> tags = new ArrayList<>();
     String id;
     public Query()
     {
@@ -65,16 +66,20 @@ public class Query implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(question);
-        dest.writeValue(answer);
-        dest.writeValue(tags);
         dest.writeString(id);
+        dest.writeTypedList(answer);
+        dest.writeList(tags);
+
+
     }
 
     public Query(Parcel parcel){
-        question = (Statement) parcel.readValue(null);
-        answer = (ArrayList<Statement>) parcel.readValue(null);
-        tags = (ArrayList<String>) parcel.readValue(null);
+        question = (Statement) parcel.readValue(Statement.class.getClassLoader());
         id = parcel.readString();
+        parcel.readTypedList(answer,Statement.CREATOR);
+        parcel.readList(tags, String.class.getClassLoader());
+
+
     }
 
     public static final Parcelable.Creator<Query> CREATOR = new Parcelable.Creator<Query>(){

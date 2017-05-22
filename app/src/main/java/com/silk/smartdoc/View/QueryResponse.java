@@ -24,6 +24,7 @@ public class QueryResponse extends AppCompatActivity {
         Query query = intent.getParcelableExtra("Query");
         ArrayList<Statement> statements = query.getAnswer();
         ListView listView =(ListView) findViewById(R.id.searchResultListView);
-        listView.setAdapter(new QueryResponseAdapter(statements,QueryResponse.this));
+        if(statements!=null)
+            listView.setAdapter(new QueryResponseAdapter(statements,QueryResponse.this));
     }
 }

@@ -3,7 +3,6 @@ package com.silk.smartdoc.View;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -24,17 +22,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.silk.smartdoc.Model.KeyPairBoolData;
 import com.silk.smartdoc.Model.Person;
 import com.silk.smartdoc.Model.Query;
-import com.silk.smartdoc.Model.Question;
 import com.silk.smartdoc.Model.Statement;
-import com.silk.smartdoc.Model.Test;
 import com.silk.smartdoc.R;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
-
-import static com.silk.smartdoc.R.id.testNameET;
 
 public class PostQueryExperience extends AppCompatActivity {
     @Override
@@ -183,7 +177,7 @@ public class PostQueryExperience extends AppCompatActivity {
                                     }
                                 }
 
-                                EditText queryText = (EditText) findViewById(R.id.queryText);
+                                EditText queryText = (EditText) findViewById(R.id.answerText);
                                 String query = queryText.getText().toString();
                                 if(queryText.equals("")||tags.size()==0){
                                     Toast.makeText(PostQueryExperience.this,"Enter all the details",Toast.LENGTH_LONG).show();
