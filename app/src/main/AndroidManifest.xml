@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".Controller.SmartDocManager"
@@ -67,10 +67,15 @@
                 android:resource="@xml/authenticator" />
         </service>
 
+        <activity android:name=".View.QueryResponse" />
         <activity
             android:name=".View.CentreWebsite"
             android:label="@string/title_activity_centre_website"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".View.AnswerResponse" />
+        <activity android:name=".View.MyQuestions" />
+        <activity android:name=".View.MyQuestionsResponse" />
+        <activity android:name=".View.MyAnswers"></activity>
     </application>
 
 </manifest>

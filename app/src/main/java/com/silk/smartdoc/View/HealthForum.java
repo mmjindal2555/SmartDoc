@@ -76,9 +76,10 @@ public class HealthForum extends AppCompatActivity
     }
 
     public void openAnswerQueryActivity(View view){
-        Toast.makeText(HealthForum.this, "This functionality is coming soon",Toast.LENGTH_LONG).show();
-        //Intent intent = new Intent(this,AnswerQuery.class);
-        //startActivity(intent);
+        //Toast.makeText(HealthForum.this, "This functionality is coming soon",Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this,AnswerQuery.class);
+        intent.putExtra("Person",person);
+        startActivity(intent);
     }
 
     @Override
@@ -130,9 +131,13 @@ public class HealthForum extends AppCompatActivity
             sdm.displayMgr.displayMedicineSerachPage(this);
 
         } else if (id == R.id.my_questions) {
-            Toast.makeText(HealthForum.this, "This functionality is coming soon",Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this,MyQuestions.class);
+            intent.putExtra("Person",person);
+            startActivity(intent);
         } else if (id == R.id.my_experiences) {
-            Toast.makeText(HealthForum.this, "This functionality is coming soon",Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this,MyAnswers.class);
+            intent.putExtra("Person",person);
+            startActivity(intent);
         }
         else if(id == R.id.logout){
             AccountManager accountManager = AccountManager.get(HealthForum.this);

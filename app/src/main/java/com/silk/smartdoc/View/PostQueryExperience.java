@@ -3,14 +3,14 @@ package com.silk.smartdoc.View;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -23,15 +23,12 @@ import com.silk.smartdoc.Model.KeyPairBoolData;
 import com.silk.smartdoc.Model.Person;
 import com.silk.smartdoc.Model.Query;
 import com.silk.smartdoc.Model.Statement;
-import com.silk.smartdoc.Model.Test;
 import com.silk.smartdoc.R;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
-
-import static com.silk.smartdoc.R.id.testNameET;
 
 public class PostQueryExperience extends AppCompatActivity {
     @Override
@@ -101,15 +98,69 @@ public class PostQueryExperience extends AppCompatActivity {
                         });
 
 
-                        String res="";
                         for (int i = 0; i < items.size(); i++) {
                             if (items.get(i).isSelected()) {
                                 tags.add(items.get(i).getName());
-                                res += items.get(i).getName() + " : " + items.get(i).isSelected()+"\n";
                             }
                         }
-                        Toast.makeText(getApplicationContext(),
-                                res, Toast.LENGTH_LONG).show();
+
+
+
+
+
+                        //Fetch from DataBase and filter by tags
+                        final ArrayList<Query> queries = new ArrayList<Query>();
+                        final ListView listView = (ListView) findViewById(R.id.listView);
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Query query = queries.get(position);
+                                Intent i = new Intent(PostQueryExperience.this,QueryResponse.class);
+                                i.putExtra("Query",query);
+                                startActivity(i);
+                            }
+                        });
+                        DatabaseReference databaseReferenceMed = FirebaseDatabase.getInstance().getReference().child("Query");
+                        databaseReferenceMed.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                Iterable<DataSnapshot> children= dataSnapshot.getChildren();
+
+                                for (DataSnapshot child: children) {
+                                    ArrayList<String> questionTags = (ArrayList<String>)child.child("tags").getValue();
+
+                                    for(String t : tags)
+                                    {
+                                        if(questionTags.contains(t))
+                                        {
+                                            queries.add(child.getValue(Query.class));
+                                            break;
+                                        }
+                                    }
+                                }
+                                //searchListView.setAdapter(new ArrayAdapter<String>(MedicineSearch.this, android.R.layout.simple_list_item_1, medArrayList));
+                                listView.setAdapter(new PostQueryAdapter(queries,PostQueryExperience.this));
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+
+
+
+
+
+
+
+
+
+
+
                         commitButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -126,7 +177,7 @@ public class PostQueryExperience extends AppCompatActivity {
                                     }
                                 }
 
-                                EditText queryText = (EditText) findViewById(R.id.queryText);
+                                EditText queryText = (EditText) findViewById(R.id.answerText);
                                 String query = queryText.getText().toString();
                                 if(queryText.equals("")||tags.size()==0){
                                     Toast.makeText(PostQueryExperience.this,"Enter all the details",Toast.LENGTH_LONG).show();
@@ -136,21 +187,82 @@ public class PostQueryExperience extends AppCompatActivity {
                                     DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Statement");
                                     String id = db.push().getKey();
                                     Intent loginIntent = getIntent();
-                                    Person person = loginIntent.getParcelableExtra("Person");
+                                    final Person person = loginIntent.getParcelableExtra("Person");
                                     Statement statement = new Statement(person.getEmail(),id,query, new Date(),new ArrayList<String>());
+
                                     db.child(id).setValue(statement);
+
+
 
                                     //Query
                                     DatabaseReference db1 = FirebaseDatabase.getInstance().getReference().child("Query");
                                     String q_id = db1.push().getKey();
-                                    Query query1 = new Query(statement,new ArrayList<Statement>() ,tags, q_id );
+                                    final Query query1 = new Query(statement,new ArrayList<Statement>() ,tags, q_id );
                                     db1.child(q_id).setValue(query1);
                                     queryText.setText("");
                                     otherTagET.setText("");
                                     tags = new ArrayList<String>();
                                     Toast.makeText(PostQueryExperience.this,"Query posted",Toast.LENGTH_LONG).show();
-                                    //Intent intent = new Intent(PostQueryExperience.this,PostQueryExperience.class);
-                                    //startActivity(intent);
+
+                                    ///////////////////////////////
+                                    final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users");
+                                    //reference = reference;
+
+                                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            Iterable<DataSnapshot> children= dataSnapshot.getChildren();
+                                            ArrayList<String> myExperience = new ArrayList<String>();;
+                                            ArrayList<String> myQuestion = new ArrayList<String>();;
+                                            String email = person.getEmail() ;
+                                            String user_id = person.getId();
+                                            for (DataSnapshot child: children) {
+                                                String id=child.child("id").getValue(String.class);
+                                                user_id = person.getId();
+                                                if(id.equals(user_id))
+                                                {
+                                                    myExperience = child.child("myExperience").getValue(ArrayList.class);
+                                                    if(myExperience==null)
+                                                        myExperience = new ArrayList<String>();
+                                                    myQuestion =(ArrayList<String>) child.child("myQuestions").getValue();
+                                                    if(myQuestion==null)
+                                                        myQuestion = new ArrayList<String>();
+                                                    myQuestion.add(query1.getId());
+                                                    Person p = new Person(person.getName(), email, person.getPassword(), person.getDateOfBirth()
+                                                            , person.getSex(), email, person.getIsDoctor(), person.getRegistrationNumber(),
+                                                            myQuestion,myExperience,
+                                                            user_id);
+                                                    //person.setMyExperience(myExperience);
+                                                    reference.child(user_id).setValue(p);
+                                                    break;
+
+                                                }
+                                            }
+
+                                        }
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+                                    /*/Person
+                                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users");
+                                    String email = person.getEmail() ;
+                                    String user_id = person.getId();
+                                    ArrayList<String> myQuestion = person.getMyQuestions();
+                                    if(myQuestion==null)
+                                        myQuestion = new ArrayList<String>();
+                                    myQuestion.add(query1.getId());
+                                    ArrayList<String> myExperience = person.getMyExperience();
+                                    if(myExperience==null)
+                                        myExperience = new ArrayList<String>();
+                                    Person p = new Person(person.getName(), email, person.getPassword(), person.getDateOfBirth()
+                                            , person.getSex(), email, person.getIsDoctor(), person.getRegistrationNumber(),
+                                            myQuestion,myExperience,
+                                            user_id);
+                                    //person.setMyQuestions(myQuestion);
+                                    ref.child(user_id).setValue(p);*/
 
                                 }
                             }
