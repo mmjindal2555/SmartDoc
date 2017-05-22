@@ -44,7 +44,7 @@ public class QueryResponseAdapter extends BaseAdapter {
         ViewHolder holder;
         if(convertView==null)
         {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.query_card, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.answers_card, null);
             holder = new ViewHolder();
             holder.usernmae =(TextView)convertView.findViewById(R.id.usernameTextView);
             holder.question = (TextView)convertView.findViewById(R.id.queryTextView);

@@ -6,12 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.silk.smartdoc.Model.Person;
 import com.silk.smartdoc.Model.Query;
 import com.silk.smartdoc.Model.Statement;
@@ -23,6 +27,7 @@ import java.util.Date;
 import static com.silk.smartdoc.R.id.listView;
 
 public class AnswerResponse extends AppCompatActivity {
+    boolean flag=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +35,16 @@ public class AnswerResponse extends AppCompatActivity {
         setContentView(R.layout.activity_answer_response);
         TextView userNameTextView = (TextView) findViewById(R.id.usernameTextView);
         TextView queryTextView = (TextView) findViewById(R.id.queryTextView);
+        ImageView upVotesImage = (ImageView) findViewById(R.id.thumbsUpImageView);
+        ImageView downVotesImage = (ImageView) findViewById(R.id.thumbsDownImageView);
+        TextView upVoteTextView = (TextView) findViewById(R.id.upVoteTextView);
+        TextView downVoteTextView = (TextView) findViewById(R.id.downVoteTextView);
         //
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         final Query query = extras.getParcelable("Query");
         final Person person = extras.getParcelable("Person");
-        //
+
         //Intent intent = getIntent();
         //Query query = intent.getParcelableExtra("Query");
         String userName_questionPosted = query.getQuestion().getUser_id();
@@ -62,7 +71,7 @@ public class AnswerResponse extends AppCompatActivity {
                     //Statement
                     DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Statement");
                     String id = db.push().getKey();
-                    Statement statement = new Statement(person.getEmail(),id,answer, new Date(),new ArrayList<String>());
+                    Statement statement = new Statement(person.getEmail(),id,answer, new Date(),new ArrayList<String>(),new ArrayList<String>());
                     db.child(id).setValue(statement);
 
                     //Query
@@ -78,6 +87,79 @@ public class AnswerResponse extends AppCompatActivity {
                     answerText.setText("");
                     Toast.makeText(AnswerResponse.this,"Answer posted",Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        upVotesImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Statement");
+                String q_id = query.getId();
+                ArrayList<Statement> ans_id=query.getAnswer();
+                Statement ques=query.getQuestion();
+                String question=ques.getStatement();
+                String ques_id=ques.getId();
+                ArrayList<String> up = ques.getupVotes();
+                if(up==null)
+                {
+                    up = new ArrayList<String>();
+                    up.add(person.getEmail());
+                    Statement statement = new Statement(person.getEmail(),ques_id,question, ques.getTimestamp(),up,ques.getdownVotes());
+                    db.child(ques_id).setValue(statement);
+                }
+                else
+                {
+                    flag=false;
+
+                    db.child(ques_id).child("upVotes").addListenerForSingleValueEvent(new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Iterable<DataSnapshot> children= dataSnapshot.getChildren();
+                            for (DataSnapshot child: children) {
+                                ArrayList<String> dbUserId = (ArrayList<String>) child.getValue();
+                                for(int ii=0;ii<dbUserId.size()-1;ii++)
+                                {
+                                    if(dbUserId.get(ii).equalsIgnoreCase(person.getEmail()))
+                                    {
+                                        flag=true;
+                                        break;
+                                    }
+                                }
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+
+
+
+
+                    if(flag)
+                    {
+                        up.remove(person.getEmail());
+                        Statement statement = new Statement(person.getEmail(),ques_id,question, ques.getTimestamp(),up,ques.getdownVotes());
+                        db.child(ques_id).setValue(statement);
+                    }
+                    else
+                    {
+                        up.add(person.getEmail());
+                        Statement statement = new Statement(person.getEmail(),ques_id,question, ques.getTimestamp(),up,ques.getdownVotes());
+                        db.child(ques_id).setValue(statement);
+                    }
+                }
+
+
+
+
+
+
             }
         });
     }

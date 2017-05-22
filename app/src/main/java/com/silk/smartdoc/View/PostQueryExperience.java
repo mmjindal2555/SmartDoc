@@ -188,7 +188,7 @@ public class PostQueryExperience extends AppCompatActivity {
                                     String id = db.push().getKey();
                                     Intent loginIntent = getIntent();
                                     Person person = loginIntent.getParcelableExtra("Person");
-                                    Statement statement = new Statement(person.getEmail(),id,query, new Date(),new ArrayList<String>());
+                                    Statement statement = new Statement(person.getEmail(),id,query, new Date(),new ArrayList<String>(),new ArrayList<String>());
                                     db.child(id).setValue(statement);
 
                                     //Query
