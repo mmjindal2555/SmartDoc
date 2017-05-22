@@ -187,21 +187,81 @@ public class PostQueryExperience extends AppCompatActivity {
                                     DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Statement");
                                     String id = db.push().getKey();
                                     Intent loginIntent = getIntent();
-                                    Person person = loginIntent.getParcelableExtra("Person");
+                                    final Person person = loginIntent.getParcelableExtra("Person");
                                     Statement statement = new Statement(person.getEmail(),id,query, new Date(),new ArrayList<String>());
                                     db.child(id).setValue(statement);
+
+
 
                                     //Query
                                     DatabaseReference db1 = FirebaseDatabase.getInstance().getReference().child("Query");
                                     String q_id = db1.push().getKey();
-                                    Query query1 = new Query(statement,new ArrayList<Statement>() ,tags, q_id );
+                                    final Query query1 = new Query(statement,new ArrayList<Statement>() ,tags, q_id );
                                     db1.child(q_id).setValue(query1);
                                     queryText.setText("");
                                     otherTagET.setText("");
                                     tags = new ArrayList<String>();
                                     Toast.makeText(PostQueryExperience.this,"Query posted",Toast.LENGTH_LONG).show();
-                                    //Intent intent = new Intent(PostQueryExperience.this,PostQueryExperience.class);
-                                    //startActivity(intent);
+
+                                    ///////////////////////////////
+                                    final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users");
+                                    //reference = reference;
+
+                                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            Iterable<DataSnapshot> children= dataSnapshot.getChildren();
+                                            ArrayList<String> myExperience = new ArrayList<String>();;
+                                            ArrayList<String> myQuestion = new ArrayList<String>();;
+                                            String email = person.getEmail() ;
+                                            String user_id = person.getId();
+                                            for (DataSnapshot child: children) {
+                                                String id=child.child("id").getValue(String.class);
+                                                user_id = person.getId();
+                                                if(id.equals(user_id))
+                                                {
+                                                    myExperience = child.child("myExperience").getValue(ArrayList.class);
+                                                    if(myExperience==null)
+                                                        myExperience = new ArrayList<String>();
+                                                    myQuestion =(ArrayList<String>) child.child("myQuestions").getValue();
+                                                    if(myQuestion==null)
+                                                        myQuestion = new ArrayList<String>();
+                                                    myQuestion.add(query1.getId());
+                                                    Person p = new Person(person.getName(), email, person.getPassword(), person.getDateOfBirth()
+                                                            , person.getSex(), email, person.getIsDoctor(), person.getRegistrationNumber(),
+                                                            myQuestion,myExperience,
+                                                            user_id);
+                                                    //person.setMyExperience(myExperience);
+                                                    reference.child(user_id).setValue(p);
+                                                    break;
+
+                                                }
+                                            }
+
+                                        }
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+                                    /*/Person
+                                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users");
+                                    String email = person.getEmail() ;
+                                    String user_id = person.getId();
+                                    ArrayList<String> myQuestion = person.getMyQuestions();
+                                    if(myQuestion==null)
+                                        myQuestion = new ArrayList<String>();
+                                    myQuestion.add(query1.getId());
+                                    ArrayList<String> myExperience = person.getMyExperience();
+                                    if(myExperience==null)
+                                        myExperience = new ArrayList<String>();
+                                    Person p = new Person(person.getName(), email, person.getPassword(), person.getDateOfBirth()
+                                            , person.getSex(), email, person.getIsDoctor(), person.getRegistrationNumber(),
+                                            myQuestion,myExperience,
+                                            user_id);
+                                    //person.setMyQuestions(myQuestion);
+                                    ref.child(user_id).setValue(p);*/
 
                                 }
                             }
