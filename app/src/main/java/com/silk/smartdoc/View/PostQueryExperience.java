@@ -220,7 +220,7 @@ public class PostQueryExperience extends AppCompatActivity {
                                                 user_id = person.getId();
                                                 if(id.equals(user_id))
                                                 {
-                                                    myExperience = child.child("myExperience").getValue(ArrayList.class);
+                                                    myExperience = (ArrayList<String>) child.child("myExperience").getValue();
                                                     if(myExperience==null)
                                                         myExperience = new ArrayList<String>();
                                                     myQuestion =(ArrayList<String>) child.child("myQuestions").getValue();
