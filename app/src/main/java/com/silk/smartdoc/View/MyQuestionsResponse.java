@@ -38,6 +38,6 @@ public class MyQuestionsResponse extends AppCompatActivity {
         ArrayList<Statement> statements = query.getAnswer();
         ListView listView = (ListView) findViewById(R.id.searchResultListView);
         if (statements != null)
-            listView.setAdapter(new QueryResponseAdapter(statements, MyQuestionsResponse.this));
+            listView.setAdapter(new QueryResponseAdapter(statements, MyQuestionsResponse.this,person));
     }
 }
