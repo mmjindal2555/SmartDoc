@@ -19,7 +19,7 @@ import com.silk.smartdoc.R;
 import java.util.ArrayList;
 
 public class MyQuestions extends AppCompatActivity {
-
+    Person person;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +71,7 @@ public class MyQuestions extends AppCompatActivity {
                             }
                         }
                         //searchListView.setAdapter(new ArrayAdapter<String>(MedicineSearch.this, android.R.layout.simple_list_item_1, medArrayList));
-                        listView.setAdapter(new PostQueryAdapter(query_al,MyQuestions.this));
+                        listView.setAdapter(new PostQueryAdapter(query_al,MyQuestions.this,person));
 
 
 

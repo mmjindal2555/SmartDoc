@@ -6,11 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.silk.smartdoc.Model.Query;
 import com.silk.smartdoc.Model.Statement;
 import com.silk.smartdoc.R;
-
+import com.silk.smartdoc.Model.Person;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,11 +28,14 @@ public class QueryResponseAdapter extends BaseAdapter {
     List<Statement> mObjects;
     private Context mContext;
     private SparseBooleanArray mSelectedItemsIds;
-    public QueryResponseAdapter(List<Statement> objects, Context context){
+    int upCount=0,downCount=0;
+    Person person;
+    public QueryResponseAdapter(List<Statement> objects, Context context,Person person){
         //super(context,R.layout.contents_layout,objects);
         this.mObjects = objects;
         mContext = context;
         mSelectedItemsIds = new SparseBooleanArray();
+        this.person=person;
     }
     @Override
     public int getCount() {
@@ -38,10 +49,14 @@ public class QueryResponseAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return 0;
     }
+    ArrayList<String> downVotesUserId,upVotesUserId;
+    DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Statement");
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         //String question =
         ViewHolder holder;
+
+
         if(convertView==null)
         {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.answers_card, null);
@@ -50,7 +65,157 @@ public class QueryResponseAdapter extends BaseAdapter {
             holder.question = (TextView)convertView.findViewById(R.id.queryTextView);
             //holder.numberOfAnswers = (TextView)convertView.findViewById(R.id.numberOfAnswers);
             convertView.setTag(holder);
+            holder.upButton=(ImageView) convertView.findViewById(R.id.thumbsUpImageView1);
+            holder.downButton=(ImageView) convertView.findViewById(R.id.thumbsDownImageView2);
+            holder.upVoteTextView=(TextView) convertView.findViewById(R.id.upVoteTextView1);
+            holder.downVoteTextView=(TextView) convertView.findViewById(R.id.downVoteTextView1);
+            final TextView up=holder.upVoteTextView;
+            final TextView down=holder.downVoteTextView;
             //convertView.setLongClickable(true);
+            final Statement ans=mObjects.get(position);
+            db.child(ans.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    downCount=0;
+                    if (dataSnapshot.hasChild("downVotes")) {
+
+                        for (DataSnapshot child : dataSnapshot.child("downVotes").getChildren()) {
+                            downCount+=1;
+                        }
+                    }
+                    upCount=0;
+                    if(dataSnapshot.hasChild("upVotes")) {
+
+                        for (DataSnapshot child : dataSnapshot.child("upVotes").getChildren()) {
+                            upCount+=1;
+                        }
+                    }
+                    up.setText(upCount+"");
+                    down.setText(downCount+"");
+
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+            holder.upButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    downVotesUserId=new ArrayList<String>();
+                    upVotesUserId = new ArrayList<String>();
+                    db.child(ans.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.hasChild("downVotes")) {
+                                for (DataSnapshot child : dataSnapshot.child("downVotes").getChildren()) {
+                                    downVotesUserId.add(child.getValue(String.class));
+                                }
+                                for(int ii=0;ii<downVotesUserId.size();ii++)
+                                {
+                                    if(downVotesUserId.get(ii).equalsIgnoreCase(person.getEmail()))
+                                    {
+                                        downVotesUserId.remove(person.getEmail());
+                                        break;
+                                    }
+                                }
+
+                            }
+                            if(dataSnapshot.hasChild("upVotes")) {
+                                for (DataSnapshot child : dataSnapshot.child("upVotes").getChildren()) {
+                                    upVotesUserId.add(child.getValue(String.class));
+                                }
+                            }
+                            boolean wasAlreadyPressed = false;
+                            for(int ii=0;ii<upVotesUserId.size();ii++)
+                            {
+                                if(upVotesUserId.get(ii).equalsIgnoreCase(person.getEmail()))
+                                {
+                                    upVotesUserId.remove(person.getEmail());
+                                    wasAlreadyPressed=true;
+                                    break;
+                                }
+                            }
+                            if(!wasAlreadyPressed){
+                                upVotesUserId.add(person.getEmail());
+                            }
+                            up.setText(upVotesUserId.size()+"");
+                            down.setText(downVotesUserId.size()+"");
+                            Statement statement = new Statement(ans.getUser_id(),ans.getId(),ans.getStatement(), ans.getTimestamp(),upVotesUserId
+                                    ,downVotesUserId);
+
+                            db.child(ans.getId()).setValue(statement);
+
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            });
+
+            holder.downButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    downVotesUserId=new ArrayList<String>();
+                    upVotesUserId = new ArrayList<String>();
+                    db.child(ans.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.hasChild("upVotes")) {
+                                for (DataSnapshot child : dataSnapshot.child("upVotes").getChildren()) {
+                                    upVotesUserId.add(child.getValue(String.class));
+                                }
+                                for(int ii=0;ii<upVotesUserId.size();ii++)
+                                {
+                                    if(upVotesUserId.get(ii).equalsIgnoreCase(person.getEmail()))
+                                    {
+                                        upVotesUserId.remove(person.getEmail());
+                                        break;
+                                    }
+                                }
+
+                            }
+                            if(dataSnapshot.hasChild("downVotes")) {
+                                for (DataSnapshot child : dataSnapshot.child("downVotes").getChildren()) {
+                                    downVotesUserId.add(child.getValue(String.class));
+                                }
+                            }
+                            boolean wasAlreadyPressed = false;
+                            for(int ii=0;ii<downVotesUserId.size();ii++)
+                            {
+                                if(downVotesUserId.get(ii).equalsIgnoreCase(person.getEmail()))
+                                {
+                                    downVotesUserId.remove(person.getEmail());
+                                    wasAlreadyPressed=true;
+                                    break;
+                                }
+                            }
+                            if(!wasAlreadyPressed){
+                                downVotesUserId.add(person.getEmail());
+                            }
+                            up.setText(upVotesUserId.size()+"");
+                            down.setText(downVotesUserId.size()+"");
+                            Statement statement = new Statement(ans.getUser_id(),ans.getId(),ans.getStatement(), ans.getTimestamp(),upVotesUserId
+                                    ,downVotesUserId);
+
+                            db.child(ans.getId()).setValue(statement);
+
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            });
+
 
         }
         else{
@@ -59,7 +224,6 @@ public class QueryResponseAdapter extends BaseAdapter {
         Statement o = mObjects.get(position);
         String user = o.getUser_id();
         String ques = o.getStatement();
-
         holder.usernmae.setText(user);
         holder.question.setText(ques);
         /*
@@ -77,6 +241,10 @@ public class QueryResponseAdapter extends BaseAdapter {
 
         TextView usernmae;
         TextView question;
+        ImageView upButton;
+        ImageView downButton;
+        TextView upVoteTextView;
+        TextView downVoteTextView;
     }
 
     public Context getmContext(){
