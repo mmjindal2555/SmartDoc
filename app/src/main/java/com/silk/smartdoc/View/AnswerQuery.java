@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AnswerQuery extends AppCompatActivity {
-
+    Person person;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +81,7 @@ public class AnswerQuery extends AppCompatActivity {
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 Query query = queries.get(position);
                                 Intent loginIntent = getIntent();
-                                Person person = loginIntent.getParcelableExtra("Person");
+                                person = loginIntent.getParcelableExtra("Person");
                                 Intent i = new Intent(AnswerQuery.this,AnswerResponse.class);
                                 Bundle extras = new Bundle();
                                 extras.putParcelable("Person",person);
@@ -111,7 +111,7 @@ public class AnswerQuery extends AppCompatActivity {
                                     }
                                 }
                                 //searchListView.setAdapter(new ArrayAdapter<String>(MedicineSearch.this, android.R.layout.simple_list_item_1, medArrayList));
-                                listView.setAdapter(new PostQueryAdapter(queries,AnswerQuery.this));
+                                listView.setAdapter(new PostQueryAdapter(queries,AnswerQuery.this,person));
                             }
 
                             @Override

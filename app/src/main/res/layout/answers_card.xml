@@ -3,37 +3,37 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <RelativeLayout
+        android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:id="@+id/relativeLayout2">
+        android:clickable="false"
+        android:padding="5dp">
 
         <ImageView
+            android:id="@+id/profilePicImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/profilePicImageView"
             android:adjustViewBounds="false"
             android:minHeight="30dp"
             android:minWidth="30dp"
-            android:src="@drawable/ic_user"
-            />
+            android:src="@drawable/ic_user" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="username"
             android:id="@+id/usernameTextView"
-            android:layout_toRightOf="@+id/profilePicImageView" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="query"
+            android:layout_toRightOf="@+id/profilePicImageView"
+            android:text="username"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
             android:id="@+id/queryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/usernameTextView"
             android:layout_below="@+id/usernameTextView"
-            android:layout_alignLeft="@+id/usernameTextView" />
+            android:text="query"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <ImageView
             android:id="@+id/thumbsUpImageView1"

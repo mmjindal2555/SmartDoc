@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class PostQueryExperience extends AppCompatActivity {
+    Person person;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,7 +141,7 @@ public class PostQueryExperience extends AppCompatActivity {
                                     }
                                 }
                                 //searchListView.setAdapter(new ArrayAdapter<String>(MedicineSearch.this, android.R.layout.simple_list_item_1, medArrayList));
-                                listView.setAdapter(new PostQueryAdapter(queries,PostQueryExperience.this));
+                                listView.setAdapter(new PostQueryAdapter(queries,PostQueryExperience.this,person));
                             }
 
                             @Override
@@ -187,8 +188,8 @@ public class PostQueryExperience extends AppCompatActivity {
                                     DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Statement");
                                     String id = db.push().getKey();
                                     Intent loginIntent = getIntent();
-                                    final Person person = loginIntent.getParcelableExtra("Person");
-                                    Statement statement = new Statement(person.getEmail(),id,query, new Date(),new ArrayList<String>());
+                                    person = loginIntent.getParcelableExtra("Person");
+                                    Statement statement = new Statement(person.getEmail(),id,query, new Date(),new ArrayList<String>(),new ArrayList<String>());
 
                                     db.child(id).setValue(statement);
 
