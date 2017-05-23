@@ -188,8 +188,10 @@ public class PostQueryExperience extends AppCompatActivity {
                                     DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Statement");
                                     String id = db.push().getKey();
                                     Intent loginIntent = getIntent();
-                                    person = loginIntent.getParcelableExtra("Person");
-                                    Statement statement = new Statement(person.getEmail(),id,query, new Date(),new ArrayList<String>(),new ArrayList<String>());
+
+                                    final Person person = loginIntent.getParcelableExtra("Person");
+                                    Statement statement = new Statement(person.getEmail(),id,query, new Date(),null,null);
+
 
                                     db.child(id).setValue(statement);
 
