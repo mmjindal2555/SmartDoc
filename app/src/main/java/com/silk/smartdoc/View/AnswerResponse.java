@@ -29,10 +29,6 @@ import static com.silk.smartdoc.R.id.listView;
 import static com.silk.smartdoc.R.id.my_questions;
 
 public class AnswerResponse extends AppCompatActivity {
-    boolean flag=false;
-    boolean upFlag=false,downFlag=false;
-    ArrayList<String> dbUserId;
-    boolean downsFlag=false;
     ArrayList<String> downVotesUserId,upVotesUserId;
     TextView upVoteTextView,downVoteTextView;
     int upCount=0;
@@ -70,7 +66,7 @@ public class AnswerResponse extends AppCompatActivity {
         ArrayList<Statement> statements = query.getAnswer();
         ListView listView = (ListView) findViewById(R.id.searchResultListView);
         if (statements != null)
-            listView.setAdapter(new QueryResponseAdapter(statements, AnswerResponse.this));
+            listView.setAdapter(new QueryResponseAdapter(statements, AnswerResponse.this,person));
 
 
         db.child(ques_id).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -78,11 +74,13 @@ public class AnswerResponse extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("downVotes")) {
+                    downCount=0;
                     for (DataSnapshot child : dataSnapshot.child("downVotes").getChildren()) {
                         downCount+=1;
                     }
                 }
                 if(dataSnapshot.hasChild("upVotes")) {
+                    upCount=0;
                     for (DataSnapshot child : dataSnapshot.child("upVotes").getChildren()) {
                         upCount+=1;
                     }
@@ -198,7 +196,7 @@ public class AnswerResponse extends AppCompatActivity {
         upVotesImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downVotesUserId=new ArrayList<String>();
+                downVotesUserId = new ArrayList<String>();
                 upVotesUserId = new ArrayList<String>();
                 db.child(ques_id).addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -238,7 +236,7 @@ public class AnswerResponse extends AppCompatActivity {
                             }
                             upVoteTextView.setText(upVotesUserId.size()+"");
                             downVoteTextView.setText(downVotesUserId.size()+"");
-                            Statement statement = new Statement(person.getEmail(),ques_id,question, ques.getTimestamp(),upVotesUserId
+                            Statement statement = new Statement(ques.getUser_id(),ques_id,question, ques.getTimestamp(),upVotesUserId
                                     ,downVotesUserId);
 
                             db.child(ques_id).setValue(statement);
@@ -298,7 +296,7 @@ public class AnswerResponse extends AppCompatActivity {
                         if(!wasAlreadyPressed){
                             downVotesUserId.add(person.getEmail());
                         }
-                        Statement statement = new Statement(person.getEmail(),ques_id,question, ques.getTimestamp(),upVotesUserId
+                        Statement statement = new Statement(ques.getUser_id(),ques_id,question, ques.getTimestamp(),upVotesUserId
                                 ,downVotesUserId);
                         upVoteTextView.setText(upVotesUserId.size()+"");
                         downVoteTextView.setText(downVotesUserId.size()+"");
@@ -320,7 +318,7 @@ public class AnswerResponse extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                ImageView upImg=(ImageView) findViewById(R.id.thumbsDownImageView);
             }
         });
     }

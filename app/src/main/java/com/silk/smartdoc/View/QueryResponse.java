@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.silk.smartdoc.Model.Person;
 import com.silk.smartdoc.Model.Query;
 import com.silk.smartdoc.Model.Statement;
 import com.silk.smartdoc.R;
@@ -23,6 +24,7 @@ public class QueryResponse extends AppCompatActivity {
 
         Intent intent = getIntent();
         Query query = intent.getParcelableExtra("Query");
+        final Person person = intent.getParcelableExtra("Person");
         TextView userNameTextView = (TextView) findViewById(R.id.usernameTextView);
         TextView queryTextView = (TextView) findViewById(R.id.queryTextView);
 
@@ -34,6 +36,6 @@ public class QueryResponse extends AppCompatActivity {
         ArrayList<Statement> statements = query.getAnswer();
         ListView listView =(ListView) findViewById(R.id.searchResultListView);
         if(statements!=null)
-            listView.setAdapter(new QueryResponseAdapter(statements,QueryResponse.this));
+            listView.setAdapter(new QueryResponseAdapter(statements,QueryResponse.this,person));
     }
 }
