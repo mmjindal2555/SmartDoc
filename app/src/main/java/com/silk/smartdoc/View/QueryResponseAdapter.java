@@ -14,7 +14,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.silk.smartdoc.Model.Query;
 import com.silk.smartdoc.Model.Statement;
 import com.silk.smartdoc.R;
 import com.silk.smartdoc.Model.Person;
@@ -61,7 +60,7 @@ public class QueryResponseAdapter extends BaseAdapter {
         {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.answers_card, null);
             holder = new ViewHolder();
-            holder.usernmae =(TextView)convertView.findViewById(R.id.usernameTextView);
+            holder.usernmae =(TextView)convertView.findViewById(R.id.userTextView);
             holder.question = (TextView)convertView.findViewById(R.id.queryTextView);
             //holder.numberOfAnswers = (TextView)convertView.findViewById(R.id.numberOfAnswers);
             convertView.setTag(holder);

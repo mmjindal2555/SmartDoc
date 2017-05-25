@@ -6,29 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.silk.smartdoc.Model.Person;
 import com.silk.smartdoc.Model.Query;
-import com.silk.smartdoc.Model.Statement;
 import com.silk.smartdoc.R;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import static com.silk.smartdoc.R.id.downVoteTextView;
-import static com.silk.smartdoc.R.id.upVoteTextView;
 
 /**
  * Created by AKASH AGARWAL on 5/21/2017.
@@ -67,7 +54,7 @@ public class PostQueryAdapter extends BaseAdapter {
         {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.query_card, null);
             holder = new ViewHolder();
-            holder.usernmae =(TextView)convertView.findViewById(R.id.usernameTextView);
+            holder.usernmae =(TextView)convertView.findViewById(R.id.userTextView);
             holder.question = (TextView)convertView.findViewById(R.id.queryTextView);
             holder.numberOfAnswers = (TextView)convertView.findViewById(R.id.numberOfAnswers);
             holder.tags = (TextView)convertView.findViewById(R.id.tagsTextView);

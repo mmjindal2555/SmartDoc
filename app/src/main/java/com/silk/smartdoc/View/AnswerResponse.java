@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -26,9 +25,6 @@ import com.silk.smartdoc.R;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.silk.smartdoc.R.id.listView;
-import static com.silk.smartdoc.R.id.my_questions;
-
 public class AnswerResponse extends AppCompatActivity {
     ArrayList<String> downVotesUserId,upVotesUserId;
     TextView upVoteTextView,downVoteTextView;
@@ -38,7 +34,7 @@ public class AnswerResponse extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer_response);
-        TextView userNameTextView = (TextView) findViewById(R.id.usernameTextView);
+        TextView userNameTextView = (TextView) findViewById(R.id.userTextView);
         TextView queryTextView = (TextView) findViewById(R.id.queryTextView);
         ImageView upVotesImage = (ImageView) findViewById(R.id.thumbsUpImageView);
         ImageView downVotesImage = (ImageView) findViewById(R.id.thumbsDownImageView);

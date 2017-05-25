@@ -3,9 +3,11 @@ package com.silk.smartdoc.View;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,7 +27,12 @@ public class MyAnswers extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_answers);
 
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_experiences_toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.primarycolor));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setTitle("SmartDoc");
+        setSupportActionBar(toolbar);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarcolor));
 
         Intent intent = getIntent();
         final Person person = intent.getParcelableExtra("Person");
@@ -52,6 +59,16 @@ public class MyAnswers extends AppCompatActivity {
                     }
                 }
                 final ListView listView = (ListView) findViewById(R.id.listView);
+                TextView emptyText = (TextView) findViewById(R.id.emptyTV);
+                emptyText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MyAnswers.this,AnswerQuery.class);
+                        intent.putExtra("Person",person);
+                        startActivity(intent);
+                    }
+                });
+                listView.setEmptyView(emptyText);
                 //
                 final ArrayList<String> al = myExperiences;
                 //
@@ -73,7 +90,7 @@ public class MyAnswers extends AppCompatActivity {
                             }
                         }
                         //searchListView.setAdapter(new ArrayAdapter<String>(MedicineSearch.this, android.R.layout.simple_list_item_1, medArrayList));
-                        listView.setAdapter(new MyAnswersAdapter(query_al,person.getEmail(),MyAnswers.this));
+                        listView.setAdapter(new MyAnswersAdapter(query_al,person.getId(),MyAnswers.this));
                     }
 
                     @Override

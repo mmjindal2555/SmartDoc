@@ -21,4 +21,15 @@
         android:layout_below="@id/my_questions_toolbar"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp" />
+    <TextView
+        android:id="@+id/emptyTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="No questions yet.Click here to post your question" />
 </RelativeLayout>
