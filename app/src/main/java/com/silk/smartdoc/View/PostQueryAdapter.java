@@ -26,6 +26,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import static com.silk.smartdoc.R.id.downVoteTextView;
@@ -73,8 +74,10 @@ public class PostQueryAdapter extends BaseAdapter {
             holder.usernmae =(TextView)convertView.findViewById(R.id.usernameTextView);
             holder.question = (TextView)convertView.findViewById(R.id.queryTextView);
             holder.numberOfAnswers = (TextView)convertView.findViewById(R.id.numberOfAnswers);
-            holder.tags = (TextView)convertView.findViewById(R.id.tagsTextView);
+
+            holder.tagsLayout = (RelativeLayout)convertView.findViewById(R.id.tagsRelativeLayout);
             holder.transparentLayer = (RelativeLayout)convertView.findViewById(R.id.transparent_layer_question);
+
             convertView.setTag(holder);
             //convertView.setLongClickable(true);
         }
@@ -86,14 +89,30 @@ public class PostQueryAdapter extends BaseAdapter {
         Query o = mObjects.get(position);
         final String user = o.getQuestion().getUser_id();
         String ques = o.getQuestion().getStatement();
-        String allTags = "";
         ArrayList<String> tags = o.getTags();
-        Set<String> uniqueTags = new HashSet<String>(tags);
-        for (int i = 0; i < uniqueTags.size(); i++) {
-            allTags +=(tags.get(i));
-            allTags +=" ,";
+        HashSet<String> uniqueTags = new HashSet<String>(tags);
+        tags = new ArrayList<>(uniqueTags);
+
+
+        //Random rnd = new Random();
+        int prevTagTextViewId = 0;
+        for (int i = 0; i < tags.size(); i++) {
+            TextView dynamicTextView = new TextView(mContext);
+            //dynamicTextView.setTextColor(rnd.nextInt() | 0xff000000);
+            dynamicTextView.setTextColor(0xffffffff);
+            dynamicTextView.setText("  "+tags.get(i)+"  ");
+            dynamicTextView.setBackgroundResource(R.drawable.tags_background);
+            int curTagTextViewId = prevTagTextViewId + 1;
+            dynamicTextView.setId(curTagTextViewId);
+            final RelativeLayout.LayoutParams params =
+                    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                            RelativeLayout.LayoutParams.WRAP_CONTENT);
+            params.addRule(RelativeLayout.RIGHT_OF, prevTagTextViewId);
+            params.rightMargin = 10;
+            holder.tagsLayout.addView(dynamicTextView, params);
+            prevTagTextViewId = curTagTextViewId;
         }
-        holder.tags.setText(allTags);
+        
         reference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -122,7 +141,7 @@ public class PostQueryAdapter extends BaseAdapter {
         TextView usernmae;
         TextView question;
         TextView numberOfAnswers;
-        TextView tags;
+        RelativeLayout tagsLayout;
         RelativeLayout transparentLayer;
     }
     public Context getmContext(){
