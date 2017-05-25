@@ -43,7 +43,7 @@ public class AnswerResponse extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer_response);
-         userNameTextView  = (TextView) findViewById(R.id.usernameTextView);
+         userNameTextView  = (TextView) findViewById(R.id.userTextView);
         TextView queryTextView = (TextView) findViewById(R.id.queryTextView);
         upVotesImage = (ImageView) findViewById(R.id.thumbsUpImageView);
         downVotesImage = (ImageView) findViewById(R.id.thumbsDownImageView);
