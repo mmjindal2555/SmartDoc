@@ -122,6 +122,7 @@ public class PostQueryAdapter extends BaseAdapter {
                 if(picUrl!=null) {
                     Picasso.with(mContext)
                             .load(picUrl)
+                            .placeholder(R.drawable.ic_user)
                             .into(holder.profilePic);
                 }
             }
@@ -131,7 +132,7 @@ public class PostQueryAdapter extends BaseAdapter {
 
             }
         });
-        if(o.getQuestion().getdownVotes().size()>5){
+        if(o.getQuestion().getdownVotes()!=null && o.getQuestion().getdownVotes().size()>5){
             holder.transparentLayer.setVisibility(View.VISIBLE);
         }
         holder.question.setText(ques);
