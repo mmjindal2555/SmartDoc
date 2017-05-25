@@ -6,6 +6,7 @@ import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -21,6 +22,10 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.silk.smartdoc.Controller.SmartDocAccountManager;
 import com.silk.smartdoc.Controller.SmartDocManager;
 import com.silk.smartdoc.Model.Person;
@@ -31,6 +36,7 @@ import com.silk.smartdoc.View.TestSearchActivity;
 public class HealthForum extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Person person;
+    FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +59,12 @@ public class HealthForum extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
+        Menu navMenu = navigationView.getMenu();
+        mUser.reload();
+        if(mUser.isEmailVerified())
+        {
+            navMenu.getItem(4).getSubMenu().getItem(0).setVisible(false);
+        }
         TextView nameTV = (TextView)header.findViewById(R.id.nameTV);
         TextView emailTV = (TextView)header.findViewById(R.id.emailTV);
 
@@ -70,16 +82,29 @@ public class HealthForum extends AppCompatActivity
 
     public void openPostQueryActivity(View view){
         //Toast.makeText(HealthForum.this, "This functionality is coming soon",Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(this,PostQueryExperience.class);
-        intent.putExtra("Person",person);
-        startActivity(intent);
+        mUser.reload();
+        if(mUser.isEmailVerified()) {
+            Intent intent = new Intent(this, PostQueryExperience.class);
+            intent.putExtra("Person", person);
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(HealthForum.this,"Verification of email is needed",Toast.LENGTH_LONG).show();
+        }
     }
 
     public void openAnswerQueryActivity(View view){
         //Toast.makeText(HealthForum.this, "This functionality is coming soon",Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(this,AnswerQuery.class);
-        intent.putExtra("Person",person);
-        startActivity(intent);
+        mUser.reload();
+        if(mUser.isEmailVerified()){
+            Intent intent = new Intent(this,AnswerQuery.class);
+            intent.putExtra("Person",person);
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(HealthForum.this,"Verification of email is needed",Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override
@@ -96,6 +121,7 @@ public class HealthForum extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.health_forum, menu);
+
         return true;
     }
 
@@ -121,7 +147,7 @@ public class HealthForum extends AppCompatActivity
         int id = item.getItemId();
         SmartDocManager sdm = (SmartDocManager)getApplicationContext();
         if (id == R.id.health_forum) {
-            Toast.makeText(HealthForum.this, "This funcionality is coming soon",Toast.LENGTH_LONG).show();
+            Toast.makeText(HealthForum.this, "This functionality is coming soon",Toast.LENGTH_LONG).show();
         } else if (id == R.id.medical_tests) {
 
             sdm.displayMgr.displayTestSearchPage(this);
@@ -131,13 +157,39 @@ public class HealthForum extends AppCompatActivity
             sdm.displayMgr.displayMedicineSerachPage(this);
 
         } else if (id == R.id.my_questions) {
-            Intent intent = new Intent(this,MyQuestions.class);
-            intent.putExtra("Person",person);
-            startActivity(intent);
+            mUser.reload();
+            if(mUser.isEmailVerified()) {
+                Intent intent = new Intent(this, MyQuestions.class);
+                intent.putExtra("Person", person);
+                startActivity(intent);
+            }
+            else{
+                Toast.makeText(HealthForum.this,"Verification of email is needed",Toast.LENGTH_LONG).show();
+            }
         } else if (id == R.id.my_experiences) {
-            Intent intent = new Intent(this,MyAnswers.class);
-            intent.putExtra("Person",person);
-            startActivity(intent);
+            mUser.reload();
+            if(mUser.isEmailVerified()) {
+                Intent intent = new Intent(this,MyAnswers.class);
+                intent.putExtra("Person", person);
+                startActivity(intent);
+            }
+            else{
+                Toast.makeText(HealthForum.this,"Verification of email is needed",Toast.LENGTH_LONG).show();
+            }
+        }
+        else if(id == R.id.verify){
+            mUser.reload();
+            mUser.sendEmailVerification()
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(HealthForum.this,"Please Verify by going " +
+                                                "through your email",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
         }
         else if(id == R.id.logout){
             AccountManager accountManager = AccountManager.get(HealthForum.this);

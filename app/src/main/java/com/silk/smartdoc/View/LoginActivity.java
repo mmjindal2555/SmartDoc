@@ -11,6 +11,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -103,31 +104,35 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else {
                     final DatabaseReference finalReference = reference;
-                    mAuth.signInWithEmailAndPassword(username,password)
-                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if(task.isSuccessful()) {
-                                        finalReference.addValueEventListener(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                Person person = loggingController.isValid(dataSnapshot,
-                                                        username, password);
-                                                finishLogin(person);
-                                            }
+                    if(!(username.equals("")||password.equals(""))){
+                        mAuth.signInWithEmailAndPassword(username, password)
+                                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            finalReference.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    Person person = loggingController.isValid(dataSnapshot,
+                                                            username, password);
+                                                    finishLogin(person);
+                                                }
 
-                                            @Override
-                                            public void onCancelled(DatabaseError databaseError) {
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
 
-                                            }
-                                        });
+                                                }
+                                            });
+                                        } else {
+                                            Toast.makeText(LoginActivity.this,
+                                                    "Incorrect Username and/or Password", Toast.LENGTH_LONG).show();
+                                        }
                                     }
-                                    else{
-                                        Toast.makeText(LoginActivity.this,
-                                                "Incorrect Username and/or Password",Toast.LENGTH_LONG).show();
-                                    }
-                                }
-                            });
+                                });
+                    }
+                    else{
+                        Toast.makeText(LoginActivity.this,"Enter the credentials",Toast.LENGTH_LONG).show();
+                    }
 
                 }
 

@@ -56,7 +56,7 @@ public class SignUp extends AppCompatActivity {
     Button signup;
     Calendar myCalendar;
     DatePickerDialog.OnDateSetListener date;
-
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +81,7 @@ public class SignUp extends AppCompatActivity {
         sdlogo.setTypeface(myCustomFont);
         getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarcolor));
 
-        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         rmale.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -265,6 +265,7 @@ public class SignUp extends AppCompatActivity {
                         && sexIsValid && isDocValid){
 
                     final Date finalDob = dob;
+
                     mAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(SignUp.this, new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -288,12 +289,13 @@ public class SignUp extends AppCompatActivity {
                                         }
                                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users");
                                         String id = ref.push().getKey();
-                                        Person person = new Person(name, email, password, finalDob, sex, email, isDoctor, regno,id);
+                                        Person person = new Person(name, email, password, finalDob,
+                                                sex, email, isDoctor, regno,null,null,id);
                                         ref.child(id).setValue(person);
                                         finish();
                                     } else {
                                         // If sign in fails, display a message to the user.
-                                        Toast.makeText(SignUp.this, "Authentication failed.",
+                                        Toast.makeText(SignUp.this, task.getException().getMessage()+"",
                                                 Toast.LENGTH_LONG).show();
                                     }
                                 }
