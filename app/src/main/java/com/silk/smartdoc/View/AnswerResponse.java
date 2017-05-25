@@ -3,6 +3,7 @@ package com.silk.smartdoc.View;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -43,6 +44,13 @@ public class AnswerResponse extends AppCompatActivity {
         ImageView downVotesImage = (ImageView) findViewById(R.id.thumbsDownImageView);
         upVoteTextView = (TextView) findViewById(R.id.upVoteTextView2);
         downVoteTextView = (TextView) findViewById(R.id.downVoteTextView2);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.answer_response_toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.primarycolor));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setTitle("SmartDoc");
+        setSupportActionBar(toolbar);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarcolor));
         //
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -96,7 +104,7 @@ public class AnswerResponse extends AppCompatActivity {
         });
 
         //If user Posts his/her answer
-        Button postAnswerButton = (Button) findViewById(R.id.postAnswerButton);
+        ImageView postAnswerButton = (ImageView) findViewById(R.id.postAnswerButton);
         postAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
