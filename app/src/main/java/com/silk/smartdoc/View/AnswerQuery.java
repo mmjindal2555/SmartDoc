@@ -3,6 +3,7 @@ package com.silk.smartdoc.View;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +31,12 @@ public class AnswerQuery extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer_query);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.answer_response_toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.primarycolor));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setTitle("Answer Query");
+        setSupportActionBar(toolbar);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarcolor));
         final List<String> list = new ArrayList<String>();
         DatabaseReference databaseReferenceMed = FirebaseDatabase.getInstance().getReference().child("Tags");
 
