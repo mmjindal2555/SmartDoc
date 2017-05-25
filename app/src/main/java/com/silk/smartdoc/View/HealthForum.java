@@ -18,19 +18,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.silk.smartdoc.Controller.SmartDocAccountManager;
 import com.silk.smartdoc.Controller.SmartDocManager;
 import com.silk.smartdoc.Model.Person;
+import com.silk.smartdoc.Model.Query;
+import com.silk.smartdoc.Model.Statement;
 import com.silk.smartdoc.R;
 import com.silk.smartdoc.View.MedicineSearch;
 import com.silk.smartdoc.View.TestSearchActivity;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 public class HealthForum extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Person person;
+    ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +67,7 @@ public class HealthForum extends AppCompatActivity
         View header = navigationView.getHeaderView(0);
         TextView nameTV = (TextView)header.findViewById(R.id.nameTV);
         TextView emailTV = (TextView)header.findViewById(R.id.emailTV);
+        listView = (ListView) findViewById(R.id.faqListView);
 
         nameTV.setText(person.getName());
         emailTV.setText(person.getEmail());
@@ -63,6 +76,31 @@ public class HealthForum extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Query");
+
+
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            ArrayList<Query> queries = new ArrayList<Query>();
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children= dataSnapshot.getChildren();
+                for (DataSnapshot c: children)
+                {
+                    queries.add(c.getValue(Query.class));
+
+                }
+                PostQueryAdapter postQueryAdapter = new PostQueryAdapter(queries,HealthForum.this,person);
+                listView.setAdapter(postQueryAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
         navigationView.setNavigationItemSelectedListener(this);

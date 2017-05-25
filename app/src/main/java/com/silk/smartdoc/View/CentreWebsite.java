@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.silk.smartdoc.R;
@@ -24,6 +26,8 @@ import com.silk.smartdoc.R;
 public class CentreWebsite extends AppCompatActivity {
 
     WebView webView;
+    ProgressBar progressBar;
+    int mProgressStatus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,13 +41,14 @@ public class CentreWebsite extends AppCompatActivity {
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
         webView = (WebView) findViewById(R.id.centerWebsite);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar2);
         String centerName = getIntent().getStringExtra("centerName");
         String centerUrl = getIntent().getStringExtra("centerUrl");
 
         toolbar.setTitle(centerName);
         toolbar.setSubtitle(centerUrl);
         getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarcolor));
-
+        mProgressStatus=0;
         webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setPluginState(PluginState.ON);
@@ -54,6 +59,22 @@ public class CentreWebsite extends AppCompatActivity {
         webView.setHorizontalScrollBarEnabled(false);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(false);
         final Activity activity = this;
+
+        final Handler mHandler = new Handler();
+        new Thread(new Runnable() {
+            public void run() {
+                while (mProgressStatus < 100) {
+                    //mProgressStatus = doWork();
+
+                    // Update the progress bar
+                    mHandler.post(new Runnable() {
+                        public void run() {
+                            progressBar.setProgress(mProgressStatus);
+                        }
+                    });
+                }
+            }
+        }).start();
 
         webView.setWebChromeClient(new WebChromeClient(){
             public void onProgressChanged(WebView view, int progress) {
