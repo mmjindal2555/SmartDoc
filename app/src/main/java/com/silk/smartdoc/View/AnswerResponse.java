@@ -28,6 +28,7 @@ import java.util.Date;
 
 import static com.silk.smartdoc.R.id.listView;
 import static com.silk.smartdoc.R.id.my_questions;
+import static com.silk.smartdoc.R.id.up;
 
 public class AnswerResponse extends AppCompatActivity {
     ArrayList<String> downVotesUserId,upVotesUserId;
@@ -35,17 +36,20 @@ public class AnswerResponse extends AppCompatActivity {
     int upCount=0;
     int downCount=0;
     TextView userNameTextView;
+    ImageView upVotesImage;
+    ImageView downVotesImage;
+    TextView numOfAnswers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer_response);
          userNameTextView  = (TextView) findViewById(R.id.usernameTextView);
         TextView queryTextView = (TextView) findViewById(R.id.queryTextView);
-        ImageView upVotesImage = (ImageView) findViewById(R.id.thumbsUpImageView);
-        ImageView downVotesImage = (ImageView) findViewById(R.id.thumbsDownImageView);
+        upVotesImage = (ImageView) findViewById(R.id.thumbsUpImageView);
+        downVotesImage = (ImageView) findViewById(R.id.thumbsDownImageView);
         upVoteTextView = (TextView) findViewById(R.id.upVoteTextView2);
         downVoteTextView = (TextView) findViewById(R.id.downVoteTextView2);
-
+        numOfAnswers = (TextView)findViewById(R.id.numberOfAnswers);
         Toolbar toolbar = (Toolbar) findViewById(R.id.answer_response_toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.primarycolor));
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
@@ -106,6 +110,12 @@ public class AnswerResponse extends AppCompatActivity {
                     for (DataSnapshot child : dataSnapshot.child("upVotes").getChildren()) {
                         upCount+=1;
                     }
+                }
+                if(dataSnapshot.hasChild("answer")){
+                    numOfAnswers.setText(dataSnapshot.child("answer").getChildrenCount()+"");
+                }
+                else{
+                    numOfAnswers.setText("0");
                 }
                 upVoteTextView.setText(upCount+"");
                 downVoteTextView.setText(downCount+"");
@@ -230,10 +240,11 @@ public class AnswerResponse extends AppCompatActivity {
                             }
                             for(int ii=0;ii<downVotesUserId.size();ii++)
                             {
-                                if(person.getId()!=null && downVotesUserId.get(ii).equalsIgnoreCase(person.getId()))
+                                if(downVotesUserId.get(ii).equalsIgnoreCase(person.getId()))
                                 {
 
                                     downVotesUserId.remove(person.getId());
+                                    downVotesImage.setImageResource(R.drawable.ic_keyboard_arrow_down);
                                     break;
                                 }
                             }
@@ -250,11 +261,13 @@ public class AnswerResponse extends AppCompatActivity {
                                 if(person.getId()!=null && upVotesUserId.get(ii).equalsIgnoreCase(person.getId()))
                                 {
                                     upVotesUserId.remove(person.getId());
+                                    upVotesImage.setImageResource(R.drawable.ic_keyboard_arrow_up);
                                     wasAlreadyPressed=true;
                                     break;
                                 }
                             }
                             if(!wasAlreadyPressed){
+                                upVotesImage.setImageResource(R.drawable.ic_keyboard_arrow_up_blue);
                                 upVotesUserId.add(person.getId());
                             }
                             upVoteTextView.setText(upVotesUserId.size()+"");
@@ -295,6 +308,7 @@ public class AnswerResponse extends AppCompatActivity {
                             {
                                 if(person.getId()!=null && upVotesUserId.get(ii).equalsIgnoreCase(person.getId()))
                                 {
+                                    upVotesImage.setImageResource(R.drawable.ic_keyboard_arrow_up);
                                     upVotesUserId.remove(person.getId());
                                     break;
                                 }
@@ -312,11 +326,13 @@ public class AnswerResponse extends AppCompatActivity {
                             if(person.getId()!=null && downVotesUserId.get(ii).equalsIgnoreCase(person.getId()))
                             {
                                 downVotesUserId.remove(person.getId());
+                                downVotesImage.setImageResource(R.drawable.ic_keyboard_arrow_down);
                                 wasAlreadyPressed=true;
                                 break;
                             }
                         }
                         if(!wasAlreadyPressed){
+                            downVotesImage.setImageResource(R.drawable.ic_keyboard_arrow_down_blue);
                             downVotesUserId.add(person.getId());
                         }
                         Statement statement = new Statement(ques.getUser_id(),ques_id,question, ques.getTimestamp(),upVotesUserId

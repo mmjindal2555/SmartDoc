@@ -50,7 +50,7 @@ public class QueryResponseAdapter extends BaseAdapter {
         return 0;
     }
     ArrayList<String> downVotesUserId,upVotesUserId;
-    DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Statement");
+    DatabaseReference db = FirebaseDatabase.getInstance().getReference();
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         //String question =
@@ -73,7 +73,7 @@ public class QueryResponseAdapter extends BaseAdapter {
             final TextView down=holder.downVoteTextView;
             //convertView.setLongClickable(true);
             final Statement ans=mObjects.get(position);
-            db.child(ans.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            db.child("Statement").child(ans.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
 
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -91,7 +91,7 @@ public class QueryResponseAdapter extends BaseAdapter {
 
                         for (DataSnapshot child : dataSnapshot.child("upVotes").getChildren()) {
                             if(child.getValue(String.class).equals(person.getId()))
-                                holder.downButton.setImageResource(R.drawable.ic_keyboard_arrow_up_blue);
+                                holder.upButton.setImageResource(R.drawable.ic_keyboard_arrow_up_blue);
                             upCount+=1;
                         }
                     }
@@ -111,7 +111,7 @@ public class QueryResponseAdapter extends BaseAdapter {
 
                     downVotesUserId=new ArrayList<String>();
                     upVotesUserId = new ArrayList<String>();
-                    db.child(ans.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    db.child("Statement").child(ans.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
 
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -155,7 +155,7 @@ public class QueryResponseAdapter extends BaseAdapter {
                             Statement statement = new Statement(ans.getUser_id(),ans.getId(),ans.getStatement(), ans.getTimestamp(),upVotesUserId
                                     ,downVotesUserId);
 
-                            db.child(ans.getId()).setValue(statement);
+                            db.child("Statement").child(ans.getId()).setValue(statement);
 
                         }
                         @Override
@@ -171,7 +171,7 @@ public class QueryResponseAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     downVotesUserId=new ArrayList<String>();
                     upVotesUserId = new ArrayList<String>();
-                    db.child(ans.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    db.child("Statement").child(ans.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
 
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -181,9 +181,10 @@ public class QueryResponseAdapter extends BaseAdapter {
                                 }
                                 for(int ii=0;ii<upVotesUserId.size();ii++)
                                 {
-                                    if(upVotesUserId.get(ii).equalsIgnoreCase(person.getEmail()))
+                                    if(upVotesUserId.get(ii).equalsIgnoreCase(person.getId()))
                                     {
-                                        upVotesUserId.remove(person.getEmail());
+                                        holder.upButton.setImageResource(R.drawable.ic_keyboard_arrow_up);
+                                        upVotesUserId.remove(person.getId());
                                         break;
                                     }
                                 }
@@ -197,23 +198,24 @@ public class QueryResponseAdapter extends BaseAdapter {
                             boolean wasAlreadyPressed = false;
                             for(int ii=0;ii<downVotesUserId.size();ii++)
                             {
-                                if(downVotesUserId.get(ii).equalsIgnoreCase(person.getEmail()))
+                                if(downVotesUserId.get(ii).equalsIgnoreCase(person.getId()))
                                 {
-                                    downVotesUserId.remove(person.getEmail());
+                                    holder.downButton.setImageResource(R.drawable.ic_keyboard_arrow_down);
+                                    downVotesUserId.remove(person.getId());
                                     wasAlreadyPressed=true;
                                     break;
                                 }
                             }
                             if(!wasAlreadyPressed){
-
-                                downVotesUserId.add(person.getEmail());
+                                holder.downButton.setImageResource(R.drawable.ic_keyboard_arrow_down_blue);
+                                downVotesUserId.add(person.getId());
                             }
                             up.setText(upVotesUserId.size()+"");
                             down.setText(downVotesUserId.size()+"");
                             Statement statement = new Statement(ans.getUser_id(),ans.getId(),ans.getStatement(), ans.getTimestamp(),upVotesUserId
                                     ,downVotesUserId);
 
-                            db.child(ans.getId()).setValue(statement);
+                            db.child("Statement").child(ans.getId()).setValue(statement);
 
                         }
                         @Override
@@ -232,7 +234,17 @@ public class QueryResponseAdapter extends BaseAdapter {
         Statement o = mObjects.get(position);
         String user = o.getUser_id();
         String ques = o.getStatement();
-        holder.usernmae.setText(user);
+        db.child("Users").child(user).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                holder.usernmae.setText(dataSnapshot.child("name").getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         holder.question.setText(ques);
 
         return convertView;
