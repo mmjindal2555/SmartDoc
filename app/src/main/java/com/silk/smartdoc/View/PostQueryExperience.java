@@ -3,6 +3,7 @@ package com.silk.smartdoc.View;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,8 +11,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -32,14 +35,24 @@ import java.util.StringTokenizer;
 
 public class PostQueryExperience extends AppCompatActivity {
     Person person;
+    ListView listView;
+    TextView emptyText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_query_experience);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.post_query_experience_toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.primarycolor));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setTitle("Post Query");
+        setSupportActionBar(toolbar);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarcolor));
+
         final EditText otherTagET = (EditText)findViewById(R.id.otherTagEditText);
         final Switch otherTagSwitch = (Switch)findViewById(R.id.otherTagSwitch);
-
-
+        listView = (ListView) findViewById(R.id.listView);
+        emptyText = (TextView) findViewById(R.id.emptyTV);
+        listView.setEmptyView(emptyText);
 
 
 
@@ -73,7 +86,7 @@ public class PostQueryExperience extends AppCompatActivity {
                     listArray1.add(h);
                 }
                 MultiSpinnerSearch searchMultiSpinnerLimit = (MultiSpinnerSearch) findViewById(R.id.searchMultiSpinnerLimit);
-                final Button commitButton = (Button) findViewById(R.id.postButton);
+                final ImageView commitButton = (ImageView) findViewById(R.id.postButton);
 
                 /***
                  * -1 is no by default selection
@@ -111,13 +124,14 @@ public class PostQueryExperience extends AppCompatActivity {
 
                         //Fetch from DataBase and filter by tags
                         final ArrayList<Query> queries = new ArrayList<Query>();
-                        final ListView listView = (ListView) findViewById(R.id.listView);
+
                         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 Query query = queries.get(position);
-                                Intent i = new Intent(PostQueryExperience.this,QueryResponse.class);
+                                Intent i = new Intent(PostQueryExperience.this,AnswerResponse.class);
                                 i.putExtra("Query",query);
+                                i.putExtra("Person",person);
                                 startActivity(i);
                             }
                         });
@@ -290,31 +304,5 @@ public class PostQueryExperience extends AppCompatActivity {
             }
         });
 
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_post_query_experience, menu);
-
-
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
