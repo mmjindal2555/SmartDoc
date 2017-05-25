@@ -47,7 +47,7 @@ public class PostQueryExperience extends AppCompatActivity {
         toolbar.setTitle("Post Query");
         setSupportActionBar(toolbar);
         getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarcolor));
-
+        person = getIntent().getParcelableExtra("Person");
         final EditText otherTagET = (EditText)findViewById(R.id.otherTagEditText);
         final Switch otherTagSwitch = (Switch)findViewById(R.id.otherTagSwitch);
         listView = (ListView) findViewById(R.id.listView);
@@ -130,8 +130,10 @@ public class PostQueryExperience extends AppCompatActivity {
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 Query query = queries.get(position);
                                 Intent i = new Intent(PostQueryExperience.this,AnswerResponse.class);
-                                i.putExtra("Query",query);
-                                i.putExtra("Person",person);
+                                Bundle extras = new Bundle();
+                                extras.putParcelable("Person",person);
+                                extras.putParcelable("Query",query);
+                                i.putExtras(extras);
                                 startActivity(i);
                             }
                         });

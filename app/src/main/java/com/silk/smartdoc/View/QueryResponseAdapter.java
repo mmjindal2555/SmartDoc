@@ -234,13 +234,6 @@ public class QueryResponseAdapter extends BaseAdapter {
         String ques = o.getStatement();
         holder.usernmae.setText(user);
         holder.question.setText(ques);
-        /*
-        if(o.getAnswer()==null)
-            holder.numberOfAnswers.setText("0");
-        else
-            holder.numberOfAnswers.setText(o.getAnswer().size()+"");
-            */
-
 
         return convertView;
     }

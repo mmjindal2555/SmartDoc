@@ -34,11 +34,12 @@ public class AnswerResponse extends AppCompatActivity {
     TextView upVoteTextView,downVoteTextView;
     int upCount=0;
     int downCount=0;
+    TextView userNameTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer_response);
-        TextView userNameTextView = (TextView) findViewById(R.id.usernameTextView);
+         userNameTextView  = (TextView) findViewById(R.id.usernameTextView);
         TextView queryTextView = (TextView) findViewById(R.id.queryTextView);
         ImageView upVotesImage = (ImageView) findViewById(R.id.thumbsUpImageView);
         ImageView downVotesImage = (ImageView) findViewById(R.id.thumbsDownImageView);
@@ -59,9 +60,22 @@ public class AnswerResponse extends AppCompatActivity {
 
         //Intent intent = getIntent();
         //Query query = intent.getParcelableExtra("Query");
-        String userName_questionPosted = query.getQuestion().getUser_id();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String userName_questionPosted = dataSnapshot.child(query.getQuestion()
+                        .getUser_id()).child("name").getValue(String.class);
+                userNameTextView.setText(userName_questionPosted);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         String query_Posted = query.getQuestion().getStatement();
-        userNameTextView.setText(userName_questionPosted);
+
         queryTextView.setText(query_Posted);
 
         final DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Statement");
@@ -210,21 +224,22 @@ public class AnswerResponse extends AppCompatActivity {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.hasChild("downVotes")) {
+                        if (dataSnapshot.child("downVotes").getChildrenCount()>0 ) {
                             for (DataSnapshot child : dataSnapshot.child("downVotes").getChildren()) {
                                 downVotesUserId.add(child.getValue(String.class));
                             }
                             for(int ii=0;ii<downVotesUserId.size();ii++)
                             {
-                                if(downVotesUserId.get(ii).equalsIgnoreCase(person.getEmail()))
+                                if(person.getId()!=null && downVotesUserId.get(ii).equalsIgnoreCase(person.getId()))
                                 {
-                                    downVotesUserId.remove(person.getEmail());
+
+                                    downVotesUserId.remove(person.getId());
                                     break;
                                 }
                             }
 
                         }
-                        if(dataSnapshot.hasChild("upVotes")) {
+                        if(dataSnapshot.child("upVotes").getChildrenCount()>0) {
                             for (DataSnapshot child : dataSnapshot.child("upVotes").getChildren()) {
                                 upVotesUserId.add(child.getValue(String.class));
                             }
@@ -232,15 +247,15 @@ public class AnswerResponse extends AppCompatActivity {
                             boolean wasAlreadyPressed = false;
                             for(int ii=0;ii<upVotesUserId.size();ii++)
                             {
-                                if(upVotesUserId.get(ii).equalsIgnoreCase(person.getEmail()))
+                                if(person.getId()!=null && upVotesUserId.get(ii).equalsIgnoreCase(person.getId()))
                                 {
-                                    upVotesUserId.remove(person.getEmail());
+                                    upVotesUserId.remove(person.getId());
                                     wasAlreadyPressed=true;
                                     break;
                                 }
                             }
                             if(!wasAlreadyPressed){
-                                upVotesUserId.add(person.getEmail());
+                                upVotesUserId.add(person.getId());
                             }
                             upVoteTextView.setText(upVotesUserId.size()+"");
                             downVoteTextView.setText(downVotesUserId.size()+"");
@@ -278,9 +293,9 @@ public class AnswerResponse extends AppCompatActivity {
                             }
                             for(int ii=0;ii<upVotesUserId.size();ii++)
                             {
-                                if(upVotesUserId.get(ii).equalsIgnoreCase(person.getEmail()))
+                                if(person.getId()!=null && upVotesUserId.get(ii).equalsIgnoreCase(person.getId()))
                                 {
-                                    upVotesUserId.remove(person.getEmail());
+                                    upVotesUserId.remove(person.getId());
                                     break;
                                 }
                             }
@@ -294,15 +309,15 @@ public class AnswerResponse extends AppCompatActivity {
                         boolean wasAlreadyPressed = false;
                         for(int ii=0;ii<downVotesUserId.size();ii++)
                         {
-                            if(downVotesUserId.get(ii).equalsIgnoreCase(person.getEmail()))
+                            if(person.getId()!=null && downVotesUserId.get(ii).equalsIgnoreCase(person.getId()))
                             {
-                                downVotesUserId.remove(person.getEmail());
+                                downVotesUserId.remove(person.getId());
                                 wasAlreadyPressed=true;
                                 break;
                             }
                         }
                         if(!wasAlreadyPressed){
-                            downVotesUserId.add(person.getEmail());
+                            downVotesUserId.add(person.getId());
                         }
                         Statement statement = new Statement(ques.getUser_id(),ques_id,question, ques.getTimestamp(),upVotesUserId
                                 ,downVotesUserId);

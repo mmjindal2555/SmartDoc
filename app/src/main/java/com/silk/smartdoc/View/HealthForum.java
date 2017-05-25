@@ -60,11 +60,13 @@ public class HealthForum extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
         Menu navMenu = navigationView.getMenu();
-        mUser.reload();
-        if(mUser.isEmailVerified())
-        {
-            navMenu.getItem(4).getSubMenu().getItem(0).setVisible(false);
+        try {
+            mUser.reload();
+            if (mUser.isEmailVerified()) {
+                navMenu.getItem(4).getSubMenu().getItem(0).setVisible(false);
+            }
         }
+        catch (Exception e){}
         TextView nameTV = (TextView)header.findViewById(R.id.nameTV);
         TextView emailTV = (TextView)header.findViewById(R.id.emailTV);
 
