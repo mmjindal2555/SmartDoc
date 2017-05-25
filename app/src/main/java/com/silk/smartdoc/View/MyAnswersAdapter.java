@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.silk.smartdoc.Model.Query;
 import com.silk.smartdoc.Model.Statement;
@@ -53,6 +54,7 @@ public class MyAnswersAdapter extends BaseAdapter {
             holder.userTV =(TextView)convertView.findViewById(R.id.userTextView);
             holder.queryTV = (TextView)convertView.findViewById(R.id.queryTextView);
             holder.answerTV = (TextView)convertView.findViewById(R.id.answerTextView);
+            //holder.transparentLayer = (RelativeLayout)convertView.findViewById(R.id.transparent_layer_answer);
             convertView.setTag(holder);
 
         }
@@ -83,6 +85,7 @@ public class MyAnswersAdapter extends BaseAdapter {
         TextView userTV;
         TextView queryTV;
         TextView answerTV;
+        RelativeLayout transparentLayer;
     }
 
     public Context getmContext(){

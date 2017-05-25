@@ -40,12 +40,14 @@ public class PostQueryAdapter extends BaseAdapter {
     private Context mContext;
     Person person;
     private SparseBooleanArray mSelectedItemsIds;
+    DatabaseReference reference;
     public PostQueryAdapter(List<Query> objects, Context context,Person person){
         //super(context,R.layout.contents_layout,objects);
         this.mObjects = objects;
         mContext = context;
         mSelectedItemsIds = new SparseBooleanArray();
         this.person=person;
+        this.reference = FirebaseDatabase.getInstance().getReference();
     }
     @Override
     public int getCount() {
@@ -64,7 +66,7 @@ public class PostQueryAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         //String question =
-        ViewHolder holder;
+        final ViewHolder holder;
         if(convertView==null)
         {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.query_card, null);
@@ -72,13 +74,12 @@ public class PostQueryAdapter extends BaseAdapter {
             holder.usernmae =(TextView)convertView.findViewById(R.id.usernameTextView);
             holder.question = (TextView)convertView.findViewById(R.id.queryTextView);
             holder.numberOfAnswers = (TextView)convertView.findViewById(R.id.numberOfAnswers);
+
             holder.tagsLayout = (RelativeLayout)convertView.findViewById(R.id.tagsRelativeLayout);
+            holder.transparentLayer = (RelativeLayout)convertView.findViewById(R.id.transparent_layer_question);
+
             convertView.setTag(holder);
-
             //convertView.setLongClickable(true);
-
-
-
         }
         else{
             holder=(ViewHolder)convertView.getTag();
@@ -86,7 +87,7 @@ public class PostQueryAdapter extends BaseAdapter {
 
 
         Query o = mObjects.get(position);
-        String user = o.getQuestion().getUser_id();
+        final String user = o.getQuestion().getUser_id();
         String ques = o.getQuestion().getStatement();
         ArrayList<String> tags = o.getTags();
         HashSet<String> uniqueTags = new HashSet<String>(tags);
@@ -111,9 +112,21 @@ public class PostQueryAdapter extends BaseAdapter {
             holder.tagsLayout.addView(dynamicTextView, params);
             prevTagTextViewId = curTagTextViewId;
         }
+        
+        reference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                holder.usernmae.setText(dataSnapshot.child(user).child("name").getValue(String.class));
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-        holder.usernmae.setText(user);
+            }
+        });
+        if(o.getQuestion().getdownVotes().size()>5){
+            holder.transparentLayer.setVisibility(View.VISIBLE);
+        }
         holder.question.setText(ques);
         if(o.getAnswer()==null)
             holder.numberOfAnswers.setText("0");
@@ -125,14 +138,12 @@ public class PostQueryAdapter extends BaseAdapter {
     }
 
     public static class ViewHolder{
-
         TextView usernmae;
         TextView question;
         TextView numberOfAnswers;
         RelativeLayout tagsLayout;
-
+        RelativeLayout transparentLayer;
     }
-
     public Context getmContext(){
         return this.mContext;
     }

@@ -18,7 +18,8 @@ public class Statement implements Parcelable{
     ArrayList<String> upVotes;
     ArrayList<String> downVotes;
     Date timestamp ;
-    public Statement(String user_id,String id,String statement, Date timestamp,ArrayList<String> upVotes,ArrayList<String> downVotes)
+    public Statement(String user_id,String id,String statement,
+                     Date timestamp,ArrayList<String> upVotes,ArrayList<String> downVotes)
     {
         this.user_id=user_id;
         this.id=id;

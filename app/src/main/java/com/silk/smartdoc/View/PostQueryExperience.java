@@ -164,18 +164,6 @@ public class PostQueryExperience extends AppCompatActivity {
                             }
                         });
 
-
-
-
-
-
-
-
-
-
-
-
-
                         commitButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
