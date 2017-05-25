@@ -53,7 +53,7 @@ public class QueryResponseAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         //String question =
-        ViewHolder holder;
+        final ViewHolder holder;
 
 
         if(convertView==null)
@@ -80,6 +80,8 @@ public class QueryResponseAdapter extends BaseAdapter {
                     if (dataSnapshot.hasChild("downVotes")) {
 
                         for (DataSnapshot child : dataSnapshot.child("downVotes").getChildren()) {
+                            if(child.getValue(String.class).equals(person.getId()))
+                                holder.downButton.setImageResource(R.drawable.ic_keyboard_arrow_down_blue);
                             downCount+=1;
                         }
                     }
@@ -87,6 +89,8 @@ public class QueryResponseAdapter extends BaseAdapter {
                     if(dataSnapshot.hasChild("upVotes")) {
 
                         for (DataSnapshot child : dataSnapshot.child("upVotes").getChildren()) {
+                            if(child.getValue(String.class).equals(person.getId()))
+                                holder.downButton.setImageResource(R.drawable.ic_keyboard_arrow_up_blue);
                             upCount+=1;
                         }
                     }
@@ -116,9 +120,10 @@ public class QueryResponseAdapter extends BaseAdapter {
                                 }
                                 for(int ii=0;ii<downVotesUserId.size();ii++)
                                 {
-                                    if(downVotesUserId.get(ii).equalsIgnoreCase(person.getEmail()))
+                                    if(downVotesUserId.get(ii).equalsIgnoreCase(person.getId()))
                                     {
-                                        downVotesUserId.remove(person.getEmail());
+                                        downVotesUserId.remove(person.getId());
+                                        holder.downButton.setImageResource(R.drawable.ic_keyboard_arrow_down);
                                         break;
                                     }
                                 }
@@ -132,15 +137,17 @@ public class QueryResponseAdapter extends BaseAdapter {
                             boolean wasAlreadyPressed = false;
                             for(int ii=0;ii<upVotesUserId.size();ii++)
                             {
-                                if(upVotesUserId.get(ii).equalsIgnoreCase(person.getEmail()))
+                                if(upVotesUserId.get(ii).equalsIgnoreCase(person.getId()))
                                 {
-                                    upVotesUserId.remove(person.getEmail());
+                                    upVotesUserId.remove(person.getId());
+                                    holder.upButton.setImageResource(R.drawable.ic_keyboard_arrow_up);
                                     wasAlreadyPressed=true;
                                     break;
                                 }
                             }
                             if(!wasAlreadyPressed){
-                                upVotesUserId.add(person.getEmail());
+                                holder.upButton.setImageResource(R.drawable.ic_keyboard_arrow_up_blue);
+                                upVotesUserId.add(person.getId());
                             }
                             up.setText(upVotesUserId.size()+"");
                             down.setText(downVotesUserId.size()+"");
@@ -197,6 +204,7 @@ public class QueryResponseAdapter extends BaseAdapter {
                                 }
                             }
                             if(!wasAlreadyPressed){
+
                                 downVotesUserId.add(person.getEmail());
                             }
                             up.setText(upVotesUserId.size()+"");
@@ -225,13 +233,6 @@ public class QueryResponseAdapter extends BaseAdapter {
         String ques = o.getStatement();
         holder.usernmae.setText(user);
         holder.question.setText(ques);
-        /*
-        if(o.getAnswer()==null)
-            holder.numberOfAnswers.setText("0");
-        else
-            holder.numberOfAnswers.setText(o.getAnswer().size()+"");
-            */
-
 
         return convertView;
     }

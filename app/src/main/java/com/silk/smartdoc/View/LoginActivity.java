@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +20,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
         AccountManager am = AccountManager.get(this); // "this" references the current Context
         Account[] accounts = am.getAccountsByType(AUTH_TOKEN_TYPE);
+        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
         loggingController = new LoggingController();
         if(accounts.length > 0){
             final String user = accounts[0].name;
@@ -95,25 +103,37 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else {
-                    reference.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+                    final DatabaseReference finalReference = reference;
+                    if(!(username.equals("")||password.equals(""))){
+                        mAuth.signInWithEmailAndPassword(username, password)
+                                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            finalReference.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    Person person = loggingController.isValid(dataSnapshot,
+                                                            username, password);
+                                                    finishLogin(person);
+                                                }
 
-                            Person person = loggingController.isValid(dataSnapshot, username, password);
-                            if(person!=null) {
-                                finishLogin(person);
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
 
-                            }
-                            else {
-                                Toast.makeText(LoginActivity.this, "Incorrect Username and/or Password"
-                                        , Toast.LENGTH_LONG).show();
-                            }
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                                                }
+                                            });
+                                        } else {
+                                            Toast.makeText(LoginActivity.this,
+                                                    "Incorrect Username and/or Password", Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                });
+                    }
+                    else{
+                        Toast.makeText(LoginActivity.this,"Enter the credentials",Toast.LENGTH_LONG).show();
+                    }
 
-                        }
-                    });
                 }
 
             }

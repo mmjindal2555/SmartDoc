@@ -23,8 +23,11 @@
                 android:title="My Experiences" />
         </menu>
     </item>
-    <item android:title="">
+    <item android:title="Profile">
         <menu>
+            <item
+                android:id="@+id/verify"
+                android:title="Verify Your email Address" />
             <item
                 android:id="@+id/logout"
                 android:title="Log Out" />
