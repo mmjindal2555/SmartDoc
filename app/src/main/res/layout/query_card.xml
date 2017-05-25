@@ -59,15 +59,14 @@
                     android:text="query"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="14dp" />
-                <TextView
-                    android:id="@+id/tagsTextView"
+
+                <RelativeLayout
+                    android:id="@+id/tagsRelativeLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@+id/usernameTextView"
-                    android:layout_below="@+id/queryTextView"
-                    android:text="tags"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="14dp" />
+                    android:layout_below="@+id/queryTextView">
+                </RelativeLayout>
 
             </RelativeLayout>
 

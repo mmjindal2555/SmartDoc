@@ -117,7 +117,7 @@ public class AnswerResponse extends AppCompatActivity {
                     //Statement
                     DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Statement");
                     String id = db.push().getKey();
-                    Statement statement = new Statement(person.getEmail(),id,answer, new Date(),new ArrayList<String>(),new ArrayList<String>());
+                    Statement statement = new Statement(person.getId(),id,answer, new Date(),new ArrayList<String>(),new ArrayList<String>());
                     db.child(id).setValue(statement);
 
                     /*/Person
