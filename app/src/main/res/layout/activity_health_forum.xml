@@ -81,7 +81,17 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/buttonslayout"
             android:layout_centerHorizontal="true" />
-        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/emptyTVHF"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="1dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Sorry, No discussions to show" />
+
+    </RelativeLayout>
 
 
     <android.support.design.widget.NavigationView

@@ -19,6 +19,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,17 +28,26 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.silk.smartdoc.Controller.SmartDocAccountManager;
 import com.silk.smartdoc.Controller.SmartDocManager;
 import com.silk.smartdoc.Model.Person;
+import com.silk.smartdoc.Model.Query;
 import com.silk.smartdoc.R;
 import com.silk.smartdoc.View.MedicineSearch;
 import com.silk.smartdoc.View.TestSearchActivity;
+
+import java.util.ArrayList;
 
 public class HealthForum extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Person person;
     FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+    ListView listView;
+    TextView emptyTV;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +61,9 @@ public class HealthForum extends AppCompatActivity
         setSupportActionBar(toolbar);
         getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarcolor));
 
+        listView = (ListView)findViewById(R.id.faqListView);
+        emptyTV = (TextView)findViewById(R.id.emptyTVHF);
+        listView.setEmptyView(emptyTV);
         // getting Person who logged in
         Intent loginIntent = getIntent();
         person = loginIntent.getParcelableExtra("Person");
@@ -77,7 +91,33 @@ public class HealthForum extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        FirebaseDatabase.getInstance().getReference().child("Query").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final ArrayList<Query> queries = new ArrayList<Query>();
+                if(dataSnapshot!=null){
+                    for(DataSnapshot q:dataSnapshot.getChildren()){
+                        queries.add(q.getValue(Query.class));
+                    }
+                    listView.setAdapter(new PostQueryAdapter(queries,HealthForum.this,person));
+                }
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Query query = queries.get(position);
+                        Intent i = new Intent(HealthForum.this,AnswerResponse.class);
+                        i.putExtra("Query",query);
+                        i.putExtra("Person",person);
+                        startActivity(i);
+                    }
+                });
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         navigationView.setNavigationItemSelectedListener(this);
     }

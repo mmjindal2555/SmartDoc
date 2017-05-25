@@ -53,7 +53,8 @@ public class PostQueryExperience extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
         emptyText = (TextView) findViewById(R.id.emptyTV);
         listView.setEmptyView(emptyText);
-
+        Intent loginIntent = getIntent();
+        person = loginIntent.getParcelableExtra("Person");
         final List<String> list = new ArrayList<String>();
         DatabaseReference databaseReferenceMed = FirebaseDatabase.getInstance().getReference().child("Tags");
         otherTagSwitch.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
