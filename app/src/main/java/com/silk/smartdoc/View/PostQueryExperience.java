@@ -164,18 +164,6 @@ public class PostQueryExperience extends AppCompatActivity {
                             }
                         });
 
-
-
-
-
-
-
-
-
-
-
-
-
                         commitButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -204,7 +192,7 @@ public class PostQueryExperience extends AppCompatActivity {
                                     Intent loginIntent = getIntent();
 
                                     final Person person = loginIntent.getParcelableExtra("Person");
-                                    Statement statement = new Statement(person.getEmail(),id,query, new Date(),null,null);
+                                    Statement statement = new Statement(person.getId(),id,query, new Date(),null,null);
 
 
                                     db.child(id).setValue(statement);
