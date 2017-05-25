@@ -14,8 +14,10 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff"
+        android:background="#dedede"
+        android:elevation="1dp"
         tools:context="com.silk.smartdoc.HealthForum">
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -88,8 +90,10 @@
             android:layout_height="match_parent"
             android:elevation="1dp"
             android:ems="10"
+            android:gravity="center"
             android:inputType="textPersonName"
-            android:text="Sorry, No discussions to show" />
+            android:text="Sorry, No discussions to show"
+            android:textColor="#777777" />
 
     </RelativeLayout>
 

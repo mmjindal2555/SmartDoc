@@ -20,6 +20,7 @@ import com.silk.smartdoc.Model.Person;
 import com.silk.smartdoc.Model.Query;
 import com.silk.smartdoc.Model.Statement;
 import com.silk.smartdoc.R;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -74,7 +75,7 @@ public class PostQueryAdapter extends BaseAdapter {
             holder.usernmae =(TextView)convertView.findViewById(R.id.usernameTextView);
             holder.question = (TextView)convertView.findViewById(R.id.queryTextView);
             holder.numberOfAnswers = (TextView)convertView.findViewById(R.id.numberOfAnswers);
-
+            holder.profilePic = (ImageView)convertView.findViewById(R.id.profilePicImageView);
             holder.tagsLayout = (RelativeLayout)convertView.findViewById(R.id.tagsRelativeLayout);
             holder.transparentLayer = (RelativeLayout)convertView.findViewById(R.id.transparent_layer_question);
 
@@ -117,6 +118,12 @@ public class PostQueryAdapter extends BaseAdapter {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 holder.usernmae.setText(dataSnapshot.child(user).child("name").getValue(String.class));
+                String picUrl = dataSnapshot.child(user).child("gravatarUrl").getValue(String.class);
+                if(picUrl!=null) {
+                    Picasso.with(mContext)
+                            .load(picUrl)
+                            .into(holder.profilePic);
+                }
             }
 
             @Override
@@ -143,6 +150,7 @@ public class PostQueryAdapter extends BaseAdapter {
         TextView numberOfAnswers;
         RelativeLayout tagsLayout;
         RelativeLayout transparentLayer;
+        ImageView profilePic;
     }
     public Context getmContext(){
         return this.mContext;

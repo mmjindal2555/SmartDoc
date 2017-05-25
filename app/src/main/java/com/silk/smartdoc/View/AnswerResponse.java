@@ -1,6 +1,7 @@
 package com.silk.smartdoc.View;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +23,7 @@ import com.silk.smartdoc.Model.Person;
 import com.silk.smartdoc.Model.Query;
 import com.silk.smartdoc.Model.Statement;
 import com.silk.smartdoc.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,6 +41,8 @@ public class AnswerResponse extends AppCompatActivity {
     ImageView upVotesImage;
     ImageView downVotesImage;
     TextView numOfAnswers;
+    ImageView profilePic;
+    ImageView msgImgView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +54,8 @@ public class AnswerResponse extends AppCompatActivity {
         upVoteTextView = (TextView) findViewById(R.id.upVoteTextView2);
         downVoteTextView = (TextView) findViewById(R.id.downVoteTextView2);
         numOfAnswers = (TextView)findViewById(R.id.numberOfAnswers);
+        profilePic = (ImageView)findViewById(R.id.profilePicImageView);
+        msgImgView = (ImageView)findViewById(R.id.imageView3);
         Toolbar toolbar = (Toolbar) findViewById(R.id.answer_response_toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.primarycolor));
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
@@ -64,13 +70,30 @@ public class AnswerResponse extends AppCompatActivity {
 
         //Intent intent = getIntent();
         //Query query = intent.getParcelableExtra("Query");
+
+
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users");
+
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String userName_questionPosted = dataSnapshot.child(query.getQuestion()
                         .getUser_id()).child("name").getValue(String.class);
                 userNameTextView.setText(userName_questionPosted);
+                String picUrl = dataSnapshot.child(query.getQuestion().getUser_id()).
+                        child("gravatarUrl").getValue(String.class);
+                if(picUrl!=null) {
+                    Picasso.with(AnswerResponse.this)
+                            .load(picUrl)
+                            .into(profilePic);
+                }
+                String msgPicUrl = dataSnapshot.child(person.getId()).child("gravatarUrl")
+                        .getValue(String.class);
+                if(msgPicUrl!=null) {
+                    Picasso.with(AnswerResponse.this)
+                            .load(msgPicUrl)
+                            .into(msgImgView);
+                }
             }
 
             @Override

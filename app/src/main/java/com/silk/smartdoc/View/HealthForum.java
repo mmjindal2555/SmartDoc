@@ -20,16 +20,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.images.ImageManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.silk.smartdoc.Controller.SmartDocAccountManager;
@@ -39,8 +42,11 @@ import com.silk.smartdoc.Model.Query;
 import com.silk.smartdoc.R;
 import com.silk.smartdoc.View.MedicineSearch;
 import com.silk.smartdoc.View.TestSearchActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import fr.tkeunebr.gravatar.Gravatar;
 
 public class HealthForum extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -72,12 +78,16 @@ public class HealthForum extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        View header = navigationView.getHeaderView(0);
+        final View header = navigationView.getHeaderView(0);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Menu navMenu = navigationView.getMenu();
         try {
             mUser.reload();
             if (mUser.isEmailVerified()) {
                 navMenu.getItem(4).getSubMenu().getItem(0).setVisible(false);
+                String gravatarUrl = Gravatar.init().with(mUser.getEmail()).force404().build();
+                reference.child("Users").child(person.getId())
+                        .child("gravatarUrl").setValue(gravatarUrl);
             }
         }
         catch (Exception e){}
@@ -86,12 +96,28 @@ public class HealthForum extends AppCompatActivity
 
         nameTV.setText(person.getName());
         emailTV.setText(person.getEmail());
+        reference.child("Users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String picUrl = dataSnapshot.child(person.getId()).child("gravatarUrl").getValue(String.class);
+                if(picUrl!=null) {
+                    Picasso.with(HealthForum.this)
+                            .load(picUrl)
+                            .into((ImageView)header.findViewById(R.id.picTV));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         drawer.setBackgroundColor(getResources().getColor(R.color.accentcolor));
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        FirebaseDatabase.getInstance().getReference().child("Query").addValueEventListener(new ValueEventListener() {
+        reference.child("Query").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final ArrayList<Query> queries = new ArrayList<Query>();

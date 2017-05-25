@@ -17,6 +17,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.silk.smartdoc.Model.Statement;
 import com.silk.smartdoc.R;
 import com.silk.smartdoc.Model.Person;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +70,7 @@ public class QueryResponseAdapter extends BaseAdapter {
             holder.downButton=(ImageView) convertView.findViewById(R.id.thumbsDownImageView2);
             holder.upVoteTextView=(TextView) convertView.findViewById(R.id.upVoteTextView1);
             holder.downVoteTextView=(TextView) convertView.findViewById(R.id.downVoteTextView1);
+            holder.profilePic = (ImageView)convertView.findViewById(R.id.profilePicImageView);
             final TextView up=holder.upVoteTextView;
             final TextView down=holder.downVoteTextView;
             //convertView.setLongClickable(true);
@@ -231,12 +234,18 @@ public class QueryResponseAdapter extends BaseAdapter {
             holder=(ViewHolder)convertView.getTag();
         }
         Statement o = mObjects.get(position);
-        String user = o.getUser_id();
+        final String user = o.getUser_id();
         String ques = o.getStatement();
         db.child("Users").child(user).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 holder.usernmae.setText(dataSnapshot.child("name").getValue(String.class));
+                String picUrl = dataSnapshot.child("gravatarUrl").getValue(String.class);
+                if(picUrl!=null) {
+                    Picasso.with(mContext)
+                            .load(picUrl)
+                            .into(holder.profilePic);
+                }
             }
 
             @Override
@@ -257,6 +266,7 @@ public class QueryResponseAdapter extends BaseAdapter {
         ImageView downButton;
         TextView upVoteTextView;
         TextView downVoteTextView;
+        ImageView profilePic;
     }
 
     public Context getmContext(){
