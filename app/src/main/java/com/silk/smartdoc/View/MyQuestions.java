@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,6 +58,16 @@ public class MyQuestions extends AppCompatActivity {
                     }
                 }
                 final ListView listView = (ListView) findViewById(R.id.listView);
+                TextView emptyText = (TextView) findViewById(R.id.emptyTV);
+                emptyText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MyQuestions.this,PostQueryExperience.class);
+                        intent.putExtra("Person",person);
+                        startActivity(intent);
+                    }
+                });
+                listView.setEmptyView(emptyText);
                 //
                 final ArrayList<String> al = myQuestion;
                 //
@@ -77,26 +88,26 @@ public class MyQuestions extends AppCompatActivity {
                                 }
                             }
                         }
-                        //searchListView.setAdapter(new ArrayAdapter<String>(MedicineSearch.this, android.R.layout.simple_list_item_1, medArrayList));
-                        listView.setAdapter(new PostQueryAdapter(query_al,MyQuestions.this,person));
+                        //if(query_al.size()!=0) {
+                            //searchListView.setAdapter(new ArrayAdapter<String>(MedicineSearch.this, android.R.layout.simple_list_item_1, medArrayList));
+                            listView.setAdapter(new PostQueryAdapter(query_al, MyQuestions.this, person));
 
 
-
-                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                Query query = query_al.get(position);
-                                Intent loginIntent = getIntent();
-                                Person person = loginIntent.getParcelableExtra("Person");
-                                Intent i = new Intent(MyQuestions.this,AnswerResponse.class);
-                                Bundle extras = new Bundle();
-                                extras.putParcelable("Person",person);
-                                extras.putParcelable("Query",query);
-                                i.putExtras(extras);
-                                //i.putExtra("Query",query);
-                                startActivity(i);
-                            }
-                        });
+                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    Query query = query_al.get(position);
+                                    Intent loginIntent = getIntent();
+                                    Person person = loginIntent.getParcelableExtra("Person");
+                                    Intent i = new Intent(MyQuestions.this, AnswerResponse.class);
+                                    Bundle extras = new Bundle();
+                                    extras.putParcelable("Person", person);
+                                    extras.putParcelable("Query", query);
+                                    i.putExtras(extras);
+                                    //i.putExtra("Query",query);
+                                    startActivity(i);
+                                }
+                            });
                     }
 
                     @Override
