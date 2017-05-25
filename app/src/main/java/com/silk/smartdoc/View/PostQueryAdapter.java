@@ -23,7 +23,9 @@ import com.silk.smartdoc.R;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.silk.smartdoc.R.id.downVoteTextView;
 import static com.silk.smartdoc.R.id.upVoteTextView;
@@ -68,6 +70,7 @@ public class PostQueryAdapter extends BaseAdapter {
             holder.usernmae =(TextView)convertView.findViewById(R.id.usernameTextView);
             holder.question = (TextView)convertView.findViewById(R.id.queryTextView);
             holder.numberOfAnswers = (TextView)convertView.findViewById(R.id.numberOfAnswers);
+            holder.tags = (TextView)convertView.findViewById(R.id.tagsTextView);
             convertView.setTag(holder);
 
             //convertView.setLongClickable(true);
@@ -83,7 +86,14 @@ public class PostQueryAdapter extends BaseAdapter {
         Query o = mObjects.get(position);
         String user = o.getQuestion().getUser_id();
         String ques = o.getQuestion().getStatement();
-
+        String allTags = "";
+        ArrayList<String> tags = o.getTags();
+        Set<String> uniqueTags = new HashSet<String>(tags);
+        for (int i = 0; i < uniqueTags.size(); i++) {
+            allTags +=(tags.get(i));
+            allTags +=" ,";
+        }
+        holder.tags.setText(allTags);
         holder.usernmae.setText(user);
         holder.question.setText(ques);
         if(o.getAnswer()==null)
@@ -100,6 +110,7 @@ public class PostQueryAdapter extends BaseAdapter {
         TextView usernmae;
         TextView question;
         TextView numberOfAnswers;
+        TextView tags;
 
     }
 
