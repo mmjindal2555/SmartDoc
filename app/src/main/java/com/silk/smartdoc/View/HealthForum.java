@@ -84,7 +84,7 @@ public class HealthForum extends AppCompatActivity
         try {
             mUser.reload();
             if (mUser.isEmailVerified()) {
-                navMenu.getItem(4).getSubMenu().getItem(0).setVisible(false);
+                navMenu.getItem(3).getSubMenu().getItem(0).setVisible(false);
                 String gravatarUrl = Gravatar.init().with(mUser.getEmail()).force404().build();
                 reference.child("Users").child(person.getId())
                         .child("gravatarUrl").setValue(gravatarUrl);
@@ -100,8 +100,8 @@ public class HealthForum extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String picUrl = dataSnapshot.child(person.getId()).child("gravatarUrl").getValue(String.class);
-                picUrl = picUrl.substring(0,picUrl.length()-3)+"retro";
                 if(picUrl!=null) {
+                    picUrl = picUrl.substring(0,picUrl.length()-3)+"retro";
                     Picasso.with(HealthForum.this)
                             .load(picUrl)
                             .placeholder(R.drawable.ic_action_account_circle)
@@ -186,46 +186,16 @@ public class HealthForum extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.health_forum, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         SmartDocManager sdm = (SmartDocManager)getApplicationContext();
-        if (id == R.id.health_forum) {
-            Toast.makeText(HealthForum.this, "This functionality is coming soon",Toast.LENGTH_LONG).show();
-        } else if (id == R.id.medical_tests) {
-
+        if (id == R.id.medical_tests) {
             sdm.displayMgr.displayTestSearchPage(this);
-
         } else if (id == R.id.medicines) {
-
             sdm.displayMgr.displayMedicineSerachPage(this);
-
         } else if (id == R.id.my_questions) {
             mUser.reload();
             if(mUser.isEmailVerified()) {

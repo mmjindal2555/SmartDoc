@@ -100,7 +100,7 @@ public class PostQueryAdapter extends BaseAdapter {
         for (int i = 0; i < tags.size(); i++) {
             TextView dynamicTextView = new TextView(mContext);
             //dynamicTextView.setTextColor(rnd.nextInt() | 0xff000000);
-            dynamicTextView.setTextColor(0xffffffff);
+            dynamicTextView.setTextColor(0xff2f9d41);
             dynamicTextView.setText("  "+tags.get(i)+"  ");
             dynamicTextView.setBackgroundResource(R.drawable.tags_background);
             int curTagTextViewId = prevTagTextViewId + 1;
@@ -108,9 +108,16 @@ public class PostQueryAdapter extends BaseAdapter {
             final RelativeLayout.LayoutParams params =
                     new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
                             RelativeLayout.LayoutParams.WRAP_CONTENT);
-            params.addRule(RelativeLayout.RIGHT_OF, prevTagTextViewId);
-            params.rightMargin = 10;
-            holder.tagsLayout.addView(dynamicTextView, params);
+            if(curTagTextViewId%4==1 && curTagTextViewId!=1){
+                params.addRule(RelativeLayout.BELOW, prevTagTextViewId-3);
+                params.topMargin = 10;
+                holder.tagsLayout.addView(dynamicTextView, params);
+            }
+            else{
+                params.addRule(RelativeLayout.RIGHT_OF, prevTagTextViewId);
+                params.rightMargin = 10;
+                holder.tagsLayout.addView(dynamicTextView, params);
+            }
             prevTagTextViewId = curTagTextViewId;
         }
         
@@ -119,8 +126,8 @@ public class PostQueryAdapter extends BaseAdapter {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 holder.usernmae.setText(dataSnapshot.child(user).child("name").getValue(String.class));
                 String picUrl = dataSnapshot.child(user).child("gravatarUrl").getValue(String.class);
-                picUrl = picUrl.substring(0,picUrl.length()-3)+"retro";
                 if(picUrl!=null) {
+                    picUrl = picUrl.substring(0,picUrl.length()-3)+"retro";
                     Picasso.with(mContext)
                             .load(picUrl)
                             .placeholder(R.drawable.ic_user)

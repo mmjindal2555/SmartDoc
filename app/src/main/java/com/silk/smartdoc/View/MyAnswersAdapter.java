@@ -111,6 +111,7 @@ public class MyAnswersAdapter extends BaseAdapter {
                 String picUrl = dataSnapshot.child(user).
                         child("gravatarUrl").getValue(String.class);
                 if(picUrl!=null) {
+                    picUrl = picUrl.substring(0,picUrl.length()-3)+"retro";
                     Picasso.with(mContext)
                             .load(picUrl)
                             .into(holder.profilePic);
@@ -119,6 +120,7 @@ public class MyAnswersAdapter extends BaseAdapter {
                 String msgPicUrl = dataSnapshot.child(user_id).child("gravatarUrl")
                         .getValue(String.class);
                 if(msgPicUrl!=null) {
+                    msgPicUrl = msgPicUrl.substring(0,msgPicUrl.length()-3)+"retro";
                     Picasso.with(mContext)
                             .load(msgPicUrl)
                             .into(holder.userPicImageView);

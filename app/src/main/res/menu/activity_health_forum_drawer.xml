@@ -3,9 +3,6 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/health_forum"
-            android:title="Health Forum" />
-        <item
             android:id="@+id/medical_tests"
             android:title="Search for medical tests" />
         <item
