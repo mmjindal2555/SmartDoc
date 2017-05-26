@@ -52,7 +52,7 @@
                         android:id="@+id/thumbsUpImageView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignRight="@+id/usernameTextView"
+                        android:layout_alignRight="@+id/userTextView"
                         android:layout_below="@+id/queryTextView"
                         android:src="@drawable/ic_keyboard_arrow_up" />
 
@@ -101,7 +101,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_below="@+id/usernameTextView"
+                        android:layout_below="@+id/userTextView"
                         android:layout_weight="1"
                         android:background="@color/grey"
                         android:gravity="center"
@@ -131,7 +131,7 @@
                 android:padding="5dp">
 
                 <TextView
-                    android:id="@+id/usernameTextView"
+                    android:id="@+id/userTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -145,8 +145,8 @@
                     android:id="@+id/queryTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/usernameTextView"
-                    android:layout_below="@+id/usernameTextView"
+                    android:layout_alignLeft="@+id/userTextView"
+                    android:layout_below="@+id/userTextView"
                     android:text="query"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="14dp" />

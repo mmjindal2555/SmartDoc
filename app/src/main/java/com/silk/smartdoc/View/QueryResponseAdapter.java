@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -14,10 +15,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.silk.smartdoc.Model.Query;
 import com.silk.smartdoc.Model.Statement;
 import com.silk.smartdoc.R;
 import com.silk.smartdoc.Model.Person;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,18 +52,18 @@ public class QueryResponseAdapter extends BaseAdapter {
         return 0;
     }
     ArrayList<String> downVotesUserId,upVotesUserId;
-    DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Statement");
+    DatabaseReference db = FirebaseDatabase.getInstance().getReference();
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         //String question =
-        ViewHolder holder;
+        final ViewHolder holder;
 
 
         if(convertView==null)
         {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.answers_card, null);
             holder = new ViewHolder();
-            holder.usernmae =(TextView)convertView.findViewById(R.id.usernameTextView);
+            holder.usernmae =(TextView)convertView.findViewById(R.id.userTextView);
             holder.question = (TextView)convertView.findViewById(R.id.queryTextView);
             //holder.numberOfAnswers = (TextView)convertView.findViewById(R.id.numberOfAnswers);
             convertView.setTag(holder);
@@ -69,11 +71,13 @@ public class QueryResponseAdapter extends BaseAdapter {
             holder.downButton=(ImageView) convertView.findViewById(R.id.thumbsDownImageView2);
             holder.upVoteTextView=(TextView) convertView.findViewById(R.id.upVoteTextView1);
             holder.downVoteTextView=(TextView) convertView.findViewById(R.id.downVoteTextView1);
+            holder.profilePic = (ImageView)convertView.findViewById(R.id.profilePicImageView);
+            holder.transparentLayer = (RelativeLayout)convertView.findViewById(R.id.transparent_layer_answer);
             final TextView up=holder.upVoteTextView;
             final TextView down=holder.downVoteTextView;
             //convertView.setLongClickable(true);
             final Statement ans=mObjects.get(position);
-            db.child(ans.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            db.child("Statement").child(ans.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
 
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -81,6 +85,8 @@ public class QueryResponseAdapter extends BaseAdapter {
                     if (dataSnapshot.hasChild("downVotes")) {
 
                         for (DataSnapshot child : dataSnapshot.child("downVotes").getChildren()) {
+                            if(child.getValue(String.class).equals(person.getId()))
+                                holder.downButton.setImageResource(R.drawable.ic_keyboard_arrow_down_blue);
                             downCount+=1;
                         }
                     }
@@ -88,6 +94,8 @@ public class QueryResponseAdapter extends BaseAdapter {
                     if(dataSnapshot.hasChild("upVotes")) {
 
                         for (DataSnapshot child : dataSnapshot.child("upVotes").getChildren()) {
+                            if(child.getValue(String.class).equals(person.getId()))
+                                holder.upButton.setImageResource(R.drawable.ic_keyboard_arrow_up_blue);
                             upCount+=1;
                         }
                     }
@@ -107,7 +115,7 @@ public class QueryResponseAdapter extends BaseAdapter {
 
                     downVotesUserId=new ArrayList<String>();
                     upVotesUserId = new ArrayList<String>();
-                    db.child(ans.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    db.child("Statement").child(ans.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
 
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -117,9 +125,10 @@ public class QueryResponseAdapter extends BaseAdapter {
                                 }
                                 for(int ii=0;ii<downVotesUserId.size();ii++)
                                 {
-                                    if(downVotesUserId.get(ii).equalsIgnoreCase(person.getEmail()))
+                                    if(downVotesUserId.get(ii).equalsIgnoreCase(person.getId()))
                                     {
-                                        downVotesUserId.remove(person.getEmail());
+                                        downVotesUserId.remove(person.getId());
+                                        holder.downButton.setImageResource(R.drawable.ic_keyboard_arrow_down);
                                         break;
                                     }
                                 }
@@ -133,22 +142,24 @@ public class QueryResponseAdapter extends BaseAdapter {
                             boolean wasAlreadyPressed = false;
                             for(int ii=0;ii<upVotesUserId.size();ii++)
                             {
-                                if(upVotesUserId.get(ii).equalsIgnoreCase(person.getEmail()))
+                                if(upVotesUserId.get(ii).equalsIgnoreCase(person.getId()))
                                 {
-                                    upVotesUserId.remove(person.getEmail());
+                                    upVotesUserId.remove(person.getId());
+                                    holder.upButton.setImageResource(R.drawable.ic_keyboard_arrow_up);
                                     wasAlreadyPressed=true;
                                     break;
                                 }
                             }
                             if(!wasAlreadyPressed){
-                                upVotesUserId.add(person.getEmail());
+                                holder.upButton.setImageResource(R.drawable.ic_keyboard_arrow_up_blue);
+                                upVotesUserId.add(person.getId());
                             }
                             up.setText(upVotesUserId.size()+"");
                             down.setText(downVotesUserId.size()+"");
                             Statement statement = new Statement(ans.getUser_id(),ans.getId(),ans.getStatement(), ans.getTimestamp(),upVotesUserId
                                     ,downVotesUserId);
 
-                            db.child(ans.getId()).setValue(statement);
+                            db.child("Statement").child(ans.getId()).setValue(statement);
 
                         }
                         @Override
@@ -164,7 +175,7 @@ public class QueryResponseAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     downVotesUserId=new ArrayList<String>();
                     upVotesUserId = new ArrayList<String>();
-                    db.child(ans.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    db.child("Statement").child(ans.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
 
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -174,9 +185,10 @@ public class QueryResponseAdapter extends BaseAdapter {
                                 }
                                 for(int ii=0;ii<upVotesUserId.size();ii++)
                                 {
-                                    if(upVotesUserId.get(ii).equalsIgnoreCase(person.getEmail()))
+                                    if(upVotesUserId.get(ii).equalsIgnoreCase(person.getId()))
                                     {
-                                        upVotesUserId.remove(person.getEmail());
+                                        holder.upButton.setImageResource(R.drawable.ic_keyboard_arrow_up);
+                                        upVotesUserId.remove(person.getId());
                                         break;
                                     }
                                 }
@@ -190,22 +202,24 @@ public class QueryResponseAdapter extends BaseAdapter {
                             boolean wasAlreadyPressed = false;
                             for(int ii=0;ii<downVotesUserId.size();ii++)
                             {
-                                if(downVotesUserId.get(ii).equalsIgnoreCase(person.getEmail()))
+                                if(downVotesUserId.get(ii).equalsIgnoreCase(person.getId()))
                                 {
-                                    downVotesUserId.remove(person.getEmail());
+                                    holder.downButton.setImageResource(R.drawable.ic_keyboard_arrow_down);
+                                    downVotesUserId.remove(person.getId());
                                     wasAlreadyPressed=true;
                                     break;
                                 }
                             }
                             if(!wasAlreadyPressed){
-                                downVotesUserId.add(person.getEmail());
+                                holder.downButton.setImageResource(R.drawable.ic_keyboard_arrow_down_blue);
+                                downVotesUserId.add(person.getId());
                             }
                             up.setText(upVotesUserId.size()+"");
                             down.setText(downVotesUserId.size()+"");
                             Statement statement = new Statement(ans.getUser_id(),ans.getId(),ans.getStatement(), ans.getTimestamp(),upVotesUserId
                                     ,downVotesUserId);
 
-                            db.child(ans.getId()).setValue(statement);
+                            db.child("Statement").child(ans.getId()).setValue(statement);
 
                         }
                         @Override
@@ -222,17 +236,31 @@ public class QueryResponseAdapter extends BaseAdapter {
             holder=(ViewHolder)convertView.getTag();
         }
         Statement o = mObjects.get(position);
-        String user = o.getUser_id();
+        final String user = o.getUser_id();
         String ques = o.getStatement();
-        holder.usernmae.setText(user);
-        holder.question.setText(ques);
-        /*
-        if(o.getAnswer()==null)
-            holder.numberOfAnswers.setText("0");
-        else
-            holder.numberOfAnswers.setText(o.getAnswer().size()+"");
-            */
+        if(o.getdownVotes()!=null && o.getdownVotes().size()>5){
+            holder.transparentLayer.setVisibility(View.INVISIBLE);
+        }
+        db.child("Users").child(user).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                holder.usernmae.setText(dataSnapshot.child("name").getValue(String.class));
+                String picUrl = dataSnapshot.child("gravatarUrl").getValue(String.class);
+                picUrl = picUrl.substring(0,picUrl.length()-3)+"retro";
+                if(picUrl!=null) {
+                    Picasso.with(mContext)
+                            .load(picUrl)
+                            .placeholder(R.drawable.ic_user)
+                            .into(holder.profilePic);
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        holder.question.setText(ques);
 
         return convertView;
     }
@@ -245,6 +273,8 @@ public class QueryResponseAdapter extends BaseAdapter {
         ImageView downButton;
         TextView upVoteTextView;
         TextView downVoteTextView;
+        ImageView profilePic;
+        RelativeLayout transparentLayer;
     }
 
     public Context getmContext(){

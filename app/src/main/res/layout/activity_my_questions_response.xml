@@ -40,7 +40,7 @@
                 android:src="@drawable/ic_user" />
 
             <TextView
-                android:id="@+id/usernameTextView"
+                android:id="@+id/userTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/profilePicImageView"
@@ -51,8 +51,8 @@
                 android:id="@+id/queryTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/usernameTextView"
-                android:layout_below="@+id/usernameTextView"
+                android:layout_alignLeft="@+id/userTextView"
+                android:layout_below="@+id/userTextView"
                 android:text="query"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -60,7 +60,7 @@
                 android:id="@+id/thumbsUpImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignRight="@+id/usernameTextView"
+                android:layout_alignRight="@+id/userTextView"
                 android:layout_below="@+id/queryTextView"
                 android:src="@drawable/ic_action_thumb_up" />
 

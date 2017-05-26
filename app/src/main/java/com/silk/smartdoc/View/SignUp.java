@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.Typeface;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -23,13 +24,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.silk.smartdoc.Model.Person;
 import com.silk.smartdoc.R;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -47,10 +52,11 @@ public class SignUp extends AppCompatActivity {
     EditText cnfpassET;
     EditText registrationET;
     Switch docSwitch;
+    Button verifyButton;
     Button signup;
     Calendar myCalendar;
     DatePickerDialog.OnDateSetListener date;
-
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +74,14 @@ public class SignUp extends AppCompatActivity {
         cnfpassET = (EditText)findViewById(R.id.confirmPwEditText);
         registrationET = (EditText)findViewById(R.id.regNoEditText);
         docSwitch = (Switch)findViewById(R.id.isDocSwitch);
+        verifyButton = (Button)findViewById(R.id.verifyEmailButton);
         signup = (Button)findViewById(R.id.signUpButton);
 
         Typeface myCustomFont = Typeface.createFromAsset(getAssets(),"font/Satisfy-Regular.ttf");
         sdlogo.setTypeface(myCustomFont);
         getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarcolor));
+
+        mAuth = FirebaseAuth.getInstance();
 
         rmale.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -174,14 +183,14 @@ public class SignUp extends AppCompatActivity {
 
 
 
-        signup.setOnClickListener(new View.OnClickListener() {
+        verifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean nameIsValid = true,
                         dobIsValid = true,
                         passwordIsValid = true,
                         cnfPassIsValid = true;
-                String name = nameET.getText().toString();
+                final String name = nameET.getText().toString();
                 if(name.equals("")){
                     nameET.setBackground(getDrawable(R.drawable.error_edit_text));
                     nameET.setHintTextColor(getResources().getColor(R.color.error_on_blue));
@@ -206,11 +215,11 @@ public class SignUp extends AppCompatActivity {
                     dobET.setHintTextColor(getResources().getColor(R.color.error_on_blue));
                     dobET.setHint("Date of Birth is not valid");
                 }
-                String email = emailEt.getText().toString();
-                String password = passwordET.getText().toString();
+                final String email = emailEt.getText().toString();
+                final String password = passwordET.getText().toString();
                 String cnfpassword = cnfpassET.getText().toString();
-                String regno = registrationET.getText().toString();
-                String sex ;
+                final String regno = registrationET.getText().toString();
+                final String sex ;
                 boolean sexIsValid = true;
                 if(rmale.isChecked())
                     sex="Male";
@@ -218,7 +227,7 @@ public class SignUp extends AppCompatActivity {
                     sex="Female";
                 else
                     sex="Others";
-                Boolean isDoctor;
+                final Boolean isDoctor;
                 if(docSwitch.isChecked())
                     isDoctor = true;
                 else
@@ -254,17 +263,50 @@ public class SignUp extends AppCompatActivity {
                 }
                 if(nameIsValid && dobIsValid && isValidEmail && passwordIsValid && cnfPassIsValid
                         && sexIsValid && isDocValid){
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users");
-                    String id = ref.push().getKey();
-                    Person person = new Person(name, email, password, dob, sex, email, isDoctor, regno,new ArrayList<String>(),new ArrayList<String>(),id);
-                    ref.child(id).setValue(person);
-                    Toast.makeText(SignUp.this,"Thank you for Signing Up!",Toast.LENGTH_LONG).show();
-                    finish();
-                }
 
+                    final Date finalDob = dob;
+
+                    // BUG #14 & #15 RESOLVED
+                    mAuth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(SignUp.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        FirebaseUser user = mAuth.getCurrentUser();
+
+                                        if (user != null) {
+                                            user.sendEmailVerification()
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                Toast.makeText(SignUp.this,"Please Verify by going " +
+                                                                                "through your email",
+                                                                        Toast.LENGTH_LONG).show();
+                                                            }
+                                                        }
+                                                    });
+                                        }
+                                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users");
+                                        String id = ref.push().getKey();
+                                        Person person = new Person(name, email, password, finalDob,
+                                                sex, email, isDoctor, regno,null,null,id);
+                                        ref.child(id).setValue(person);
+                                        finish();
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        Toast.makeText(SignUp.this, task.getException().getMessage()+"",
+                                                Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+
+                }
             }
         });
     }
+
     private void updateLabel() {
         String myFormat = "MM/dd/yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
