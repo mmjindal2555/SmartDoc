@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -71,6 +72,7 @@ public class QueryResponseAdapter extends BaseAdapter {
             holder.upVoteTextView=(TextView) convertView.findViewById(R.id.upVoteTextView1);
             holder.downVoteTextView=(TextView) convertView.findViewById(R.id.downVoteTextView1);
             holder.profilePic = (ImageView)convertView.findViewById(R.id.profilePicImageView);
+            holder.transparentLayer = (RelativeLayout)convertView.findViewById(R.id.transparent_layer_answer);
             final TextView up=holder.upVoteTextView;
             final TextView down=holder.downVoteTextView;
             //convertView.setLongClickable(true);
@@ -236,14 +238,19 @@ public class QueryResponseAdapter extends BaseAdapter {
         Statement o = mObjects.get(position);
         final String user = o.getUser_id();
         String ques = o.getStatement();
+        if(o.getdownVotes()!=null && o.getdownVotes().size()>5){
+            holder.transparentLayer.setVisibility(View.INVISIBLE);
+        }
         db.child("Users").child(user).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 holder.usernmae.setText(dataSnapshot.child("name").getValue(String.class));
                 String picUrl = dataSnapshot.child("gravatarUrl").getValue(String.class);
+                picUrl = picUrl.substring(0,picUrl.length()-3)+"retro";
                 if(picUrl!=null) {
                     Picasso.with(mContext)
                             .load(picUrl)
+                            .placeholder(R.drawable.ic_user)
                             .into(holder.profilePic);
                 }
             }
@@ -267,6 +274,7 @@ public class QueryResponseAdapter extends BaseAdapter {
         TextView upVoteTextView;
         TextView downVoteTextView;
         ImageView profilePic;
+        RelativeLayout transparentLayer;
     }
 
     public Context getmContext(){

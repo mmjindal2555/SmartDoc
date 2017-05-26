@@ -103,6 +103,7 @@ public class HealthForum extends AppCompatActivity
                 if(picUrl!=null) {
                     Picasso.with(HealthForum.this)
                             .load(picUrl)
+                            .placeholder(R.drawable.ic_action_account_circle)
                             .into((ImageView)header.findViewById(R.id.picTV));
                 }
             }

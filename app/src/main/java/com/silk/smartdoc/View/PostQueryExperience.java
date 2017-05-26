@@ -27,6 +27,7 @@ import com.silk.smartdoc.Model.Person;
 import com.silk.smartdoc.Model.Query;
 import com.silk.smartdoc.Model.Statement;
 import com.silk.smartdoc.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,6 +38,7 @@ public class PostQueryExperience extends AppCompatActivity {
     Person person;
     ListView listView;
     TextView emptyText;
+    ImageView postImgView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,17 +54,35 @@ public class PostQueryExperience extends AppCompatActivity {
         final Switch otherTagSwitch = (Switch)findViewById(R.id.otherTagSwitch);
         listView = (ListView) findViewById(R.id.listView);
         emptyText = (TextView) findViewById(R.id.emptyTV);
+        postImgView = (ImageView)findViewById(R.id.imageView3);
         listView.setEmptyView(emptyText);
         Intent loginIntent = getIntent();
         person = loginIntent.getParcelableExtra("Person");
         final List<String> list = new ArrayList<String>();
+        FirebaseDatabase.getInstance().getReference().child("Users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String picUrl = dataSnapshot.child(person.getId()).child("gravatarUrl").getValue(String.class);
+                picUrl = picUrl.substring(0,picUrl.length()-3)+"retro";
+                if(picUrl!=null) {
+                    Picasso.with(PostQueryExperience.this)
+                            .load(picUrl)
+                            .placeholder(R.drawable.ic_user)
+                            .into(postImgView);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         DatabaseReference databaseReferenceMed = FirebaseDatabase.getInstance().getReference().child("Tags");
         otherTagSwitch.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(otherTagSwitch.isChecked()==true){
                     otherTagET.setEnabled(true);
-
                 }
                 else {
                     otherTagET.setEnabled(false);
@@ -181,7 +201,7 @@ public class PostQueryExperience extends AppCompatActivity {
                             Intent loginIntent = getIntent();
 
                             final Person person = loginIntent.getParcelableExtra("Person");
-                            Statement statement = new Statement(person.getEmail(),id,querytext, new Date(),null,null);
+                            Statement statement = new Statement(person.getId(),id,querytext, new Date(),null,null);
 
 
                             db.child(id).setValue(statement);

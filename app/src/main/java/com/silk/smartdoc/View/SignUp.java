@@ -266,6 +266,7 @@ public class SignUp extends AppCompatActivity {
 
                     final Date finalDob = dob;
 
+                    // BUG #14 & #15 RESOLVED
                     mAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(SignUp.this, new OnCompleteListener<AuthResult>() {
                                 @Override

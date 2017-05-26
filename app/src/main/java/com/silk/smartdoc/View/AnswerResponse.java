@@ -83,16 +83,20 @@ public class AnswerResponse extends AppCompatActivity {
                 userNameTextView.setText(userName_questionPosted);
                 String picUrl = dataSnapshot.child(query.getQuestion().getUser_id()).
                         child("gravatarUrl").getValue(String.class);
+                picUrl = picUrl.substring(0,picUrl.length()-3)+"retro";
                 if(picUrl!=null) {
                     Picasso.with(AnswerResponse.this)
                             .load(picUrl)
+                            .placeholder(R.drawable.ic_user)
                             .into(profilePic);
                 }
                 String msgPicUrl = dataSnapshot.child(person.getId()).child("gravatarUrl")
                         .getValue(String.class);
+                msgPicUrl = msgPicUrl.substring(0,msgPicUrl.length()-3)+"retro";
                 if(msgPicUrl!=null) {
                     Picasso.with(AnswerResponse.this)
                             .load(msgPicUrl)
+                            .placeholder(R.drawable.ic_user)
                             .into(msgImgView);
                 }
             }
@@ -123,15 +127,20 @@ public class AnswerResponse extends AppCompatActivity {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                String user = dataSnapshot.child("user_id").getValue(String.class);
                 if (dataSnapshot.hasChild("downVotes")) {
                     downCount=0;
                     for (DataSnapshot child : dataSnapshot.child("downVotes").getChildren()) {
+                        if(user.equals(child.getValue(String.class)))
+                            upVotesImage.setImageResource(R.drawable.ic_keyboard_arrow_up_blue);
                         downCount+=1;
                     }
                 }
                 if(dataSnapshot.hasChild("upVotes")) {
                     upCount=0;
                     for (DataSnapshot child : dataSnapshot.child("upVotes").getChildren()) {
+                        if(user.equals(child.getValue(String.class)))
+                            downVotesImage.setImageResource(R.drawable.ic_keyboard_arrow_down_blue);
                         upCount+=1;
                     }
                 }

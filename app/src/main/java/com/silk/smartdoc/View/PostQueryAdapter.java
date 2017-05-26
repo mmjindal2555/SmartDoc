@@ -119,9 +119,11 @@ public class PostQueryAdapter extends BaseAdapter {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 holder.usernmae.setText(dataSnapshot.child(user).child("name").getValue(String.class));
                 String picUrl = dataSnapshot.child(user).child("gravatarUrl").getValue(String.class);
+                picUrl = picUrl.substring(0,picUrl.length()-3)+"retro";
                 if(picUrl!=null) {
                     Picasso.with(mContext)
                             .load(picUrl)
+                            .placeholder(R.drawable.ic_user)
                             .into(holder.profilePic);
                 }
             }
@@ -131,7 +133,7 @@ public class PostQueryAdapter extends BaseAdapter {
 
             }
         });
-        if(o.getQuestion().getdownVotes().size()>5){
+        if(o.getQuestion().getdownVotes()!=null && o.getQuestion().getdownVotes().size()>5){
             holder.transparentLayer.setVisibility(View.VISIBLE);
         }
         holder.question.setText(ques);
