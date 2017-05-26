@@ -17,7 +17,16 @@
         android:background="#e9e9e9"
         android:elevation="1dp"
         tools:context="com.silk.smartdoc.HealthForum">
-
+        <TextView
+            android:id="@+id/emptyTVHF"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="1dp"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="textPersonName"
+            android:text="Sorry, No discussions to show"
+            android:textColor="#777777" />
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -84,16 +93,7 @@
             android:layout_below="@+id/buttonslayout"
             android:layout_centerHorizontal="true" />
 
-        <EditText
-            android:id="@+id/emptyTVHF"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:elevation="1dp"
-            android:ems="10"
-            android:gravity="center"
-            android:inputType="textPersonName"
-            android:text="Sorry, No discussions to show"
-            android:textColor="#777777" />
+
 
     </RelativeLayout>
 
