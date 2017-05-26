@@ -63,6 +63,7 @@ public class PostQueryExperience extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String picUrl = dataSnapshot.child(person.getId()).child("gravatarUrl").getValue(String.class);
+                picUrl = picUrl.substring(0,picUrl.length()-3)+"retro";
                 if(picUrl!=null) {
                     Picasso.with(PostQueryExperience.this)
                             .load(picUrl)

@@ -119,6 +119,7 @@ public class PostQueryAdapter extends BaseAdapter {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 holder.usernmae.setText(dataSnapshot.child(user).child("name").getValue(String.class));
                 String picUrl = dataSnapshot.child(user).child("gravatarUrl").getValue(String.class);
+                picUrl = picUrl.substring(0,picUrl.length()-3)+"retro";
                 if(picUrl!=null) {
                     Picasso.with(mContext)
                             .load(picUrl)

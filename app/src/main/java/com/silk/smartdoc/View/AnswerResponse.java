@@ -82,6 +82,7 @@ public class AnswerResponse extends AppCompatActivity {
                 userNameTextView.setText(userName_questionPosted);
                 String picUrl = dataSnapshot.child(query.getQuestion().getUser_id()).
                         child("gravatarUrl").getValue(String.class);
+                picUrl = picUrl.substring(0,picUrl.length()-3)+"retro";
                 if(picUrl!=null) {
                     Picasso.with(AnswerResponse.this)
                             .load(picUrl)
@@ -90,6 +91,7 @@ public class AnswerResponse extends AppCompatActivity {
                 }
                 String msgPicUrl = dataSnapshot.child(person.getId()).child("gravatarUrl")
                         .getValue(String.class);
+                msgPicUrl = msgPicUrl.substring(0,msgPicUrl.length()-3)+"retro";
                 if(msgPicUrl!=null) {
                     Picasso.with(AnswerResponse.this)
                             .load(msgPicUrl)
