@@ -63,8 +63,9 @@ public class PostQueryExperience extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String picUrl = dataSnapshot.child(person.getId()).child("gravatarUrl").getValue(String.class);
-                picUrl = picUrl.substring(0,picUrl.length()-3)+"retro";
+
                 if(picUrl!=null) {
+                    picUrl = picUrl.substring(0,picUrl.length()-3)+"retro";
                     Picasso.with(PostQueryExperience.this)
                             .load(picUrl)
                             .placeholder(R.drawable.ic_user)
@@ -117,14 +118,15 @@ public class PostQueryExperience extends AppCompatActivity {
                 final ImageView commitButton = (ImageView) findViewById(R.id.postButton);
 
                 searchMultiSpinnerLimit.setItems(listArray1, -1, new SpinnerListener() {
-
-
                     @Override
                     public void onItemsSelected(List<KeyPairBoolData> items) {
 
                         for (int i = 0; i < items.size(); i++) {
                             if (items.get(i).isSelected()) {
                                 tags.add(items.get(i).getName());
+                            }
+                            else if(tags.contains(items.get(i).getName())){
+                                tags.remove(items.get(i).getName());
                             }
                         }
                         //Fetch from DataBase and filter by tags

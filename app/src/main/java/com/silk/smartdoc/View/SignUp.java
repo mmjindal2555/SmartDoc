@@ -263,9 +263,7 @@ public class SignUp extends AppCompatActivity {
                 }
                 if(nameIsValid && dobIsValid && isValidEmail && passwordIsValid && cnfPassIsValid
                         && sexIsValid && isDocValid){
-
                     final Date finalDob = dob;
-
                     // BUG #14 & #15 RESOLVED
                     mAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(SignUp.this, new OnCompleteListener<AuthResult>() {
@@ -274,7 +272,6 @@ public class SignUp extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         // Sign in success, update UI with the signed-in user's information
                                         FirebaseUser user = mAuth.getCurrentUser();
-
                                         if (user != null) {
                                             user.sendEmailVerification()
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -301,12 +298,10 @@ public class SignUp extends AppCompatActivity {
                                     }
                                 }
                             });
-
                 }
             }
         });
     }
-
     private void updateLabel() {
         String myFormat = "MM/dd/yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);

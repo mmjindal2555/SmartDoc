@@ -81,10 +81,14 @@ public class AnswerResponse extends AppCompatActivity {
                 String userName_questionPosted = dataSnapshot.child(query.getQuestion()
                         .getUser_id()).child("name").getValue(String.class);
                 userNameTextView.setText(userName_questionPosted);
+                if(dataSnapshot.child(query.getQuestion().getUser_id()).child("isDoctor").getValue(Boolean.class)){
+                    userNameTextView.setTextColor(0xff4eca63);
+                }
                 String picUrl = dataSnapshot.child(query.getQuestion().getUser_id()).
                         child("gravatarUrl").getValue(String.class);
-                picUrl = picUrl.substring(0,picUrl.length()-3)+"retro";
+
                 if(picUrl!=null) {
+                    picUrl = picUrl.substring(0,picUrl.length()-3)+"retro";
                     Picasso.with(AnswerResponse.this)
                             .load(picUrl)
                             .placeholder(R.drawable.ic_user)
@@ -92,8 +96,9 @@ public class AnswerResponse extends AppCompatActivity {
                 }
                 String msgPicUrl = dataSnapshot.child(person.getId()).child("gravatarUrl")
                         .getValue(String.class);
-                msgPicUrl = msgPicUrl.substring(0,msgPicUrl.length()-3)+"retro";
+
                 if(msgPicUrl!=null) {
+                    msgPicUrl = msgPicUrl.substring(0,msgPicUrl.length()-3)+"retro";
                     Picasso.with(AnswerResponse.this)
                             .load(msgPicUrl)
                             .placeholder(R.drawable.ic_user)
@@ -132,7 +137,7 @@ public class AnswerResponse extends AppCompatActivity {
                     downCount=0;
                     for (DataSnapshot child : dataSnapshot.child("downVotes").getChildren()) {
                         if(user.equals(child.getValue(String.class)))
-                            upVotesImage.setImageResource(R.drawable.ic_keyboard_arrow_up_blue);
+                            downVotesImage.setImageResource(R.drawable.ic_keyboard_arrow_down_blue);
                         downCount+=1;
                     }
                 }
@@ -140,7 +145,7 @@ public class AnswerResponse extends AppCompatActivity {
                     upCount=0;
                     for (DataSnapshot child : dataSnapshot.child("upVotes").getChildren()) {
                         if(user.equals(child.getValue(String.class)))
-                            downVotesImage.setImageResource(R.drawable.ic_keyboard_arrow_down_blue);
+                            upVotesImage.setImageResource(R.drawable.ic_keyboard_arrow_up_blue);
                         upCount+=1;
                     }
                 }
@@ -149,7 +154,6 @@ public class AnswerResponse extends AppCompatActivity {
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
 
