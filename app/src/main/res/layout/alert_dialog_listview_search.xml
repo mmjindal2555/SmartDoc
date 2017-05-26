@@ -12,6 +12,7 @@
         android:background="@drawable/translucent"
         android:hint="Type to Search"
         android:inputType="text"
+        android:padding="5dp"
         android:paddingBottom="3dp"
         android:paddingTop="3dp">
 
@@ -40,7 +41,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="No Tags"
+            android:text="No Tags, add below"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/accentcolor" />
     </RelativeLayout>
