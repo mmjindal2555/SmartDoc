@@ -44,9 +44,6 @@
             android:label="@string/title_activity_medicine_search"
             android:theme="@style/AppTheme2" />
         <activity
-            android:name=".View.UserAnswerQuery"
-            android:label="@string/title_activity_user_answer_query" />
-        <activity
             android:name=".View.HealthForum"
             android:label="@string/title_activity_health_forum" />
         <activity
