@@ -125,6 +125,7 @@ public class PostQueryAdapter extends BaseAdapter {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 holder.usernmae.setText(dataSnapshot.child(user).child("name").getValue(String.class));
+
                 String picUrl = dataSnapshot.child(user).child("gravatarUrl").getValue(String.class);
                 if(picUrl!=null) {
                     picUrl = picUrl.substring(0,picUrl.length()-3)+"retro";

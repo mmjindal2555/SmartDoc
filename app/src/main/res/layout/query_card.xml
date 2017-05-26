@@ -108,6 +108,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/transparent_layer"
+            android:elevation="1dp"
             android:visibility="invisible"></RelativeLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>
