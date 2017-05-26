@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -134,15 +135,8 @@ public class AnswerResponse extends AppCompatActivity {
                         upCount+=1;
                     }
                 }
-                if(dataSnapshot.hasChild("answer")){
-                    numOfAnswers.setText(dataSnapshot.child("answer").getChildrenCount()+"");
-                }
-                else{
-                    numOfAnswers.setText("0");
-                }
                 upVoteTextView.setText(upCount+"");
                 downVoteTextView.setText(downCount+"");
-
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -150,6 +144,22 @@ public class AnswerResponse extends AppCompatActivity {
             }
         });
 
+        FirebaseDatabase.getInstance().getReference().child("Query").child(q_id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild("answer")){
+                    numOfAnswers.setText(dataSnapshot.child("answer").getChildrenCount()+"");
+                }
+                else{
+                    numOfAnswers.setText("0");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         //If user Posts his/her answer
         ImageView postAnswerButton = (ImageView) findViewById(R.id.postAnswerButton);
         postAnswerButton.setOnClickListener(new View.OnClickListener() {
