@@ -223,16 +223,16 @@
                 android:layout_alignEnd="@+id/linearLayout2"
                 android:layout_below="@+id/linearLayout2"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="50dp"
                 android:layout_weight="1"
                 android:background="#44ffffff"
-                android:text="Verify E-Mail Address"
+                android:text="Sign Up"
                 android:textColor="#ffffff" />
 
         </LinearLayout>
     </ScrollView>
 
-    <Button
+    <!--Button
         android:id="@+id/signUpButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -241,6 +241,6 @@
         android:background="#ffffff"
         android:text="Sign Up"
         android:textColor="@color/accentcolor"
-        android:textStyle="bold" />
+        android:textStyle="bold" /-->
 
 </RelativeLayout>

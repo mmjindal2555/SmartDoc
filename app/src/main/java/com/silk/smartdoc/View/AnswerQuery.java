@@ -3,6 +3,7 @@ package com.silk.smartdoc.View;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +31,12 @@ public class AnswerQuery extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer_query);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.answer_response_toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.primarycolor));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setTitle("Answer Query");
+        setSupportActionBar(toolbar);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarcolor));
         final List<String> list = new ArrayList<String>();
         DatabaseReference databaseReferenceMed = FirebaseDatabase.getInstance().getReference().child("Tags");
 
@@ -136,27 +143,5 @@ public class AnswerQuery extends AppCompatActivity {
 
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_answer_query, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

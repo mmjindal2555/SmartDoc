@@ -1,99 +1,170 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.silk.smartdoc.View.TestSearchResultsActivity">
 
-    <android.support.v7.widget.Toolbar
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/answer_response_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/test_search_result_toolbar"
-        android:minHeight="?attr/actionBarSize"
-        android:background="#bbbbbb"
+        android:background="@color/primarycolor"
         android:logo="@mipmap/ic_launcher"
-        xmlns:android="http://schemas.android.com/apk/res/android"/>
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:minHeight="?attr/actionBarSize" />
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardCornerRadius="4dp"
-        android:elevation="4dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="false"
+        android:layout_below="@+id/answer_response_toolbar"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="37dp">
+        android:layout_marginTop="4dp"
+        android:elevation="4dp"
+        card_view:cardCornerRadius="4dp">
 
-        <RelativeLayout
-            android:id="@+id/relativeLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
-            android:padding="5dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#d9d9d9"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#d9d9d9"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/thumbsUpImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignRight="@+id/userTextView"
+                        android:layout_below="@+id/queryTextView"
+                        android:src="@drawable/ic_keyboard_arrow_up" />
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="2dp"
+                        android:background="@color/grey"
+                        android:paddingLeft="5dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_a"
+                        app:srcCompat="@drawable/ic_a" />
+
+                    <ImageView
+                        android:id="@+id/thumbsDownImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/thumbsUpImageView1"
+                        android:layout_toEndOf="@+id/upVoteTextView1"
+                        android:src="@drawable/ic_keyboard_arrow_down" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#d9d9d9"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/upVoteTextView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/thumbsUpImageView1"
+                        android:layout_toEndOf="@+id/thumbsUpImageView1"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="00"
+                        android:textColor="#444" />
+
+                    <TextView
+                        android:id="@+id/numberOfAnswers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/userTextView"
+                        android:layout_weight="1"
+                        android:background="@color/grey"
+                        android:gravity="center"
+                        android:text="01"
+                        android:textColor="#ff444444" />
+
+                    <TextView
+                        android:id="@+id/downVoteTextView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/thumbsDownImageView2"
+                        android:layout_toEndOf="@+id/thumbsDownImageView2"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="02"
+                        android:textColor="#444" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="15"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/userTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="2dp"
+                    android:text="username"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/queryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/userTextView"
+                    android:layout_below="@+id/userTextView"
+                    android:text="query"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="14dp" />
+
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/profilePicImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
                 android:adjustViewBounds="false"
                 android:minHeight="30dp"
                 android:minWidth="30dp"
                 android:src="@drawable/ic_user" />
 
-            <TextView
-                android:id="@+id/usernameTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/profilePicImageView"
-                android:text="username"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <TextView
-                android:id="@+id/queryTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/usernameTextView"
-                android:layout_below="@+id/usernameTextView"
-                android:text="query"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <ImageView
-                android:id="@+id/thumbsUpImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignRight="@+id/usernameTextView"
-                android:layout_below="@+id/queryTextView"
-                android:src="@drawable/ic_action_thumb_up" />
-
-            <TextView
-                android:id="@+id/upVoteTextView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/thumbsDownImageView"
-                android:layout_toEndOf="@+id/thumbsUpImageView"
-                android:text="TextView" />
-
-            <ImageView
-                android:id="@+id/thumbsDownImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/thumbsUpImageView"
-                android:layout_marginLeft="0dp"
-                android:layout_toEndOf="@+id/upVoteTextView1"
-                android:src="@drawable/ic_action_thumb_down" />
-
-            <TextView
-                android:id="@+id/downVoteTextView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/thumbsDownImageView"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp"
-                android:layout_toEndOf="@+id/thumbsDownImageView"
-                android:text="TextView" />
-
-
-        </RelativeLayout>
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
 
@@ -103,41 +174,55 @@
         android:layout_height="300dp"
         android:layout_below="@+id/card_view"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
         android:divider="@android:color/transparent"
-        android:dividerHeight="1dp" />
+        android:dividerHeight="1dp"
+        android:layout_above="@+id/linearLayout5" />
 
-    <EditText
-        android:id="@+id/answerText"
+    <LinearLayout
+        android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView4"
-        android:layout_margin="3dp"
-        android:ems="10"
-        android:hint="Enter your answer here ..."
-        android:inputType="textPersonName"
-        android:minHeight="60dp" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/searchResultListView"
-        android:layout_margin="5dp"
-        android:layout_marginTop="14dp"
-        android:padding="3dp"
-        android:text="Want to post your answer ?" />
-
-    <Button
-        android:id="@+id/postAnswerButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:text="Post Answer"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="13dp" />
+        android:background="#ffffff"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            app:srcCompat="@drawable/ic_user" />
+
+        <EditText
+            android:id="@+id/answerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_toStartOf="@+id/postAnswerButton"
+            android:layout_weight="15"
+            android:ems="10"
+            android:hint="Enter your answer here ..."
+            android:inputType="textPersonName"
+            android:minHeight="60dp" />
+
+        <ImageView
+            android:id="@+id/postAnswerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:onClick="onClick"
+            android:src="@drawable/ic_send"
+            android:text="Post Answer" />
+
+    </LinearLayout>
 
 
 </RelativeLayout>

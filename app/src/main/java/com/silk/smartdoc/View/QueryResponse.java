@@ -13,8 +13,6 @@ import com.silk.smartdoc.R;
 
 import java.util.ArrayList;
 
-import static com.silk.smartdoc.R.id.listView;
-
 public class QueryResponse extends AppCompatActivity {
 
     @Override
@@ -25,7 +23,7 @@ public class QueryResponse extends AppCompatActivity {
         Intent intent = getIntent();
         Query query = intent.getParcelableExtra("Query");
         final Person person = intent.getParcelableExtra("Person");
-        TextView userNameTextView = (TextView) findViewById(R.id.usernameTextView);
+        TextView userNameTextView = (TextView) findViewById(R.id.userTextView);
         TextView queryTextView = (TextView) findViewById(R.id.queryTextView);
 
         String userName_questionPosted = query.getQuestion().getUser_id();

@@ -20,7 +20,7 @@ public class MyQuestionsResponse extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_questions_response);
 
-        TextView userNameTextView = (TextView) findViewById(R.id.usernameTextView);
+        TextView userNameTextView = (TextView) findViewById(R.id.userTextView);
         TextView queryTextView = (TextView) findViewById(R.id.queryTextView);
         //
         Intent intent = getIntent();
