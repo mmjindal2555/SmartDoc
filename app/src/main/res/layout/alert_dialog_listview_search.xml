@@ -9,8 +9,11 @@
         android:id="@+id/alertSearchEditText"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/translucent"
         android:hint="Type to Search"
-        android:inputType="text">
+        android:inputType="text"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp">
 
         <requestFocus />
     </EditText>
@@ -37,7 +40,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="Not found!"
+            android:text="No Tags"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/accentcolor" />
     </RelativeLayout>
