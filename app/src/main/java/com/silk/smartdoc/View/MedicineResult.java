@@ -65,13 +65,13 @@ public class MedicineResult extends AppCompatActivity {
                // passing snapshot to get the chemical name of the medicine
                final String chemicalName = sdm.searchMgr.searchMedicineForChemicalName(dataSnapshot, searchValue);
                if(chemicalName.equalsIgnoreCase("")) {
-                   chem.setText(" " + searchValue);
+                   //chem.setText(" " + searchValue);
                    chem.setTypeface(null, Typeface.BOLD);
                }
 
                else {
                    chem.setText(" " + chemicalName);
-                   chem.setTypeface(null, Typeface.BOLD);
+                   //chem.setTypeface(null, Typeface.BOLD);
                }
                DatabaseReference databaseReferenceChem = FirebaseDatabase.getInstance().getReference().child("Chemicals");
                databaseReferenceChem.addValueEventListener(new ValueEventListener() {
@@ -89,7 +89,7 @@ public class MedicineResult extends AppCompatActivity {
                                genericIcon.setImageResource(R.drawable.ic_cancel);
                            }
                            description.setText(" "+chemical.getDescription());
-                           description.setTypeface(null, Typeface.BOLD);
+                           //description.setTypeface(null, Typeface.BOLD);
 
                            medNames = chemical.getMedicineIds();
                            medResultArrayList = new ArrayList<Medicine>();

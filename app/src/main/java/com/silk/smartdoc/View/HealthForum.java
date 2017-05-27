@@ -62,7 +62,7 @@ public class HealthForum extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.primarycolor));
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        toolbar.setOverflowIcon(getDrawable(R.drawable.ic_action_more_vert));
+        //toolbar.setOverflowIcon(getDrawable(R.drawable.ic_action_more_vert));
         toolbar.setNavigationIcon(R.drawable.ic_action_dehaze);
         setSupportActionBar(toolbar);
         getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarcolor));

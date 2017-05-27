@@ -40,6 +40,7 @@
                 android:id="@+id/chemicalNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/chemicalFixedTextView"
                 android:layout_toRightOf="@+id/chemicalFixedTextView"
                 android:text=" chemical name"
                 android:textSize="16sp" />
@@ -52,25 +53,26 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="false"
                 android:layout_below="@+id/chemicalFixedTextView"
+                android:layout_marginTop="4dp"
                 android:paddingBottom="2dp"
-                android:text="Description :" />
+                android:text="Description" />
 
             <TextView
                 android:id="@+id/descriptionTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/chemicalFixedTextView"
-                android:layout_toRightOf="@+id/descriptionFixedTextView"
-                android:text=" description"
-                android:textSize="16sp" />
+                android:layout_below="@+id/descriptionFixedTextView"
+                android:text="description"
+                android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/genericTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Availability in Generic Stores"
-                android:id="@+id/genericTextView"
-                android:layout_below="@+id/descriptionTextView" />
+                android:layout_below="@+id/descriptionTextView"
+                android:layout_marginTop="4dp"
+                android:text="Availability in Jan Aushadi Stores"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <ImageView
                 android:id="@+id/genericIconImageView"

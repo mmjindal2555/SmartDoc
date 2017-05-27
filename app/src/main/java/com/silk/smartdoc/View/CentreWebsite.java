@@ -61,28 +61,14 @@ public class CentreWebsite extends AppCompatActivity {
         final Activity activity = this;
 
         final Handler mHandler = new Handler();
-        new Thread(new Runnable() {
-            public void run() {
-                while (mProgressStatus < 100) {
-                    //mProgressStatus = doWork();
-
-                    // Update the progress bar
-                    mHandler.post(new Runnable() {
-                        public void run() {
-                            progressBar.setProgress(mProgressStatus);
-                        }
-                    });
-                }
-            }
-        }).start();
 
         webView.setWebChromeClient(new WebChromeClient(){
             public void onProgressChanged(WebView view, int progress) {
                 setProgressBarVisibility(true);
                 activity.setProgress(progress * 100);
+                progressBar.setProgress(mProgressStatus);
                 if(progress == 100) {
-                    setProgressBarIndeterminateVisibility(false);
-                    setProgressBarVisibility(false);
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
             }
         });

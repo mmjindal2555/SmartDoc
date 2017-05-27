@@ -51,5 +51,7 @@ dependencies {
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
     compile files('libs/gravatar-android-1.0.jar')
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'org.apmem.tools:layouts:1.10@aar'
+
 }
 apply plugin: 'com.google.gms.google-services'

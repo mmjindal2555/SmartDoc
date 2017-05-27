@@ -60,13 +60,14 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="14dp" />
 
-                <RelativeLayout
+                <org.apmem.tools.layouts.FlowLayout
+
                     android:id="@+id/tagsRelativeLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@+id/usernameTextView"
                     android:layout_below="@+id/queryTextView">
-                </RelativeLayout>
+                </org.apmem.tools.layouts.FlowLayout>
 
             </RelativeLayout>
 
